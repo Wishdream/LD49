@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Objects/Tiles/block.tscn" type="PackedScene" id=1]
+
+[node name="test" type="Node2D"]
+
+[node name="DecayTimer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[node name="Block" parent="." instance=ExtResource( 1 )]
