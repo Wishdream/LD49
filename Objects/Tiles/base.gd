@@ -21,7 +21,7 @@ func _on_DecayTimer_timeout():
 		sprite_anim.frame = sprite_anim.frame + 1
 		emit_signal("start_fall")
 	else:
-		$Collider.shape_owner_set_disabled(self, true)
+		$Collider/CollisionShape.disabled = true
 		timer.disconnect("timeout", self, "_onDecayTimer_timeout")
 
 func _on_Hitbox_area_entered(area):
