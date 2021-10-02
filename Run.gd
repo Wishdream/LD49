@@ -2,8 +2,9 @@ extends Node
 
 var scrap_rate = 1
 var decay_rate = 1
-var hp_rate = 1
+var build_rate = 1
 var spawn_rate = 1
+var hp_rate = 1
 
 var disaster = 0
 var wind_dir = Vector2.ZERO
