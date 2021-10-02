@@ -1,17 +1,40 @@
-extends Node
+extends KinematicBody2D
 
-var parent
-var anim
 var main_pos = Vector2()
-var fall_rate = 3
+var vel = Vector2.ZERO
+var is_hit = false
+var parent
+var timer
 
 func _ready():
+	main_pos = position
 	parent = get_parent()
-	anim = get_parent().get_node("Sprite")
-	main_pos = get_parent().position
+	timer = get_node("Timer")
 
-func update_position(build_rate):
-	parent.position = main_pos + Vector2(0,build_rate)
+func _physics_process(delta):
+	if parent.sprite_anim.frame == parent.sprite_max:
+		move_and_slide(vel * 1.5)
+	elif timer.is_stopped(): 
+		move_and_slide(vel)
 
-func _on_Platform_update_tick():
-	update_position(fall_rate * anim.frame)
+
+func _on_Platform_start_fall():
+	vel = Vector2(0, 10 * Run.decay_rate)
+	
+
+func _on_Hitbox_area_entered(area):
+	repair_platform()
+
+
+func _process(delta):
+	if Input.is_action_just_pressed("jump"):
+		repair_platform()
+
+
+func repair_platform():
+	move_and_slide(Vector2(0, -200) * Run.build_rate)
+	if position.y < main_pos.y:
+		position = main_pos
+		timer.stop()
+	else:
+		timer.start()
