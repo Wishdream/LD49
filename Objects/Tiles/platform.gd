@@ -12,7 +12,7 @@ func _ready():
 	timer = get_node("Timer")
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if parent.sprite_anim.frame == parent.sprite_max:
 		move_and_slide(vel * 1.5)
 	elif timer.is_stopped(): 
@@ -24,7 +24,7 @@ func _on_Platform_start_fall():
 	
 
 
-func _on_Hitbox_area_entered(area):
+func _on_Hitbox_area_entered(_area):
 	repair_platform()
 
 

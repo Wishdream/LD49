@@ -64,6 +64,7 @@ collision_layer = 2
 collision_mask = 0
 
 [node name="Hitbox" type="Area2D" parent="Collider" index="0"]
+monitoring = false
 collision_layer = 0
 collision_mask = 16
 
@@ -77,3 +78,5 @@ shape = ExtResource( 3 )
 position = Vector2( -16, -16 )
 frames = SubResource( 12 )
 centered = false
+
+[connection signal="area_entered" from="Collider/Hitbox" to="." method="_on_Hitbox_area_entered"]

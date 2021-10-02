@@ -29,7 +29,6 @@ shader_param/flash_modifier = 0.0
 [node name="test" type="Node2D"]
 
 [node name="DecayTimer" type="Timer" parent="."]
-wait_time = 0.5
 autostart = true
 
 [node name="Level" type="Node" parent="."]
@@ -43,11 +42,14 @@ position = Vector2( 256, 224 )
 [node name="Ladder" parent="Level" instance=ExtResource( 2 )]
 position = Vector2( 256, 192 )
 
-[node name="Block" parent="Level/Ladder" instance=ExtResource( 1 )]
-position = Vector2( -64, 32 )
+[node name="Ladder2" parent="Level" instance=ExtResource( 2 )]
+position = Vector2( 256, 160 )
 
-[node name="Block2" parent="Level/Ladder" instance=ExtResource( 1 )]
-position = Vector2( -96, 32 )
+[node name="Block2" parent="Level" instance=ExtResource( 1 )]
+position = Vector2( 192, 224 )
+
+[node name="Block3" parent="Level" instance=ExtResource( 1 )]
+position = Vector2( 160, 224 )
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
 material = SubResource( 2 )
