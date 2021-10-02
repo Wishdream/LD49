@@ -306,7 +306,10 @@ func process_build():
 func process_death():
 	sprite.play("hurt")
 	if is_on_floor():
-		velocity.x = 0
+		if abs(velocity.x) > 1:
+			velocity.x = lerp(velocity.x, 0, 0.15)
+		else:
+			velocity.x = 0
 		sprite.play("down")
 		timer.start(DOWN_TIME)
 	apply_gravity()
