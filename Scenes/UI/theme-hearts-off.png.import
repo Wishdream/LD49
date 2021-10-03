@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/shopkeep.png-f1013c07ca5b5ad3ffbbed1f3f580730.stex"
+path="res://.import/theme-hearts-off.png-e933c35be0030a04d99c11595c6d3da5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Characters/Shopkeeper/shopkeep.png"
-dest_files=[ "res://.import/shopkeep.png-f1013c07ca5b5ad3ffbbed1f3f580730.stex" ]
+source_file="res://Scenes/UI/theme-hearts-off.png"
+dest_files=[ "res://.import/theme-hearts-off.png-e933c35be0030a04d99c11595c6d3da5.stex" ]
 
 [params]
 

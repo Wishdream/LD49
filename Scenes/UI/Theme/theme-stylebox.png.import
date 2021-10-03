@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/shopkeep.png-f1013c07ca5b5ad3ffbbed1f3f580730.stex"
+path="res://.import/theme-stylebox.png-8c04b11e1d2340e8ba8ca63868ae5e35.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Characters/Shopkeeper/shopkeep.png"
-dest_files=[ "res://.import/shopkeep.png-f1013c07ca5b5ad3ffbbed1f3f580730.stex" ]
+source_file="res://Scenes/UI/Theme/theme-stylebox.png"
+dest_files=[ "res://.import/theme-stylebox.png-8c04b11e1d2340e8ba8ca63868ae5e35.stex" ]
 
 [params]
 
