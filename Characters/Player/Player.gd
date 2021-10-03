@@ -3,16 +3,16 @@ extends KinematicBody2D
 # Constants and Variables
 #==============================================================================
 const MOVE_SPEED = 120
-const JUMP_SPEED = 200
-const DASH_SPEED = 250
+const JUMP_SPEED = 300
+const DASH_SPEED = 300
 const DODGE_SPEED = 400
 const FALL_SPEED = 400
 const DFALL_SPEED = 500
 
-const DASH_TIME = 0.4
+const DASH_TIME = 0.3
 const DODGE_TIME = 0.2
 const HURT_TIME = 0.2
-const JUMP_TIME = 0.3
+const JUMP_TIME = 0.1
 const COYOTE_TIME = 0.15
 const DOWN_TIME = 2
 
@@ -33,6 +33,7 @@ var hpmax = 100
 var hp = hpmax
 var dashed = false
 var dodged = false
+var aerialed = false
 var climbing = false
 var on_ladder = false
 var velocity = Vector2.ZERO
@@ -49,7 +50,7 @@ onready var ladderbox = get_node("Ladderbox")
 # Functions
 #==============================================================================
 
-func _process(delta):
+func _physics_process(delta):
 
 	var dir = Vector2.ZERO
 	if Input.is_action_pressed("move_left"):
@@ -82,7 +83,7 @@ func _process(delta):
 			process_aerial(dir)
 		DOWN:
 			process_death()
-			
+
 	process_attack()
 	process_build()
 	process_movement(delta)
@@ -99,7 +100,7 @@ func set_damage(value):
 		change_state(HURT)
 
 func process_movement(_delta):
-	particles.emitting = dashed
+	if not aerialed: particles.emitting = dashed
 	velocity = move_and_slide(velocity, Vector2.UP)
 	pass
 
@@ -117,9 +118,12 @@ func apply_gravity():
 # States
 #==============================================================================
 
+# Idle
 func process_idle(dir):
-	dodged = false
-	dashed = false
+	if dodged: dodged = false
+	if dashed: dashed = false
+	if aerialed: aerialed = false
+
 	if dir.x != 0:
 		change_state(MOVE)
 	else:
@@ -143,6 +147,8 @@ func process_idle(dir):
 
 	apply_gravity()
 
+
+# Ground Move
 func process_move(dir):
 	sprite.play("run")
 	if dir.x == 0:
@@ -166,13 +172,15 @@ func process_move(dir):
 
 	apply_gravity()
 
+
+# Jump
 func process_jump(dir, delta):
-	sprite.play("air up")
 
-	if Input.is_action_pressed("jump") and is_on_floor():
+	if timer.is_stopped():
 		timer.start(JUMP_TIME)
-		velocity.y = -JUMP_SPEED
+		sprite.play("air up")
 
+	# Dash Modifier
 	if dir.x != 0:
 		var speed
 		if dashed:
@@ -184,31 +192,42 @@ func process_jump(dir, delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, 25*delta)
 
+	if Input.is_action_pressed("jump"):
+		velocity.y = -JUMP_SPEED
+
 	if Input.is_action_just_released("jump"):
 		timer.stop()
+		velocity.y /= 1.5
 		change_state(FALL)
-	
+
 	if Input.is_action_just_pressed("move_up") and on_ladder:
 		change_state(CLIMB)
-		
+
 	if Input.is_action_just_pressed("dodge") and not dodged:
 		change_state(DODGE)
 
+
+# Dash
 func process_dash():
 	sprite.play("dash")
 	dashed = true
+
 	velocity.x = DASH_SPEED * (1 + (-2 * int(sprite.flip_h)) )
+
 	if timer.is_stopped():
 		timer.start(DASH_TIME)
+
 	if Input.is_action_just_pressed("jump"):
 		timer.start(JUMP_TIME)
 		velocity.y = -JUMP_SPEED
 		change_state(JUMP)
+
 	if Input.is_action_just_released("dash"):
 		velocity = Vector2.ZERO
 		change_state(IDLE)
-	pass
 
+
+# Fall
 func process_fall(dir, delta):
 	if prev_state == IDLE or prev_state == MOVE or prev_state == DASH:
 		if timer.is_stopped():
@@ -236,11 +255,13 @@ func process_fall(dir, delta):
 	if is_on_floor():
 		change_state(IDLE)
 
+	if Input.is_action_just_pressed("jump") and Run.aerial != Global.AERIAL.NONE and not aerialed:
+		change_state(AERIAL)
+	else:
+		particles.emitting = false
+
 	if dir.y == -1 and on_ladder:
 			change_state(CLIMB)
-
-	if Input.is_action_just_pressed("jump") and Run.aerial != Global.AERIAL.NONE:
-		change_state(AERIAL)
 
 	if Input.is_action_just_pressed("dodge") and not dodged:
 		timer.stop()
@@ -248,6 +269,8 @@ func process_fall(dir, delta):
 
 	apply_gravity()
 
+
+# Dodge
 func process_dodge(dir):
 	sprite.play("dodge")
 	if timer.is_stopped():
@@ -257,16 +280,19 @@ func process_dodge(dir):
 		sprite.flip_h = dir.x < 0
 	if timer.time_left < 0.06:
 		velocity = Vector2.ZERO
-		
+
+
+# Climbing
 func process_climb(dir):
 	sprite.play("run")
+	if dir.x != 0: sprite.flip_h = dir.x < 0
 	velocity = dir * MOVE_SPEED
-	
+
 	if dir != Vector2.ZERO:
 		sprite.playing = true
 	else:
 		sprite.playing = false
-		
+
 	if Input.is_action_just_pressed("jump"):
 		timer.start(JUMP_TIME)
 		velocity.y = -JUMP_SPEED
@@ -276,33 +302,65 @@ func process_climb(dir):
 		sprite.playing = true
 		change_state(DODGE)
 
+
+# Hurt / Damage
 func process_hurt():
 	if prev_state != CLIMB:
 		velocity.x = -DASH_SPEED * (1 + (-2 * int(sprite.flip_h)))
 		velocity.y = 0
 	sprite.play("hurt")
+	particles.emitting = false
+	dashed = false
 	if hp < 1:
 		change_state(DOWN)
 		timer.stop()
 
+
+# Aerial / Secondary Movement
 func process_aerial(dir):
+
+	if !aerialed: aerialed = true
+
 	match Run.aerial:
+
+		# Aerial Dash
 		Global.AERIAL.AIR_DASH:
-			pass
+			if timer.is_stopped():
+				timer.start(DASH_TIME)
+				sprite.play("dash")
+				particles.emitting = true
+				velocity.x = DASH_SPEED * (1 + (-2 * int(sprite.flip_h)) )
+				velocity.y = 0
+			if timer.time_left < 0.02:
+				velocity.x /= 4
+
+
+		# Double Jump
 		Global.AERIAL.DOUBLE_JUMP:
-			pass
+			particles.emitting = true
+			change_state(JUMP)
+
+		# Skyhook
 		Global.AERIAL.HOOK:
 			pass
+
+		# Skyjet
 		Global.AERIAL.JET:
 			pass
 	pass
 
+
+# Attacks
 func process_attack():
 	pass
 
+
+# Build
 func process_build():
 	pass
-	
+
+
+# Downstate
 func process_death():
 	sprite.play("hurt")
 	if is_on_floor():
@@ -313,6 +371,7 @@ func process_death():
 		sprite.play("down")
 		timer.start(DOWN_TIME)
 	apply_gravity()
+
 
 #==============================================================================
 # Signals
