@@ -11,7 +11,7 @@ radius = 8.0
 length = 0.4
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("SpritePivot/Sprite:rotation_degrees")
+tracks/0/path = NodePath("Sprite:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -49,10 +49,7 @@ shape = ExtResource( 2 )
 
 [node name="Timer" type="Timer" parent="."]
 
-[node name="SpritePivot" type="Node2D" parent="."]
-rotation = -0.426297
-
-[node name="Sprite" type="Sprite" parent="SpritePivot"]
+[node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 3 )
 hframes = 5
 vframes = 5

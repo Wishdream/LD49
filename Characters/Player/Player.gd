@@ -389,10 +389,15 @@ func process_attack(facing):
 					hand_object.frame = 4
 					
 			is_attacking = true
+			var pos
 			if Run.weapon > 3:
+				pos = spawn_proj.global_position
 				hand_anim.play_backwards("swing")
 			else:
+				pos = spawn_mel.global_position
 				hand_anim.play("swing")
+				
+			attacks.shoot_attack(pos, facing, Run.weapon)
 
 
 # Build

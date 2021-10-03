@@ -9,7 +9,7 @@ var hp_rate = 1
 var disaster = 0
 var wind_dir = Vector2.ZERO
 
-var weapon = Global.WEAPON.DAGGER
+var weapon = Global.WEAPON.SHURIKEN
 var hammer = Global.HAMMER.BOOMER
 var aerial = Global.AERIAL.NONE
 

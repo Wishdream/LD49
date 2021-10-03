@@ -9,15 +9,27 @@ export(int, "Melee", "Projectile") var attack_type = 0
 export(Vector2) var velocity = Vector2.ZERO
 
 func set_bullet():
-	if damage_type == 0: # Attack
+	if damage_type == 0: # Attack from player
 		$Hitbox.set_collision_layer_bit(3,true)
+		$Hitbox.connect("body_entered", self, "_on_Hitbox_body_entered")
+		$Hitbox.set_collision_mask_bit(1, true)
+		$Hitbox.set_collision_mask_bit(2, true)
 	if damage_type == 1: # Build
 		$Hitbox.set_collision_layer_bit(4, true)
-	if damage_type == 2: # Damage
+		$Hitbox.connect("area_entered", self, "_on_Hitbox_area_entered")
+		$Hitbox.set_collision_mask_bit(1, true)
+	if damage_type == 2: # Damage to player
 		$Hitbox.set_collision_layer_bit(2, true)
-	if damage_type == 3: # Double
+		$Hitbox.connect("area_entered", self, "_on_Hitbox_area_entered")
+		$Hitbox.set_collision_mask_bit(0, true)
+		$Hitbox.set_collision_mask_bit(1, true)
+	if damage_type == 3: # Double - Build and attack
 		$Hitbox.set_collision_layer_bit(3, true)
 		$Hitbox.set_collision_layer_bit(4, true)
+		$Hitbox.connect("body_entered", self, "_on_Hitbox_body_entered")
+		$Hitbox.connect("area_entered", self, "_on_Hitbox_area_entered")
+		$Hitbox.set_collision_mask_bit(1, true)
+		$Hitbox.set_collision_mask_bit(2, true)
 	if attack_type == 1:
 		$Hitbox.monitoring = true
 	$Timer.start(damage_time)
@@ -30,8 +42,10 @@ func _physics_process(delta):
 		position += velocity * delta
 
 func _on_Timer_timeout():
-	queue_free()
+	call_deferred("queue_free")
 
 func _on_Hitbox_area_entered(area):
-	if attack_type == 1:
-		call_deferred("queue_free")
+	call_deferred("queue_free")
+
+func _on_Hitbox_body_entered(body):
+	call_deferred("queue_free")

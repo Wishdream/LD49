@@ -1,8 +1,15 @@
 extends Node
 
-var shot_dir = Vector2.ZERO
+var weapon_dagger = load("res://Characters/Player/Attacks/Weapons/Dagger.tscn")
+var weapon_sword = load("res://Characters/Player/Attacks/Weapons/Sword.tscn")
+var weapon_spear = load("res://Characters/Player/Attacks/Weapons/Spear.tscn")
+var weapon_hammer = load("res://Characters/Player/Attacks/Weapons/Hammer.tscn")
+var weapon_pistol = load("res://Characters/Player/Attacks/Weapons/Pistol.tscn")
+var weapon_shuri = load("res://Characters/Player/Attacks/Weapons/Shuriken.tscn")
+
 var build_normal = load("res://Characters/Player/Attacks/Builders/Normal.tscn")
 var build_boomer = load("res://Characters/Player/Attacks/Builders/Boomer.tscn")
+var build_spike = load("res://Characters/Player/Attacks/Builders/Spike.tscn")
 var build_better = load("res://Characters/Player/Attacks/Builders/Better.tscn")
 var build_area = load("res://Characters/Player/Attacks/Builders/Area.tscn")
 
@@ -10,19 +17,22 @@ func shoot_attack(pos, dir, type):
 	var shot
 	match type:
 		Global.WEAPON.DAGGER:
-			pass
+			shot = weapon_dagger.instance()
 		Global.WEAPON.SWORD:
-			pass
+			shot = weapon_sword.instance()
 		Global.WEAPON.SPEAR:
-			pass
+			shot = weapon_spear.instance()
 		Global.WEAPON.HAMMER:
-			pass
+			shot = weapon_hammer.instance()
 		Global.WEAPON.PISTOL:
-			pass
+			shot = weapon_pistol.instance()
 		Global.WEAPON.SHURIKEN:
-			pass
-	spawn_bullet(pos, dir, shot)
-	pass
+			shot = weapon_shuri.instance()
+	
+	shot.scale.x = dir
+	shot.velocity *= dir
+	
+	spawn_bullet(pos, shot)
 	
 func shoot_build(pos, dir, type):
 	var shot
@@ -32,13 +42,15 @@ func shoot_build(pos, dir, type):
 		Global.HAMMER.BOOMER:
 			shot = build_boomer.instance()
 			shot.source = get_parent()
-			shot.get_node("SpritePivot").scale.x = dir
 		Global.HAMMER.SPIKE:
-			pass
+			shot = build_spike.instance()
 		Global.HAMMER.BETTER:
 			shot = build_better.instance()
 		Global.HAMMER.AREA:
 			shot = build_area.instance()
+	
+	# Flip to facing
+	shot.scale.x = dir
 	
 	# Shot movement
 	if type != Global.HAMMER.BOOMER:
@@ -51,8 +63,8 @@ func shoot_build(pos, dir, type):
 		else:
 			shot.velocity *= dir
 			
-	spawn_bullet(pos, dir, shot)
+	spawn_bullet(pos, shot)
 
-func spawn_bullet(pos, dir, shot):
+func spawn_bullet(pos, shot):
 	get_tree().get_current_scene().add_child(shot)
 	shot.position = pos
