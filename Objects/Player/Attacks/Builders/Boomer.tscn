@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Objects/Player/Attacks/Builders/Boomer.gd" type="Script" id=1]
+[ext_resource path="res://Objects/Player/Items/items.png" type="Texture" id=2]
+[ext_resource path="res://Objects/Player/Attacks/Builders/regular_build_hitbox.tres" type="Shape2D" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 8.0
+
+[sub_resource type="Animation" id=2]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
+[node name="Boomer" type="Node2D"]
+script = ExtResource( 1 )
+build_value = 1
+damage_time = 1.0
+damage_type = 1
+attack_type = 1
+velocity = Vector2( 150, 0 )
+
+[node name="Scanbox" type="Area2D" parent="."]
+input_pickable = false
+monitorable = false
+collision_layer = 0
+collision_mask = 2
+
+[node name="Scan" type="CollisionShape2D" parent="Scanbox"]
+shape = SubResource( 1 )
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Hitbox"]
+shape = ExtResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+hframes = 5
+vframes = 5
+frame = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "spin"
+anims/spin = SubResource( 2 )
+
+[connection signal="area_entered" from="Scanbox" to="." method="_on_Scanbox_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

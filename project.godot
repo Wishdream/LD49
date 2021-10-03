@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Attack",
 "language": "GDScript",
-"path": "res://Characters/Player/Attacks/attack_base.gd"
+"path": "res://Objects/Player/Attacks/attack_base.gd"
 }, {
 "base": "Node2D",
 "class": "Block",
