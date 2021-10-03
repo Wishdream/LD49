@@ -18,14 +18,8 @@ __meta__ = {
 }
 
 [node name="Health" type="TextureProgress" parent="."]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -33.0
-margin_top = -13.0
-margin_right = 33.0
-margin_bottom = -2.0
+margin_right = 180.0
+margin_bottom = 120.0
 max_value = 10.0
 value = 1.0
 texture_under = ExtResource( 2 )
@@ -35,12 +29,8 @@ __meta__ = {
 }
 
 [node name="Scrap" type="TextureRect" parent="."]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 2.0
-margin_top = -13.0
-margin_right = 15.0
-margin_bottom = -2.0
+margin_right = 180.0
+margin_bottom = 120.0
 texture = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -57,38 +47,22 @@ __meta__ = {
 }
 
 [node name="Sword" parent="." instance=ExtResource( 3 )]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -26.0
-margin_top = -14.0
-margin_right = -2.0
-margin_bottom = 10.0
-rect_scale = Vector2( 0.5, 0.5 )
+margin_left = 0.0
+margin_right = 180.0
+margin_bottom = 120.0
 
 [node name="Hammer" parent="." instance=ExtResource( 3 )]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -14.0
-margin_top = -14.0
-margin_right = 10.0
-margin_bottom = 10.0
-rect_scale = Vector2( 0.5, 0.5 )
+margin_left = 0.0
+margin_right = 180.0
+margin_bottom = 120.0
 index = 5
 
 [node name="Sprite" parent="Hammer" index="0"]
 frame = 5
 
 [node name="ItemContainer" type="HBoxContainer" parent="."]
-anchor_right = 1.0
-margin_left = 2.0
-margin_top = 2.0
-margin_right = 174.0
-margin_bottom = 26.0
-rect_scale = Vector2( 0.5, 0.5 )
+margin_right = 180.0
+margin_bottom = 120.0
 alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
