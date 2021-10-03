@@ -12,12 +12,17 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Attack",
 "language": "GDScript",
-"path": "res://Objects/Player/Attacks/attack_base.gd"
+"path": "res://Objects/attack_base.gd"
 }, {
 "base": "Node2D",
 "class": "Block",
 "language": "GDScript",
 "path": "res://Objects/Tiles/base.gd"
+}, {
+"base": "EntityObject",
+"class": "EnemyObject",
+"language": "GDScript",
+"path": "res://Objects/Enemies/Enemy.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "EntityObject",
@@ -27,6 +32,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Attack": "",
 "Block": "",
+"EnemyObject": "",
 "EntityObject": ""
 }
 
@@ -129,10 +135,11 @@ pause={
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Level"
 2d_physics/layer_3="Enemy"
-2d_physics/layer_4="Attack"
-2d_physics/layer_5="Build"
-2d_physics/layer_6="Item"
-2d_physics/layer_7="Friend"
+2d_physics/layer_4="Player Attack"
+2d_physics/layer_5="Player Build"
+2d_physics/layer_6="Enemy Attack"
+2d_physics/layer_7="Item"
+2d_physics/layer_8="Friend"
 
 [physics]
 
