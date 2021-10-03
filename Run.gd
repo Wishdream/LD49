@@ -10,8 +10,8 @@ var disaster = 0
 var wind_dir = Vector2.ZERO
 
 var weapon = Global.WEAPON.DAGGER
-var hammer = Global.HAMMMER.NORMAL
-var aerial = Global.AERIAL.DOUBLE_JUMP
+var hammer = Global.HAMMER.BOOMER
+var aerial = Global.AERIAL.NONE
 
 var weapon_dura = 0
 var hammer_dura = 0
@@ -27,7 +27,7 @@ func reset_run():
 	disaster = 0
 	wind_dir = Vector2.ZERO
 	weapon = Global.WEAPON.DAGGER
-	hammer = Global.HAMMMER.NORMAL
+	hammer = Global.HAMMER.NORMAL
 	aerial = Global.AERIAL.NONE
 	weapon_dura = 0
 	hammer_dura = 0
