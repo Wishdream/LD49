@@ -36,19 +36,30 @@ var dodged = false
 var aerialed = false
 var climbing = false
 var on_ladder = false
+var is_attacking = false
+var is_building = false
 var velocity = Vector2.ZERO
 var prev_state = null
 var state = FALL
 
 onready var sprite = get_node("Sprite")
-onready var timer = get_node("Timer")
+onready var move_timer = get_node("MoveTimer")
+onready var inv_timer = get_node("InvTimer")
+onready var swing_timer = get_node("SwingTimer")
 onready var particles = get_node("Particles")
 onready var anim_player = get_node("AnimationPlayer")
 onready var ladderbox = get_node("Ladderbox")
+onready var hand_pivot = get_node("HandPivot")
+onready var hand_object = get_node("HandPivot/Hand")
+onready var hand_anim = get_node("HandPivot/Hand/AnimationPlayer")
 
 #==============================================================================
 # Functions
 #==============================================================================
+
+func _ready():
+	hand_anim.connect("animation_finished", self, "_on_AnimationPlayer_animation_finished")
+	hand_anim.play("idle")
 
 func _physics_process(delta):
 
@@ -92,15 +103,16 @@ func change_state(new_state):
 	prev_state = state
 	state = new_state
 
-func set_damage(value):
+func take_damage(value):
 	hp -= value
 	dashed = false
 	if (value > 0):
-		timer.start(HURT_TIME)
+		move_timer.start(HURT_TIME)
 		change_state(HURT)
 
 func process_movement(_delta):
 	if not aerialed: particles.emitting = dashed
+	hand_pivot.scale.x = 1 + (-2 * int(sprite.flip_h))
 	velocity = move_and_slide(velocity, Vector2.UP)
 	pass
 
@@ -176,8 +188,8 @@ func process_move(delta, dir):
 # Jump
 func process_jump(delta, dir):
 
-	if timer.is_stopped():
-		timer.start(JUMP_TIME)
+	if move_timer.is_stopped():
+		move_timer.start(JUMP_TIME)
 		sprite.play("air up")
 
 	# Dash Modifier
@@ -196,7 +208,7 @@ func process_jump(delta, dir):
 		velocity.y = -JUMP_SPEED
 
 	if Input.is_action_just_released("jump"):
-		timer.stop()
+		move_timer.stop()
 		velocity.y /= 1.5
 		change_state(FALL)
 
@@ -214,11 +226,11 @@ func process_dash(_delta):
 
 	velocity.x = DASH_SPEED * (1 + (-2 * int(sprite.flip_h)) )
 
-	if timer.is_stopped():
-		timer.start(DASH_TIME)
+	if move_timer.is_stopped():
+		move_timer.start(DASH_TIME)
 
 	if Input.is_action_just_pressed("jump"):
-		timer.start(JUMP_TIME)
+		move_timer.start(JUMP_TIME)
 		velocity.y = -JUMP_SPEED
 		change_state(JUMP)
 
@@ -230,13 +242,13 @@ func process_dash(_delta):
 # Fall
 func process_fall(delta, dir):
 	if prev_state == IDLE or prev_state == MOVE or prev_state == DASH:
-		if timer.is_stopped():
-			timer.start(COYOTE_TIME)
+		if move_timer.is_stopped():
+			move_timer.start(COYOTE_TIME)
 		if Input.is_action_just_pressed("jump"):
-			timer.start(JUMP_TIME)
+			move_timer.start(JUMP_TIME)
 			velocity.y = -JUMP_SPEED
 			change_state(JUMP)
-			timer.stop()
+			move_timer.stop()
 
 	if dir.x != 0:
 		var speed
@@ -264,7 +276,7 @@ func process_fall(delta, dir):
 			change_state(CLIMB)
 
 	if Input.is_action_just_pressed("dodge") and not dodged:
-		timer.stop()
+		move_timer.stop()
 		change_state(DODGE)
 
 	apply_gravity(delta)
@@ -273,12 +285,12 @@ func process_fall(delta, dir):
 # Dodge
 func process_dodge(_delta, dir):
 	sprite.play("dodge")
-	if timer.is_stopped():
-		timer.start(DODGE_TIME)
+	if move_timer.is_stopped():
+		move_timer.start(DODGE_TIME)
 		dodged = true
 		velocity = dir * DODGE_SPEED
 		sprite.flip_h = dir.x < 0
-	if timer.time_left < 0.06:
+	if move_timer.time_left < 0.06:
 		velocity = Vector2.ZERO
 
 
@@ -294,7 +306,7 @@ func process_climb(_delta, dir):
 		sprite.playing = false
 
 	if Input.is_action_just_pressed("jump"):
-		timer.start(JUMP_TIME)
+		move_timer.start(JUMP_TIME)
 		velocity.y = -JUMP_SPEED
 		sprite.playing = true
 		change_state(JUMP)
@@ -313,7 +325,7 @@ func process_hurt(_delta):
 	dashed = false
 	if hp < 1:
 		change_state(DOWN)
-		timer.stop()
+		move_timer.stop()
 
 
 # Aerial / Secondary Movement
@@ -325,13 +337,13 @@ func process_aerial(_delta, dir):
 
 		# Aerial Dash
 		Global.AERIAL.AIR_DASH:
-			if timer.is_stopped():
-				timer.start(DASH_TIME)
+			if move_timer.is_stopped():
+				move_timer.start(DASH_TIME)
 				sprite.play("dash")
 				particles.emitting = true
 				velocity.x = DASH_SPEED * (1 + (-2 * int(sprite.flip_h)) )
 				velocity.y = 0
-			if timer.time_left < 0.02:
+			if move_timer.time_left < 0.02:
 				velocity.x /= 4
 
 
@@ -347,21 +359,71 @@ func process_aerial(_delta, dir):
 		# Skyjet
 		Global.AERIAL.JET:
 			pass
-	pass
 
 
 # Attacks
 func process_attack():
-	pass
+	if state != HURT or state != DOWN:
+		if Input.is_action_just_pressed("attack") and swing_timer.time_left < 0.1:
+			
+			# Graphic and stat changes
+			match Run.weapon:
+				Global.WEAPON.DAGGER:
+					hand_object.frame = 22
+					pass
+				Global.WEAPON.SWORD:
+					hand_object.frame = 0
+					pass
+				Global.WEAPON.SPEAR:
+					hand_object.frame = 1
+					pass
+				Global.WEAPON.HAMMER:
+					hand_object.frame = 2
+					pass
+				Global.WEAPON.PISTOL:
+					hand_object.frame = 3
+					pass
+				Global.WEAPON.SHURIKEN:
+					hand_object.frame = 4
+					pass
+					
+			is_attacking = true
+			if Run.weapon > 3:
+				hand_anim.play_backwards("swing")
+			else:
+				hand_anim.play("swing")
 
 
 # Build
 func process_build():
-	pass
+	if state != HURT or state != DOWN:
+		if Input.is_action_just_pressed("build") and swing_timer.time_left < 0.1:
+			
+			# Graphic and stat changes
+			match Run.hammer:
+				Global.HAMMMER.NORMAL:
+					hand_object.frame = 5
+					pass
+				Global.HAMMMER.BOOMER:
+					hand_object.frame = 0
+					pass
+				Global.WEAPON.SPIKE:
+					hand_object.frame = 1
+					pass
+				Global.WEAPON.BETTER:
+					hand_object.frame = 2
+					pass
+				Global.WEAPON.AREA:
+					hand_object.frame = 3
+					pass
+			
+			is_attacking = true
+			hand_anim.play("swing")
 
 
 # Downstate
 func process_death(_delta):
+	hand_object.visible = false
 	sprite.play("hurt")
 	if is_on_floor():
 		if abs(velocity.x) > 1:
@@ -369,7 +431,7 @@ func process_death(_delta):
 		else:
 			velocity.x = 0
 		sprite.play("down")
-		timer.start(DOWN_TIME)
+		move_timer.start(DOWN_TIME)
 	apply_gravity(_delta)
 
 
@@ -377,7 +439,7 @@ func process_death(_delta):
 # Signals
 #==============================================================================
 
-func _on_Timer_timeout():
+func _on_MoveTimer_timeout():
 	if state == HURT:
 		velocity = Vector2.ZERO
 	if state == DOWN:
@@ -386,7 +448,10 @@ func _on_Timer_timeout():
 
 
 func _on_Hitbox_area_entered(_area):
-	set_damage(5)
+	if (_area.get("damage_value") == null):
+		take_damage(5)
+	else:
+		take_damage(_area.damage_value)
 
 
 func _on_Ladderbox_area_entered(_area):
@@ -398,3 +463,10 @@ func _on_Ladderbox_area_exited(_area):
 		if state == CLIMB: change_state(FALL)
 		on_ladder = false
 		sprite.playing = true
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == "swing":
+		is_attacking = false
+		hand_anim.play("idle")
+

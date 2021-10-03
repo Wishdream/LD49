@@ -17,6 +17,7 @@ var weapon_dura = 0
 var hammer_dura = 0
 
 var scrap = 0
+var items = {}
 
 func reset_run():
 	scrap_rate = 1
@@ -31,11 +32,12 @@ func reset_run():
 	weapon_dura = 0
 	hammer_dura = 0
 	scrap = 0
+	items = {}
 
-func add_aura(item):
+func add_aura(_item):
 	pass
 
-func remove_aura(item):
+func remove_aura(_item):
 	pass
 	
 func calculate_aura():

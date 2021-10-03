@@ -18,4 +18,4 @@ resource_local_to_scene = true
 resource_name = "Flash Material"
 shader = SubResource( 1 )
 shader_param/flash_color = Color( 1, 1, 1, 1 )
-shader_param/flash_modifier = 0.0
+shader_param/flash_modifier = 1.0

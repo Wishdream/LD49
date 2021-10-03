@@ -34,11 +34,11 @@ tracks/0/keys = {
 }
 
 [node name="Sprite" type="Sprite"]
-rotation = -1.5708
 texture = ExtResource( 1 )
 offset = Vector2( 5, -5 )
 hframes = 5
 vframes = 5
+frame = 22
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 1 )
