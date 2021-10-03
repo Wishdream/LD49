@@ -9,9 +9,9 @@ var hp_rate = 1
 var disaster = 0
 var wind_dir = Vector2.ZERO
 
-var weapon = 0
-var hammer = 0
-var aerial = 0
+var weapon = Global.WEAPON.DAGGER
+var hammer = Global.HAMMMER.NORMAL
+var aerial = Global.AERIAL.DOUBLE_JUMP
 
 var weapon_dura = 0
 var hammer_dura = 0
@@ -25,9 +25,9 @@ func reset_run():
 	spawn_rate = 1
 	disaster = 0
 	wind_dir = Vector2.ZERO
-	weapon = 0
-	hammer = 0
-	aerial = 0
+	weapon = Global.WEAPON.DAGGER
+	hammer = Global.HAMMMER.NORMAL
+	aerial = Global.AERIAL.NONE
 	weapon_dura = 0
 	hammer_dura = 0
 	scrap = 0
