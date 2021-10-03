@@ -5,6 +5,7 @@ signal start_fall
 var sprite_anim
 var sprite_max
 var timer
+var time_signal
 var safe_hp = 5
 
 func _ready():
@@ -16,12 +17,14 @@ func _ready():
 func _on_DecayTimer_timeout():
 	if safe_hp > 0:
 		safe_hp = safe_hp - 1
-	elif sprite_anim.frame < sprite_max-1:
+	elif sprite_anim.frame < sprite_max-2:
 		sprite_anim.frame = sprite_anim.frame + 1
 		emit_signal("start_fall")
 	else:
+		sprite_anim.frame = sprite_anim.frame + 1
 		$Collider/CollisionShape.disabled = true
-		timer.disconnect("timeout", self, "_onDecayTimer_timeout")
+		if time_signal:
+			timer.disconnect("timeout", self, "_onDecayTimer_timeout")
 
 func _on_Hitbox_area_entered(area):
 	sprite_anim.frame = sprite_anim.frame - 1
