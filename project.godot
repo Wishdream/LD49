@@ -20,7 +20,7 @@ _global_script_classes=[ {
 "path": "res://Objects/Tiles/base.gd"
 }, {
 "base": "EntityObject",
-"class": "EnemyObject",
+"class": "Enemy",
 "language": "GDScript",
 "path": "res://Objects/Enemies/Enemy.gd"
 }, {
@@ -32,7 +32,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Attack": "",
 "Block": "",
-"EnemyObject": "",
+"Enemy": "",
 "EntityObject": ""
 }
 

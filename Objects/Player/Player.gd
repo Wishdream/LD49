@@ -101,10 +101,6 @@ func _physics_process(delta):
 	process_build(facing)
 	process_movement(delta, facing)
 
-func change_state(new_state):
-	prev_state = state
-	state = new_state
-
 func take_damage(value):
 	hp -= value
 	dashed = false
@@ -112,7 +108,7 @@ func take_damage(value):
 		move_timer.start(HURT_TIME)
 		change_state(HURT)
 
-func process_movement(_delta, facing):
+func process_movement(_delta, _facing = 1):
 	if not aerialed: particles.emitting = dashed
 	hand_pivot.scale.x = facing
 	velocity = move_and_slide(velocity, Vector2.UP)
