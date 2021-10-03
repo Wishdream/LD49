@@ -11,7 +11,8 @@ func _ready():
 	parent = get_parent()
 	timer = get_node("Timer")
 
-func _physics_process(delta):
+
+func _physics_process(_delta):
 	if parent.sprite_anim.frame == parent.sprite_max:
 		move_and_slide(vel * 1.5)
 	elif timer.is_stopped(): 
@@ -22,13 +23,9 @@ func _on_Platform_start_fall():
 	vel = Vector2(0, 10 * Run.decay_rate)
 	
 
-func _on_Hitbox_area_entered(area):
+
+func _on_Hitbox_area_entered(_area):
 	repair_platform()
-
-
-func _process(delta):
-	if Input.is_action_just_pressed("jump"):
-		repair_platform()
 
 
 func repair_platform():
