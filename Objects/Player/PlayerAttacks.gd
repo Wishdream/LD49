@@ -1,17 +1,17 @@
 extends Node
 
-var weapon_dagger = load("res://Characters/Player/Attacks/Weapons/Dagger.tscn")
-var weapon_sword = load("res://Characters/Player/Attacks/Weapons/Sword.tscn")
-var weapon_spear = load("res://Characters/Player/Attacks/Weapons/Spear.tscn")
-var weapon_hammer = load("res://Characters/Player/Attacks/Weapons/Hammer.tscn")
-var weapon_pistol = load("res://Characters/Player/Attacks/Weapons/Pistol.tscn")
-var weapon_shuri = load("res://Characters/Player/Attacks/Weapons/Shuriken.tscn")
+var weapon_dagger = load("res://Objects/Player/Attacks/Weapons/Dagger.tscn")
+var weapon_sword = load("res://Objects/Player/Attacks/Weapons/Sword.tscn")
+var weapon_spear = load("res://Objects/Player/Attacks/Weapons/Spear.tscn")
+var weapon_hammer = load("res://Objects/Player/Attacks/Weapons/Hammer.tscn")
+var weapon_pistol = load("res://Objects/Player/Attacks/Weapons/Pistol.tscn")
+var weapon_shuri = load("res://Objects/Player/Attacks/Weapons/Shuriken.tscn")
 
-var build_normal = load("res://Characters/Player/Attacks/Builders/Normal.tscn")
-var build_boomer = load("res://Characters/Player/Attacks/Builders/Boomer.tscn")
-var build_spike = load("res://Characters/Player/Attacks/Builders/Spike.tscn")
-var build_better = load("res://Characters/Player/Attacks/Builders/Better.tscn")
-var build_area = load("res://Characters/Player/Attacks/Builders/Area.tscn")
+var build_normal = load("res://Objects/Player/Attacks/Builders/Normal.tscn")
+var build_boomer = load("res://Objects/Player/Attacks/Builders/Boomer.tscn")
+var build_spike = load("res://Objects/Player/Attacks/Builders/Spike.tscn")
+var build_better = load("res://Objects/Player/Attacks/Builders/Better.tscn")
+var build_area = load("res://Objects/Player/Attacks/Builders/Area.tscn")
 
 func shoot_attack(pos, dir, type):
 	var shot

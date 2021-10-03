@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/UI/HUDItem.gd" type="Script" id=1]
-[ext_resource path="res://Characters/Player/Items/ItemSprite.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Objects/Player/Items/ItemSprite.tscn" type="PackedScene" id=2]
+
 
 [node name="Item" type="Control"]
 margin_left = 328.0

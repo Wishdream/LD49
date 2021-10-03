@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "Block",
 "language": "GDScript",
 "path": "res://Objects/Tiles/base.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "EntityObject",
+"language": "GDScript",
+"path": "res://Objects/EntityObject.gd"
 } ]
 _global_script_class_icons={
 "Attack": "",
-"Block": ""
+"Block": "",
+"EntityObject": ""
 }
 
 [application]

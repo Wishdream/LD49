@@ -1,12 +1,12 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Characters/Player/pal-spriteframes.tres" type="SpriteFrames" id=1]
-[ext_resource path="res://Characters/Player/Player.gd" type="Script" id=2]
-[ext_resource path="res://Characters/flash_material.tres" type="Material" id=3]
-[ext_resource path="res://Characters/Player/player_hitbox.tres" type="Shape2D" id=4]
-[ext_resource path="res://Characters/Player/player_colbox.tres" type="Shape2D" id=5]
-[ext_resource path="res://Characters/Player/Items/HeldSprite.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Characters/Player/PlayerAttacks.gd" type="Script" id=7]
+[ext_resource path="res://Objects/Player/pal-spriteframes.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://Objects/Player/Player.gd" type="Script" id=2]
+[ext_resource path="res://Objects/flash_material.tres" type="Material" id=3]
+[ext_resource path="res://Objects/Player/player_hitbox.tres" type="Shape2D" id=4]
+[ext_resource path="res://Objects/Player/player_colbox.tres" type="Shape2D" id=5]
+[ext_resource path="res://Objects/Player/Items/HeldSprite.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Objects/Player/PlayerAttacks.gd" type="Script" id=7]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Flash"
@@ -29,6 +29,7 @@ material = ExtResource( 3 )
 z_index = 1
 collision_mask = 2
 script = ExtResource( 2 )
+MOVE_SPEED = 120
 
 [node name="Attacks" type="Node" parent="."]
 script = ExtResource( 7 )
