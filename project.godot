@@ -24,6 +24,11 @@ Run="*res://Run.gd"
 window/size/width=720
 window/size/height=480
 
+[gui]
+
+theme/custom="res://Scenes/UI/theme.tres"
+theme/custom_font="res://Scenes/UI/font-dogicapixel.tres"
+
 [input]
 
 move_left={
