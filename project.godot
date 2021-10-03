@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "Attack",
 "language": "GDScript",
 "path": "res://Characters/Player/Attacks/attack_base.gd"
+}, {
+"base": "Node2D",
+"class": "Block",
+"language": "GDScript",
+"path": "res://Objects/Tiles/base.gd"
 } ]
 _global_script_class_icons={
-"Attack": ""
+"Attack": "",
+"Block": ""
 }
 
 [application]
@@ -33,6 +39,11 @@ Run="*res://Run.gd"
 
 window/size/width=720
 window/size/height=480
+
+[gui]
+
+theme/custom="res://Scenes/UI/theme.tres"
+theme/custom_font="res://Scenes/UI/font-dogicapixel.tres"
 
 [input]
 
