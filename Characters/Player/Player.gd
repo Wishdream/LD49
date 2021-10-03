@@ -64,25 +64,25 @@ func _physics_process(delta):
 
 	match state:
 		IDLE:
-			process_idle(dir)
+			process_idle(delta, dir)
 		MOVE:
-			process_move(dir)
+			process_move(delta, dir)
 		DASH:
-			process_dash()
+			process_dash(delta)
 		JUMP:
-			process_jump(dir, delta)
+			process_jump(delta, dir)
 		FALL:
-			process_fall(dir, delta)
+			process_fall(delta, dir)
 		DODGE:
-			process_dodge(dir)
+			process_dodge(delta, dir)
 		CLIMB:
-			process_climb(dir)
+			process_climb(delta, dir)
 		HURT:
-			process_hurt()
+			process_hurt(delta)
 		AERIAL:
-			process_aerial(dir)
+			process_aerial(delta, dir)
 		DOWN:
-			process_death()
+			process_death(delta)
 
 	process_attack()
 	process_build()
@@ -104,8 +104,8 @@ func process_movement(_delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 	pass
 
-func apply_gravity():
-	velocity += Vector2(0,Global.GRAVITY)
+func apply_gravity(_delta):
+	velocity += Vector2(0,Global.GRAVITY) * _delta
 	var fspeed
 	if dashed:
 		fspeed = DFALL_SPEED
@@ -119,7 +119,7 @@ func apply_gravity():
 #==============================================================================
 
 # Idle
-func process_idle(dir):
+func process_idle(delta, dir):
 	if dodged: dodged = false
 	if dashed: dashed = false
 	if aerialed: aerialed = false
@@ -145,11 +145,11 @@ func process_idle(dir):
 	if not is_on_floor():
 		change_state(FALL)
 
-	apply_gravity()
+	apply_gravity(delta)
 
 
 # Ground Move
-func process_move(dir):
+func process_move(delta, dir):
 	sprite.play("run")
 	if dir.x == 0:
 		change_state(IDLE)
@@ -170,11 +170,11 @@ func process_move(dir):
 	if not is_on_floor():
 		change_state(FALL)
 
-	apply_gravity()
+	apply_gravity(delta)
 
 
 # Jump
-func process_jump(dir, delta):
+func process_jump(delta, dir):
 
 	if timer.is_stopped():
 		timer.start(JUMP_TIME)
@@ -208,7 +208,7 @@ func process_jump(dir, delta):
 
 
 # Dash
-func process_dash():
+func process_dash(_delta):
 	sprite.play("dash")
 	dashed = true
 
@@ -228,7 +228,7 @@ func process_dash():
 
 
 # Fall
-func process_fall(dir, delta):
+func process_fall(delta, dir):
 	if prev_state == IDLE or prev_state == MOVE or prev_state == DASH:
 		if timer.is_stopped():
 			timer.start(COYOTE_TIME)
@@ -267,11 +267,11 @@ func process_fall(dir, delta):
 		timer.stop()
 		change_state(DODGE)
 
-	apply_gravity()
+	apply_gravity(delta)
 
 
 # Dodge
-func process_dodge(dir):
+func process_dodge(_delta, dir):
 	sprite.play("dodge")
 	if timer.is_stopped():
 		timer.start(DODGE_TIME)
@@ -283,7 +283,7 @@ func process_dodge(dir):
 
 
 # Climbing
-func process_climb(dir):
+func process_climb(_delta, dir):
 	sprite.play("climb")
 	if dir.x != 0: sprite.flip_h = dir.x < 0
 	velocity = dir * MOVE_SPEED
@@ -304,7 +304,7 @@ func process_climb(dir):
 
 
 # Hurt / Damage
-func process_hurt():
+func process_hurt(_delta):
 	if prev_state != CLIMB:
 		velocity.x = -DASH_SPEED * (1 + (-2 * int(sprite.flip_h)))
 		velocity.y = 0
@@ -317,7 +317,7 @@ func process_hurt():
 
 
 # Aerial / Secondary Movement
-func process_aerial(dir):
+func process_aerial(_delta, dir):
 
 	if !aerialed: aerialed = true
 
@@ -361,7 +361,7 @@ func process_build():
 
 
 # Downstate
-func process_death():
+func process_death(_delta):
 	sprite.play("hurt")
 	if is_on_floor():
 		if abs(velocity.x) > 1:
@@ -370,7 +370,7 @@ func process_death():
 			velocity.x = 0
 		sprite.play("down")
 		timer.start(DOWN_TIME)
-	apply_gravity()
+	apply_gravity(_delta)
 
 
 #==============================================================================
