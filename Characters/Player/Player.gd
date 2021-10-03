@@ -284,7 +284,7 @@ func process_dodge(dir):
 
 # Climbing
 func process_climb(dir):
-	sprite.play("run")
+	sprite.play("climb")
 	if dir.x != 0: sprite.flip_h = dir.x < 0
 	velocity = dir * MOVE_SPEED
 
