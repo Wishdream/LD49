@@ -31,6 +31,7 @@ enum {
 
 var hpmax = 100
 var hp = hpmax
+var dir = Vector2.ZERO
 var dashed = false
 var dodged = false
 var aerialed = false
@@ -38,6 +39,7 @@ var climbing = false
 var on_ladder = false
 var is_attacking = false
 var is_building = false
+var boom_throw = false
 var velocity = Vector2.ZERO
 var prev_state = null
 var state = FALL
@@ -52,6 +54,9 @@ onready var ladderbox = get_node("Ladderbox")
 onready var hand_pivot = get_node("HandPivot")
 onready var hand_object = get_node("HandPivot/Hand")
 onready var hand_anim = get_node("HandPivot/Hand/AnimationPlayer")
+onready var attacks = get_node("Attacks")
+onready var spawn_mel = get_node("HandPivot/MelSpawn")
+onready var spawn_proj = get_node("HandPivot/ProjSpawn")
 
 #==============================================================================
 # Functions
@@ -63,7 +68,7 @@ func _ready():
 
 func _physics_process(delta):
 
-	var dir = Vector2.ZERO
+	dir = Vector2.ZERO
 	if Input.is_action_pressed("move_left"):
 		dir.x -= 1
 	if Input.is_action_pressed("move_right"):
@@ -72,6 +77,8 @@ func _physics_process(delta):
 		dir.y -= 1
 	if Input.is_action_pressed("move_down"):
 		dir.y += 1
+	
+	var facing = 1 + (-2 * int(sprite.flip_h))
 
 	match state:
 		IDLE:
@@ -79,7 +86,7 @@ func _physics_process(delta):
 		MOVE:
 			process_move(delta, dir)
 		DASH:
-			process_dash(delta)
+			process_dash(delta, facing)
 		JUMP:
 			process_jump(delta, dir)
 		FALL:
@@ -89,15 +96,15 @@ func _physics_process(delta):
 		CLIMB:
 			process_climb(delta, dir)
 		HURT:
-			process_hurt(delta)
+			process_hurt(delta, facing)
 		AERIAL:
-			process_aerial(delta, dir)
+			process_aerial(delta, dir, facing)
 		DOWN:
 			process_death(delta)
 
-	process_attack()
-	process_build()
-	process_movement(delta)
+	process_attack(facing)
+	process_build(facing)
+	process_movement(delta, facing)
 
 func change_state(new_state):
 	prev_state = state
@@ -110,9 +117,9 @@ func take_damage(value):
 		move_timer.start(HURT_TIME)
 		change_state(HURT)
 
-func process_movement(_delta):
+func process_movement(_delta, facing):
 	if not aerialed: particles.emitting = dashed
-	hand_pivot.scale.x = 1 + (-2 * int(sprite.flip_h))
+	hand_pivot.scale.x = facing
 	velocity = move_and_slide(velocity, Vector2.UP)
 	pass
 
@@ -220,11 +227,11 @@ func process_jump(delta, dir):
 
 
 # Dash
-func process_dash(_delta):
+func process_dash(_delta, facing):
 	sprite.play("dash")
 	dashed = true
 
-	velocity.x = DASH_SPEED * (1 + (-2 * int(sprite.flip_h)) )
+	velocity.x = DASH_SPEED * facing
 
 	if move_timer.is_stopped():
 		move_timer.start(DASH_TIME)
@@ -316,9 +323,9 @@ func process_climb(_delta, dir):
 
 
 # Hurt / Damage
-func process_hurt(_delta):
+func process_hurt(_delta, facing):
 	if prev_state != CLIMB:
-		velocity.x = -DASH_SPEED * (1 + (-2 * int(sprite.flip_h)))
+		velocity.x = -DASH_SPEED * facing
 		velocity.y = 0
 	sprite.play("hurt")
 	particles.emitting = false
@@ -329,7 +336,7 @@ func process_hurt(_delta):
 
 
 # Aerial / Secondary Movement
-func process_aerial(_delta, dir):
+func process_aerial(_delta, dir, facing):
 
 	if !aerialed: aerialed = true
 
@@ -341,7 +348,7 @@ func process_aerial(_delta, dir):
 				move_timer.start(DASH_TIME)
 				sprite.play("dash")
 				particles.emitting = true
-				velocity.x = DASH_SPEED * (1 + (-2 * int(sprite.flip_h)) )
+				velocity.x = DASH_SPEED * facing
 				velocity.y = 0
 			if move_timer.time_left < 0.02:
 				velocity.x /= 4
@@ -362,7 +369,7 @@ func process_aerial(_delta, dir):
 
 
 # Attacks
-func process_attack():
+func process_attack(facing):
 	if state != HURT or state != DOWN:
 		if Input.is_action_just_pressed("attack") and swing_timer.time_left < 0.1:
 			
@@ -370,22 +377,16 @@ func process_attack():
 			match Run.weapon:
 				Global.WEAPON.DAGGER:
 					hand_object.frame = 22
-					pass
 				Global.WEAPON.SWORD:
 					hand_object.frame = 0
-					pass
 				Global.WEAPON.SPEAR:
 					hand_object.frame = 1
-					pass
 				Global.WEAPON.HAMMER:
 					hand_object.frame = 2
-					pass
 				Global.WEAPON.PISTOL:
 					hand_object.frame = 3
-					pass
 				Global.WEAPON.SHURIKEN:
 					hand_object.frame = 4
-					pass
 					
 			is_attacking = true
 			if Run.weapon > 3:
@@ -395,28 +396,28 @@ func process_attack():
 
 
 # Build
-func process_build():
+func process_build(facing):
 	if state != HURT or state != DOWN:
 		if Input.is_action_just_pressed("build") and swing_timer.time_left < 0.1:
 			
 			# Graphic and stat changes
 			match Run.hammer:
-				Global.HAMMMER.NORMAL:
+				Global.HAMMER.NORMAL:
 					hand_object.frame = 5
-					pass
-				Global.HAMMMER.BOOMER:
-					hand_object.frame = 0
-					pass
-				Global.WEAPON.SPIKE:
-					hand_object.frame = 1
-					pass
-				Global.WEAPON.BETTER:
-					hand_object.frame = 2
-					pass
-				Global.WEAPON.AREA:
-					hand_object.frame = 3
-					pass
+				Global.HAMMER.BOOMER:
+					hand_object.frame = 6
+					# Skip if boom not in hand
+					# if boom_throw: return
+					# boom_throw = true
+				Global.HAMMER.SPIKE:
+					hand_object.frame = 7
+				Global.HAMMER.BETTER:
+					hand_object.frame = 8
+				Global.HAMMER.AREA:
+					hand_object.frame = 9
 			
+			var pos = spawn_mel.global_position
+			attacks.shoot_build(pos, facing, Run.hammer)
 			is_attacking = true
 			hand_anim.play("swing")
 

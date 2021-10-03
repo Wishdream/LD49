@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Characters/Player/pal-spriteframes.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://Characters/Player/Player.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Characters/Player/player_hitbox.tres" type="Shape2D" id=4]
 [ext_resource path="res://Characters/Player/player_colbox.tres" type="Shape2D" id=5]
 [ext_resource path="res://Characters/Player/Items/HeldSprite.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Characters/Player/attacks.gd" type="Script" id=7]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Flash"
@@ -28,6 +29,9 @@ material = ExtResource( 3 )
 z_index = 1
 collision_mask = 2
 script = ExtResource( 2 )
+
+[node name="Attacks" type="Node" parent="."]
+script = ExtResource( 7 )
 
 [node name="Hitbox" type="Area2D" parent="."]
 monitorable = false
@@ -59,7 +63,6 @@ shape = ExtResource( 5 )
 
 [node name="Hand" parent="HandPivot" instance=ExtResource( 6 )]
 position = Vector2( 3, -4 )
-frame = 3
 
 [node name="MelSpawn" type="Position2D" parent="HandPivot"]
 position = Vector2( 9, -8 )
