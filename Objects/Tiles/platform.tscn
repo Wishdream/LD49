@@ -67,8 +67,7 @@ collision_mask = 0
 script = ExtResource( 2 )
 
 [node name="Hitbox" type="Area2D" parent="Collider"]
-monitoring = false
-collision_layer = 0
+collision_layer = 2
 collision_mask = 16
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Collider/Hitbox"]
@@ -87,5 +86,6 @@ wait_time = 0.2
 one_shot = true
 
 [connection signal="start_fall" from="." to="Collider" method="_on_Platform_start_fall"]
+[connection signal="area_entered" from="Collider/Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="area_entered" from="Collider/Hitbox" to="Collider" method="_on_Hitbox_area_entered"]
 [connection signal="timeout" from="Collider/Timer" to="Collider" method="_on_Timer_timeout"]
