@@ -80,6 +80,4 @@ shape = ExtResource( 3 )
 frames = SubResource( 12 )
 centered = false
 
-[connection signal="body_entered" from="Collider" to="Collider" method="_on_Collider_body_entered"]
-[connection signal="body_exited" from="Collider" to="Collider" method="_on_Collider_body_exited"]
 [connection signal="area_entered" from="Collider/Hitbox" to="." method="_on_Hitbox_area_entered"]
