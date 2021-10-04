@@ -2,7 +2,7 @@ extends Node2D
 class_name Attack
 
 export(int, 0, 100) var damage_value
-export(int, 0, 3) var build_value
+export(int, 0, 5) var build_value
 export(float) var damage_time = 0.1
 export(int, "Attack", "Build", "Damage", "Double") var damage_type = 0
 export(int, "Melee", "Projectile") var attack_type = 0

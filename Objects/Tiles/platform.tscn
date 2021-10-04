@@ -1,60 +1,75 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Objects/Tiles/base.gd" type="Script" id=1]
 [ext_resource path="res://Objects/Tiles/platform.gd" type="Script" id=2]
 [ext_resource path="res://Objects/Tiles/tile-platform.png" type="Texture" id=3]
 [ext_resource path="res://Objects/Tiles/tile_mask.tres" type="Shape2D" id=4]
 
-[sub_resource type="RectangleShape2D" id=13]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 8 )
 
-[sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 32, 32 )
+[sub_resource type="Animation" id=14]
+resource_name = "fall"
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.498039 ), Color( 1, 1, 1, 0 ) ]
+}
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 3 )
-region = Rect2( 32, 0, 32, 32 )
+region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 3 )
-region = Rect2( 64, 0, 32, 32 )
+region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 3 )
-region = Rect2( 96, 0, 32, 32 )
+region = Rect2( 64, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 3 )
-region = Rect2( 128, 0, 32, 32 )
+region = Rect2( 96, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 3 )
-region = Rect2( 160, 0, 32, 32 )
+region = Rect2( 128, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 3 )
-region = Rect2( 192, 0, 32, 32 )
+region = Rect2( 160, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 3 )
-region = Rect2( 224, 0, 32, 32 )
+region = Rect2( 192, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 3 )
-region = Rect2( 256, 0, 32, 32 )
+region = Rect2( 224, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 3 )
-region = Rect2( 288, 0, 32, 32 )
+region = Rect2( 256, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 3 )
+region = Rect2( 288, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 3 )
 region = Rect2( 320, 0, 32, 32 )
 
-[sub_resource type="SpriteFrames" id=12]
+[sub_resource type="SpriteFrames" id=13]
 animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ) ],
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
@@ -74,7 +89,7 @@ position = Vector2( -16, -16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collider/MoveChecker"]
 position = Vector2( 16, 0 )
-shape = SubResource( 13 )
+shape = SubResource( 1 )
 
 [node name="Hitbox" type="Area2D" parent="Collider"]
 collision_layer = 2
@@ -83,18 +98,39 @@ collision_mask = 16
 [node name="HitboxShape" type="CollisionShape2D" parent="Collider/Hitbox"]
 shape = ExtResource( 4 )
 
-[node name="CollisionShape" type="CollisionShape2D" parent="Collider"]
+[node name="ExitChecker" type="Area2D" parent="Collider"]
+collision_layer = 512
+collision_mask = 0
+
+[node name="HitboxShape" type="CollisionShape2D" parent="Collider/ExitChecker"]
 shape = ExtResource( 4 )
+
+[node name="ExitPlayer" type="AnimationPlayer" parent="Collider/ExitChecker"]
+anims/fall = SubResource( 14 )
 
 [node name="Sprite" type="AnimatedSprite" parent="Collider"]
 position = Vector2( -16, -16 )
-frames = SubResource( 12 )
+frames = SubResource( 13 )
 centered = false
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Collider"]
+shape = ExtResource( 4 )
 
 [node name="Timer" type="Timer" parent="Collider"]
 wait_time = 0.2
 one_shot = true
 
+[node name="Exit" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 512
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
+position = Vector2( 16, 136 )
+shape = SubResource( 1 )
+
 [connection signal="start_fall" from="." to="Collider" method="_on_Platform_start_fall"]
 [connection signal="area_entered" from="Collider/Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="area_entered" from="Collider/Hitbox" to="Collider" method="_on_Hitbox_area_entered"]
+[connection signal="animation_finished" from="Collider/ExitChecker/ExitPlayer" to="Collider" method="_on_ExitPlayer_animation_finished"]
+[connection signal="area_entered" from="Exit" to="Collider" method="_on_Exit_area_entered"]
+[connection signal="body_entered" from="Exit" to="Collider" method="_on_Exit_body_entered"]

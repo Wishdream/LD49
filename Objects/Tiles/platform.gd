@@ -35,3 +35,11 @@ func repair_platform(_area):
 		position = main_pos
 		timer.stop()
 
+func _on_Exit_area_entered(area):
+	if area == $ExitChecker:
+		vel = Vector2(0, 100)
+		$ExitChecker/ExitPlayer.play("fall")
+		set_collision_layer_bit(1, false)
+
+func _on_ExitPlayer_animation_finished(anim_name):
+	get_parent().queue_free()

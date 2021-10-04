@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Objects/Player/Attacks/Builders/Boomer.gd" type="Script" id=1]
 [ext_resource path="res://Objects/Player/Items/items.png" type="Texture" id=2]
 [ext_resource path="res://Objects/Player/Attacks/Builders/regular_build_hitbox.tres" type="Shape2D" id=3]
+[ext_resource path="res://Objects/Player/Attacks/Builders/builder_circle.png" type="Texture" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.0
@@ -25,7 +26,7 @@ tracks/0/keys = {
 
 [node name="Boomer" type="Node2D"]
 script = ExtResource( 1 )
-build_value = 1
+build_value = 3
 damage_time = 1.0
 damage_type = 1
 attack_type = 1
@@ -49,7 +50,14 @@ shape = ExtResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
 
+[node name="builder_circle" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.498039 )
+rotation = 1.74846e-07
+scale = Vector2( 2.5, 2.5 )
+texture = ExtResource( 4 )
+
 [node name="Sprite" type="Sprite" parent="."]
+rotation = 6.28319
 texture = ExtResource( 2 )
 hframes = 5
 vframes = 5

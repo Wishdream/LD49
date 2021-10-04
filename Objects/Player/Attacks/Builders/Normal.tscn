@@ -1,12 +1,19 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Objects/Attack.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Objects/Player/Attacks/Builders/regular_build_hitbox.tres" type="Shape2D" id=2]
+[ext_resource path="res://Objects/Player/Attacks/Builders/builder_circle.png" type="Texture" id=3]
 
 [node name="Normal" instance=ExtResource( 1 )]
-build_value = 2
+build_value = 3
 damage_time = 0.05
 damage_type = 1
 
 [node name="Shape" type="CollisionShape2D" parent="Hitbox" index="0"]
 shape = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="2"]
+modulate = Color( 1, 1, 1, 0.498039 )
+position = Vector2( 1.90735e-06, 1.90735e-06 )
+scale = Vector2( 2.5, 2.5 )
+texture = ExtResource( 3 )

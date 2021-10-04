@@ -25,7 +25,7 @@ const items = [
 	[ITEMTYPE.WEAPON, WEAPON.DAGGER, "Dagger", "Short, weak, but reliable"],
 	[ITEMTYPE.WEAPON, WEAPON.SWORD, "Sword", "Decent and lasts awhile"],
 	[ITEMTYPE.WEAPON, WEAPON.SPEAR, "Spear", "Far-reaching"],
-	[ITEMTYPE.WEAPON, WEAPON.HAMMER, "Hammer", "Why hammer when you can use a sword to hammer?"],
+	[ITEMTYPE.WEAPON, WEAPON.HAMMER, "\"Hammer\"", "Why hammer when you can use a sword to hammer?"],
 	[ITEMTYPE.WEAPON, WEAPON.PISTOL, "Revolver", "Powerful, but slow to reload"],
 	[ITEMTYPE.WEAPON, WEAPON.SHURIKEN, "Shuriken", "Swift, far-reaching, but weak"],
 	[ITEMTYPE.HAMMER, HAMMER.NORMAL, "Hammer", "Ol' reliable!"],
