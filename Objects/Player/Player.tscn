@@ -8,7 +8,6 @@
 [ext_resource path="res://Objects/Player/Items/HeldSprite.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Objects/Player/PlayerAttacks.gd" type="Script" id=7]
 [ext_resource path="res://Scenes/UI/HUD.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Objects/Playerinvul.tres" type="Animation" id=9]
 [ext_resource path="res://Sounds/SFX/Player/Jump2.wav" type="AudioStream" id=10]
 [ext_resource path="res://Sounds/SFX/Player/Land.wav" type="AudioStream" id=11]
 [ext_resource path="res://Sounds/SFX/Player/Dash.wav" type="AudioStream" id=12]
@@ -36,6 +35,23 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 1.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Invul"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [node name="Player" type="KinematicBody2D"]
@@ -172,7 +188,7 @@ scale_amount_random = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Flash = SubResource( 1 )
-anims/Invul = ExtResource( 9 )
+anims/Invul = SubResource( 2 )
 
 [connection signal="hp_changed" from="." to="Camera/UI/HUD" method="_on_Player_hp_changed"]
 [connection signal="items_changed" from="." to="Camera/UI/HUD" method="_on_Player_items_changed"]

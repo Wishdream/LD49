@@ -1,9 +1,10 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Objects/Tiles/base.gd" type="Script" id=1]
 [ext_resource path="res://Objects/Tiles/platform.gd" type="Script" id=2]
 [ext_resource path="res://Objects/Tiles/tile-platform.png" type="Texture" id=3]
 [ext_resource path="res://Objects/Tiles/tile_mask.tres" type="Shape2D" id=4]
+[ext_resource path="res://Objects/flash_material.tres" type="Material" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 8 )
@@ -75,6 +76,22 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="Animation" id=15]
+resource_name = "flash"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Collider/Sprite:material:shader_param/hit_strength")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.5, 0.0 ]
+}
+
 [node name="Platform" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -109,6 +126,7 @@ shape = ExtResource( 4 )
 anims/fall = SubResource( 2 )
 
 [node name="Sprite" type="AnimatedSprite" parent="Collider"]
+material = ExtResource( 5 )
 position = Vector2( -16, -16 )
 frames = SubResource( 14 )
 centered = false
@@ -127,6 +145,9 @@ collision_mask = 512
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
 position = Vector2( 16, 136 )
 shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/flash = SubResource( 15 )
 
 [connection signal="start_fall" from="." to="Collider" method="_on_Platform_start_fall"]
 [connection signal="area_entered" from="Collider/Hitbox" to="." method="_on_Hitbox_area_entered"]

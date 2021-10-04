@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Sounds/BGM/title.ogg" type="AudioStream" id=1]
+[ext_resource path="res://Sounds/BGM/stage.ogg" type="AudioStream" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+
+func stop():
+	$title.stop()
+	$stage.stop()
+	
+func play(song_name : String):
+	match song_name:
+		\"title\":
+			if !$title.playing(): $title.play()
+			$stage.stop()
+		\"stage\":
+			if !$stage.playing(): $stage.play()
+			$title.stop()
+"
+
+[node name="BGM" type="Node"]
+pause_mode = 2
+script = SubResource( 1 )
+
+[node name="title" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+volume_db = -10.0
+
+[node name="stage" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -10.0

@@ -14,7 +14,7 @@ var enemy_flier = load("res://Objects/Enemies/Flier/Flier.tscn")
 var enemy_zoomer = load("res://Objects/Enemies/Zoomer/Zoomer.tscn")
 
 func _ready():
-	timer.start( SPAWN_TIME )
+	timer.start( (SPAWN_TIME*2) * randf() )
 
 func _on_Timer_timeout():
 	var spawn_rate = spawn_time * Run.spawn_rate
@@ -34,8 +34,10 @@ func spawn_enemy(_type):
 		2: spawn = enemy_dropper.instance()
 		3: spawn = enemy_flier.instance()
 		4: spawn = enemy_zoomer.instance()
-	get_tree().get_current_scene().call_deferred("add_child", spawn)
+	get_tree().get_current_scene().get_node("Enemies").call_deferred("add_child", spawn)
 	var pos = area_origin
 	pos.x += rand_range(-area_extents.x/2, area_extents.x/2)
 	pos.y += rand_range(-area_extents.y/2, area_extents.y/2)
 	spawn.position = pos
+	$SpawnAudio.play()
+	$SpawnAudio.global_position = pos

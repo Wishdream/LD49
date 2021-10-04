@@ -164,11 +164,14 @@ tracks/5/keys = {
 script = ExtResource( 5 )
 
 [node name="shopkeep" type="Sprite" parent="."]
-position = Vector2( 272, -56 )
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 272, -280 )
 texture = ExtResource( 4 )
 
 [node name="Platform" type="Node2D" parent="."]
 visible = false
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 0, 256 )
 
 [node name="Tiles" type="Node2D" parent="Platform"]
 

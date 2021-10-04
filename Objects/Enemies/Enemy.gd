@@ -85,6 +85,7 @@ func deal_damage(value):
 		call_deferred("queue_free")
 	else:
 		hp -= value * Run.attack_rate
+		$AnimationPlayer.play("sharp_flash")
 
 
 func _on_Timer_timeout():

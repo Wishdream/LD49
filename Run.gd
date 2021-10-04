@@ -1,5 +1,6 @@
 extends Node
 
+var wait_rate = 1
 var scrap_rate = 2
 var decay_rate = 1
 var attack_rate = 1
@@ -18,12 +19,12 @@ var scrap = 0
 var items = {}
 
 func reset_run():
-	scrap_rate = 1
+	scrap_rate = 2
 	decay_rate = 1
 	attack_rate = 1
 	build_rate = 1
-	hp_rate = 1
 	spawn_rate = 1
+	hp_rate = 1
 	disaster = 0
 	wind_dir = Vector2.ZERO
 	weapon = Global.WEAPON.DAGGER
@@ -50,6 +51,11 @@ func add_aura(_item):
 				items.more_hammer += 1
 			else:
 				items.more_hammer = 1
+		Global.AURA.FAST_MOVE:
+			if items.has("fast_move"):
+				items.fast_move += 1
+			else:
+				items.fast_move = 1
 		Global.AURA.FAST_SCRAPHP:
 			if items.has("fast_scraphp"):
 				items.fast_scraphp += 1
@@ -80,6 +86,11 @@ func remove_aura(_item):
 				items.more_hammer -= 1
 			else:
 				items.erase("more_hammer")
+		Global.AURA.FAST_MOVE:
+			if items.has("fast_move"):
+				items.fast_move -= 1
+			else:
+				items.erase("fast_move")
 		Global.AURA.FAST_SCRAPHP:
 			if items.has("fast_scraphp"):
 				items.fast_scraphp -= 1
@@ -114,6 +125,9 @@ func calculate_aura():
 	if items.has("all_hammer") and items.has("all_damage"):
 		attack_rate = 0
 		build_rate = 0
+	if items.has("fast_move"):
+		wait_rate -= .1
+		spawn_rate -= .1
 	if items.has("fast_scraphp"):
 		hp_rate += .2
 		scrap_rate += .2

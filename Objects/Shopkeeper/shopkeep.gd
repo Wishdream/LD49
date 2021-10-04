@@ -1,5 +1,8 @@
 extends Node2D
 
+export var WAIT_TIME = 20
+var shop_active = false
+
 func _ready():
 	reset_pedestals()
 	disable_platform()
@@ -34,6 +37,11 @@ func enable_platform():
 		var body:StaticBody2D = i.get_node("StaticBody2D")
 		body.set_collision_layer_bit(1, true)
 
-
 func _on_StageTimer_timeout():
-	shopkeep_call()
+	if shop_active:
+		shopkeep_leave()
+		get_tree().get_current_scene().get_node("StageTimer").start(Global.RUN_TIME * Run.wait_rate)
+	else:
+		shopkeep_call()
+		get_tree().get_current_scene().get_node("StageTimer").start(WAIT_TIME)
+	shop_active = !shop_active

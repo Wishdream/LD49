@@ -37,6 +37,7 @@ func _on_DecayTimer_timeout():
 
 func _on_Hitbox_area_entered(area):
 	if area.get_collision_layer_bit(4):
+		$AnimationPlayer.play("flash")
 		if hp > hpmax:
 			hp = hpmax
 			sprite_anim.frame = 0
@@ -46,4 +47,4 @@ func _on_Hitbox_area_entered(area):
 				$Collider.set_collision_layer_bit(1, true)
 		else:
 			hp += area.get_parent().build_value * Run.build_rate
-			sprite_anim.frame = int(sprite_max - hp) - 1
+			sprite_anim.frame = int(sprite_max - hp)

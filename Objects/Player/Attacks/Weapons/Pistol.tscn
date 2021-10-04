@@ -8,7 +8,7 @@ radius = 4.0
 
 [node name="Pistol" instance=ExtResource( 1 )]
 damage_value = 3
-damage_time = 0.05
+damage_time = 1.0
 attack_type = 1
 velocity = Vector2( 300, 0 )
 

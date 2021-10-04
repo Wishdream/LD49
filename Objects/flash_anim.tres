@@ -1,11 +1,10 @@
 [gd_resource type="Animation" format=2]
 
 [resource]
-resource_name = "Invul"
-length = 0.2
-loop = true
+resource_name = "flash"
+length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:visible")
+tracks/0/path = NodePath("Collider/Sprite:material:shader_param/hit_strength")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -13,6 +12,6 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
+"update": 0,
+"values": [ 0.5, 0.0 ]
 }

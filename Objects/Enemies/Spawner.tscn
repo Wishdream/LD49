@@ -1,12 +1,17 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Objects/Enemies/Spawner.gd" type="Script" id=1]
+[ext_resource path="res://Sounds/SFX/Spawn.wav" type="AudioStream" id=2]
 
 [node name="Spawner" type="Area2D"]
 monitoring = false
 monitorable = false
 script = ExtResource( 1 )
+SPAWN_TIME = 10
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="SpawnAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 2 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
