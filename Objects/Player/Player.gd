@@ -60,14 +60,13 @@ signal hp_changed(new_hp)
 func _ready():
 	prev_state = null
 	state = FALL
-	hand_anim.connect("animation_finished", self, "_on_AnimationPlayer_animation_finished")
+	var _signal = hand_anim.connect("animation_finished", self, "_on_AnimationPlayer_animation_finished")
 	hand_anim.play("idle")
 	hand_object.frame = Global.weapon_sprite_index[Run.weapon]
-	
+
 	emit_signal("hp_changed", hp)
 
 func _physics_process(delta):
-
 	dir = Vector2.ZERO
 	if Input.is_action_pressed("move_left"):
 		dir.x -= 1
@@ -77,28 +76,28 @@ func _physics_process(delta):
 		dir.y -= 1
 	if Input.is_action_pressed("move_down"):
 		dir.y += 1
-	
+
 	facing = 1 + (-2 * int(sprite.flip_h))
 
 	match state:
 		IDLE:
-			process_idle(delta, dir)
+			process_idle(delta)
 		MOVE:
-			process_move(delta, dir)
+			process_move(delta)
 		DASH:
 			process_dash(delta, facing)
 		JUMP:
-			process_jump(delta, dir)
+			process_jump(delta)
 		FALL:
-			process_fall(delta, dir)
+			process_fall(delta)
 		DODGE:
-			process_dodge(delta, dir)
+			process_dodge(delta)
 		CLIMB:
-			process_climb(delta, dir)
+			process_climb(delta)
 		HURT:
 			process_hurt(delta, facing)
 		AERIAL:
-			process_aerial(delta, dir, facing)
+			process_aerial(delta, facing)
 		DOWN:
 			process_death(delta)
 
@@ -110,19 +109,22 @@ func take_damage(value):
 	hp -= value
 	dashed = false
 	emit_signal("hp_changed", hp)
-	
+
 	if (value > 0):
 		move_timer.start(HURT_TIME)
 		change_state(HURT)
+
 
 func process_movement(_delta, _facing = 1):
 	if not aerialed: particles.emitting = dashed
 	hand_pivot.scale.x = facing
 	velocity = move_and_slide(velocity, Vector2.UP)
-	pass
+	grounded = is_on_floor()
+
 
 func apply_gravity(_delta):
 	velocity += Vector2(0,Global.GRAVITY) * _delta
+
 	var fspeed
 	if dashed:
 		fspeed = DFALL_SPEED
@@ -136,7 +138,11 @@ func apply_gravity(_delta):
 #==============================================================================
 
 # Idle
-func process_idle(delta, _dir):
+func process_idle(delta):
+	# Clear timer, there is no timer on this state
+	if !move_timer.is_stopped():
+		move_timer.stop()
+		
 	if dodged: dodged = false
 	if dashed: dashed = false
 	if aerialed: aerialed = false
@@ -145,7 +151,7 @@ func process_idle(delta, _dir):
 		change_state(MOVE)
 	else:
 		velocity.x = 0
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and grounded:
 		change_state(JUMP)
 	if Input.is_action_just_pressed("dash"):
 		change_state(DASH)
@@ -159,14 +165,18 @@ func process_idle(delta, _dir):
 	else:
 		sprite.play("idle")
 
-	if not is_on_floor():
+	if not grounded:
 		change_state(FALL)
 
 	apply_gravity(delta)
 
 
 # Ground Move
-func process_move(delta, _dir):
+func process_move(delta):
+	# Clear timer, there is no timer on this state
+	if !move_timer.is_stopped():
+		move_timer.stop()
+	
 	sprite.play("run")
 	if dir.x == 0:
 		change_state(IDLE)
@@ -175,7 +185,7 @@ func process_move(delta, _dir):
 
 	velocity.x = dir.x * MOVE_SPEED
 
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and grounded:
 		change_state(JUMP)
 	if Input.is_action_just_pressed("dash"):
 		change_state(DASH)
@@ -184,14 +194,14 @@ func process_move(delta, _dir):
 	if Input.is_action_just_pressed("move_up") and on_ladder:
 		change_state(CLIMB)
 
-	if not is_on_floor():
+	if not grounded:
 		change_state(FALL)
 
 	apply_gravity(delta)
 
 
 # Jump
-func process_jump(delta, _dir):
+func process_jump(delta):
 
 	if move_timer.is_stopped():
 		move_timer.start(JUMP_TIME)
@@ -239,13 +249,19 @@ func process_dash(_delta, facing):
 		velocity.y = -JUMP_SPEED
 		change_state(JUMP)
 
-	if Input.is_action_just_released("dash"):
-		velocity = Vector2.ZERO
-		change_state(IDLE)
+	var wait_time = move_timer.wait_time
+	if Input.is_action_just_released("dash") and move_timer.time_left < wait_time - wait_time/4:
+		velocity.x = 0
+		change_state(MOVE)
+
+	if !grounded:
+		change_state(FALL)
+
+	apply_gravity(_delta)
 
 
 # Fall
-func process_fall(delta, _dir):
+func process_fall(delta):
 	if prev_state == IDLE or prev_state == MOVE or prev_state == DASH:
 		if move_timer.is_stopped():
 			move_timer.start(COYOTE_TIME)
@@ -269,7 +285,9 @@ func process_fall(delta, _dir):
 	if velocity.y > 0:
 		sprite.play("air dn")
 
-	if is_on_floor():
+	apply_gravity(delta)
+
+	if grounded:
 		change_state(IDLE)
 
 	if Input.is_action_just_pressed("jump") and Run.aerial != Global.AERIAL.NONE and not aerialed:
@@ -284,11 +302,9 @@ func process_fall(delta, _dir):
 		move_timer.stop()
 		change_state(DODGE)
 
-	apply_gravity(delta)
-
 
 # Dodge
-func process_dodge(_delta, _dir):
+func process_dodge(_delta):
 	sprite.play("dodge")
 	if move_timer.is_stopped():
 		move_timer.start(DODGE_TIME)
@@ -300,7 +316,7 @@ func process_dodge(_delta, _dir):
 
 
 # Climbing
-func process_climb(_delta, _dir):
+func process_climb(_delta):
 	sprite.play("climb")
 	if dir.x != 0: sprite.flip_h = dir.x < 0
 	velocity = dir * MOVE_SPEED
@@ -334,7 +350,7 @@ func process_hurt(_delta, facing):
 
 
 # Aerial / Secondary Movement
-func process_aerial(_delta, _dir, facing):
+func process_aerial(_delta, facing):
 
 	if !aerialed: aerialed = true
 
@@ -368,12 +384,12 @@ func process_aerial(_delta, _dir, facing):
 
 # Attacks
 func process_attack(facing):
-	if state != HURT or state != DOWN:
+	if state != HURT and state != DOWN:
 		if Input.is_action_just_pressed("attack") and swing_timer.time_left < 0.1:
-			
+
 			# Graphic and stat changes
 			hand_object.frame = Global.weapon_sprite_index[Run.weapon]
-			
+
 			is_attacking = true
 			var pos
 			if Run.weapon > 3:
@@ -382,24 +398,18 @@ func process_attack(facing):
 			else:
 				pos = spawn_mel.global_position
 				hand_anim.play("swing")
-				
+
 			attacks.shoot_attack(pos, facing, Run.weapon)
 
 
 # Build
 func process_build(facing):
-	if state != HURT or state != DOWN:
+	if state != HURT and state != DOWN:
 		if Input.is_action_just_pressed("build") and swing_timer.time_left < 0.1:
-			
+
 			# Graphic and stat changes
 			hand_object.frame = Global.hammer_sprite_index[Run.hammer]
-			
-			#match Run.hammer:
-				#Global.HAMMER.BOOMER:
-					# Skip if boom not in hand
-					# if boom_throw: return
-					# boom_throw = true
-			
+
 			var pos = spawn_mel.global_position
 			attacks.shoot_build(pos, facing, Run.hammer)
 			is_attacking = true
@@ -410,7 +420,7 @@ func process_build(facing):
 func process_death(_delta):
 	hand_object.visible = false
 	sprite.play("hurt")
-	if is_on_floor():
+	if grounded:
 		if abs(velocity.x) > 1:
 			velocity.x = lerp(velocity.x, 0, 0.15)
 		else:
@@ -429,7 +439,10 @@ func _on_MoveTimer_timeout():
 		velocity = Vector2.ZERO
 	if state == DOWN:
 		get_tree().quit()
-	change_state(FALL)
+	if state == DASH:
+		change_state(IDLE)
+	elif state != FALL and state != IDLE and state != MOVE:
+		change_state(FALL)
 
 
 func _on_Hitbox_area_entered(_area):
@@ -454,4 +467,3 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "swing":
 		is_attacking = false
 		hand_anim.play("idle")
-

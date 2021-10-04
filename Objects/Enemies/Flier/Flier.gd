@@ -20,12 +20,3 @@ func process_attack(_delta):
 	velocity.x = facing * ATTACK_SPEED
 	start_timer(WAIT_TIME/2)
 	play_anim("attack")
-
-func process_time_end():
-	change_state(randi()%3)
-	if prev_state == ATTACK:
-		change_state(IDLE)
-	else:
-		var random = randi()%3-1
-		if random != 0:
-			facing = random

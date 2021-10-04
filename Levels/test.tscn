@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Objects/Tiles/block.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Objects/Tiles/ladder.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Objects/Enemies/Dropper/Dropper.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Objects/Enemies/Flier/Flier.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Objects/Enemies/Zoomer/Zoomer.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Objects/Enemies/Jumper/Jumper.tscn" type="PackedScene" id=10]
 
 [sub_resource type="Shader" id=1]
 resource_name = "Flash Shader"
@@ -37,7 +38,7 @@ autostart = true
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
 material = SubResource( 2 )
-position = Vector2( 208, 216 )
+position = Vector2( 208, 224 )
 
 [node name="Level" type="Node" parent="."]
 
@@ -89,10 +90,14 @@ position = Vector2( 344, 200 )
 [node name="Enemy" parent="Level/Enemy4" instance=ExtResource( 9 )]
 position = Vector2( 0, -32 )
 
+[node name="Enemy3" parent="Level" instance=ExtResource( 10 )]
+position = Vector2( 168, 224 )
+
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2( 176, 176 )
 collision_layer = 32
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -96, 0 )
 shape = ExtResource( 5 )
