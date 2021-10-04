@@ -52,6 +52,8 @@ Run="*res://Run.gd"
 
 window/size/width=720
 window/size/height=480
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
 
 [gui]
 
