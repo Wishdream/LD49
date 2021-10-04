@@ -47,7 +47,7 @@ shape = ExtResource( 4 )
 [node name="Ladderbox" type="Area2D" parent="."]
 monitorable = false
 collision_layer = 0
-collision_mask = 2
+collision_mask = 256
 
 [node name="LadShape" type="CollisionShape2D" parent="Ladderbox"]
 position = Vector2( 0, -8 )
@@ -105,6 +105,7 @@ wait_time = 0.2
 one_shot = true
 
 [node name="InvTimer" type="Timer" parent="."]
+wait_time = 1.5
 one_shot = true
 
 [node name="Particles" type="CPUParticles2D" parent="."]

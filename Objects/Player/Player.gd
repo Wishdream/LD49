@@ -54,6 +54,7 @@ onready var spawn_proj:Position2D = get_node("HandPivot/ProjSpawn")
 signal hp_changed(new_hp)
 signal scrap_changed()
 signal items_changed()
+signal player_died()
 
 #==============================================================================
 # Functions
@@ -261,7 +262,11 @@ func process_dash(_delta, facing):
 	var wait_time = move_timer.wait_time
 	if Input.is_action_just_released("dash") and move_timer.time_left < wait_time - wait_time/4:
 		velocity.x = 0
-		change_state(MOVE)
+		change_state(IDLE)
+		
+	if is_on_wall():
+		velocity.x = 0
+		change_state(IDLE)
 
 	if !grounded:
 		change_state(FALL)
@@ -429,6 +434,7 @@ func process_build(facing):
 
 # Downstate
 func process_death(_delta):
+	
 	hand_object.visible = false
 	sprite.play("hurt")
 	if grounded:
@@ -437,7 +443,7 @@ func process_death(_delta):
 		else:
 			velocity.x = 0
 		sprite.play("down")
-		move_timer.start(DOWN_TIME)
+		if inv_timer.is_stopped(): inv_timer.start(DOWN_TIME)
 	apply_gravity(_delta)
 
 
@@ -451,18 +457,19 @@ func _on_MoveTimer_timeout():
 		inv_timer.start()
 		$Hitbox/HitShape.disabled = true
 		anim_player.play("Invul")
-	if state == DOWN:
-		get_tree().quit()
 	if state == DASH:
 		change_state(IDLE)
-	elif state != FALL and state != IDLE and state != MOVE:
+	elif state != IDLE and state != MOVE:
 		change_state(FALL)
 
 
 func _on_InvTimer_timeout():
-	$Hitbox/HitShape.disabled = false
-	anim_player.stop()
-	sprite.visible = true
+	if state == DOWN:
+		emit_signal("player_died")
+	else:
+		$Hitbox/HitShape.disabled = false
+		anim_player.stop()
+		sprite.visible = true
 	
 
 func _on_Hitbox_area_entered(_area):
@@ -471,6 +478,8 @@ func _on_Hitbox_area_entered(_area):
 			take_damage(1)
 		else:
 			take_damage(_area.damage_value)
+	if _area.get_collision_layer_bit(9):
+		emit_signal("player_died")
 
 
 func _on_Ladderbox_area_entered(_area):

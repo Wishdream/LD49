@@ -25,7 +25,8 @@ func _on_Platform_start_fall():
 	
 
 func _on_Hitbox_area_entered(_area):
-	repair_platform(_area)
+	if _area.get_collision_layer_bit(4):
+		repair_platform(_area)
 	
 	
 func repair_platform(_area):
@@ -41,5 +42,5 @@ func _on_Exit_area_entered(area):
 		$ExitChecker/ExitPlayer.play("fall")
 		set_collision_layer_bit(1, false)
 
-func _on_ExitPlayer_animation_finished(anim_name):
+func _on_ExitPlayer_animation_finished(_anim_name):
 	get_parent().queue_free()

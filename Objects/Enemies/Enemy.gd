@@ -93,4 +93,7 @@ func _on_Timer_timeout():
 
 
 func _on_Hitbox_area_entered(area):
-	deal_damage(area.get_parent().damage_value)
+	if area.get_collision_layer_bit(9):
+		call_deferred("free")
+	else:
+		deal_damage(area.get_parent().damage_value)

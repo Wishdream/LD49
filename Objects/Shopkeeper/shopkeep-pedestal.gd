@@ -64,7 +64,7 @@ func _on_Area_body_exited(body):
 	hovered_obj = body
 	set_hovered(false)
 	
-func _process(delta):
+func _process(_delta):
 	if hovered:
 		if Input.is_action_just_pressed("move_down"):
 			if Run.scrap >= price:

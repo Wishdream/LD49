@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Objects/Parallax/Parallax.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Objects/Player/Player.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Objects/Tiles/ladder.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Objects/Tiles/platform.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Objects/Shopkeeper/shopkeep.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Objects/Enemies/Spawner.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Shader" id=1]
 resource_name = "Flash Shader"
@@ -26,6 +27,24 @@ resource_name = "Flash Material"
 shader = SubResource( 1 )
 shader_param/flash_color = Color( 1, 1, 1, 1 )
 shader_param/flash_modifier = 1.0
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 253, 48 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 253, 25 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 253, 8 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 64, 8 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 728, 120 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 40, 832 )
 
 [node name="Node" type="Node"]
 
@@ -132,3 +151,54 @@ position = Vector2( 144, -96 )
 
 [node name="shopkeep" parent="." instance=ExtResource( 6 )]
 position = Vector2( -128, 0 )
+
+[node name="spawners" type="Node2D" parent="."]
+
+[node name="Air1" parent="spawners" instance=ExtResource( 7 )]
+SPAWN_TYPE = 1
+
+[node name="SpawnArea" type="CollisionShape2D" parent="spawners/Air1"]
+position = Vector2( 16, -144 )
+shape = SubResource( 3 )
+
+[node name="Air2" parent="spawners" instance=ExtResource( 7 )]
+SPAWN_TYPE = 1
+
+[node name="SpawnArea" type="CollisionShape2D" parent="spawners/Air2"]
+position = Vector2( 16, -31 )
+shape = SubResource( 4 )
+
+[node name="Ground1" parent="spawners" instance=ExtResource( 7 )]
+
+[node name="SpawnArea" type="CollisionShape2D" parent="spawners/Ground1"]
+position = Vector2( 16, -8 )
+shape = SubResource( 5 )
+
+[node name="Ground2" parent="spawners" instance=ExtResource( 7 )]
+
+[node name="SpawnArea" type="CollisionShape2D" parent="spawners/Ground2"]
+position = Vector2( -112, -104 )
+shape = SubResource( 6 )
+
+[node name="Ground3" parent="spawners" instance=ExtResource( 7 )]
+
+[node name="SpawnArea" type="CollisionShape2D" parent="spawners/Ground3"]
+position = Vector2( 112, -104 )
+shape = SubResource( 6 )
+
+[node name="DeathPlane" type="Area2D" parent="."]
+monitoring = false
+collision_layer = 512
+collision_mask = 0
+
+[node name="DED" type="CollisionShape2D" parent="DeathPlane"]
+position = Vector2( 0, 480 )
+shape = SubResource( 7 )
+
+[node name="DED2" type="CollisionShape2D" parent="DeathPlane"]
+position = Vector2( -768, 120 )
+shape = SubResource( 8 )
+
+[node name="DED3" type="CollisionShape2D" parent="DeathPlane"]
+position = Vector2( 768, 120 )
+shape = SubResource( 8 )

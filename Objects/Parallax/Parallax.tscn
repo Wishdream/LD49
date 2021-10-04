@@ -17,10 +17,8 @@ speed = -100.0
 motion_scale = Vector2( 0, 0 )
 
 [node name="Particles" type="CPUParticles2D" parent="Sky"]
-visible = false
 position = Vector2( 0, -60 )
-z_index = -1
-emitting = false
+z_index = 1
 amount = 20
 lifetime = 1.5
 local_coords = false
@@ -42,19 +40,20 @@ texture = ExtResource( 1 )
 centered = false
 
 [node name="CloudsFront" type="ParallaxLayer" parent="."]
-visible = false
+position = Vector2( 0, -24 )
 motion_scale = Vector2( 1, 0.1 )
 motion_mirroring = Vector2( 540, 0 )
 
 [node name="Sprite" type="Sprite" parent="CloudsFront"]
+position = Vector2( 0, -12 )
 texture = ExtResource( 2 )
 
 [node name="CloudsBack" type="ParallaxLayer" parent="."]
-visible = false
+position = Vector2( 0, -64 )
 motion_scale = Vector2( 0.5, 0.05 )
 motion_mirroring = Vector2( 270, 0 )
 
 [node name="Sprite" type="Sprite" parent="CloudsBack"]
-position = Vector2( 0, 14 )
+position = Vector2( 0, 40 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )

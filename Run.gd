@@ -118,7 +118,7 @@ func calculate_aura():
 		hp_rate += .2
 		scrap_rate += .2
 	if items.has("fast_scrapspawn"):
-		spawn_rate += .2
+		spawn_rate -= .2
 		scrap_rate += .2
 		
 func add_scrap(amount):
