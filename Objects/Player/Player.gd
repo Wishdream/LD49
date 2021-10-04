@@ -447,7 +447,7 @@ func _on_MoveTimer_timeout():
 
 func _on_Hitbox_area_entered(_area):
 	if (_area.get("damage_value") == null):
-		take_damage(5)
+		take_damage(1)
 	else:
 		take_damage(_area.damage_value)
 
