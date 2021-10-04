@@ -63,7 +63,7 @@ MOVE_SPEED = 120
 [node name="Attacks" type="Node" parent="."]
 script = ExtResource( 7 )
 
-[node name="Sounds" type="Node2D" parent="."]
+[node name="Sounds" type="Node" parent="."]
 
 [node name="Attack" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 18 )
@@ -91,6 +91,7 @@ stream = ExtResource( 11 )
 
 [node name="Swing" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 17 )
+volume_db = -5.0
 
 [node name="AttackHit" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 19 )

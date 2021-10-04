@@ -66,6 +66,7 @@ func hit_registered(coll):
 		# Positive it's only the player doing this
 		if (coll.get_parent().get("hp") != null):
 			if damage_type == 1 or damage_type == 3:
+				source.get_node("Sounds/Repair").pitch_scale = 1.0 + randf()
 				source.get_node("Sounds/Repair").play()
 			if damage_type != 1 and !coll.get_collision_layer_bit(1):
 				if coll.get_parent().hp < 1:

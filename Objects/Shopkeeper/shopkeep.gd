@@ -1,6 +1,6 @@
 extends Node2D
 
-export var WAIT_TIME = 20
+export var WAIT_TIME = 10
 var shop_active = false
 
 func _ready():

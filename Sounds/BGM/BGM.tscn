@@ -13,10 +13,10 @@ func stop():
 func play(song_name : String):
 	match song_name:
 		\"title\":
-			if !$title.playing(): $title.play()
+			if !$title.playing: $title.play()
 			$stage.stop()
 		\"stage\":
-			if !$stage.playing(): $stage.play()
+			if !$stage.playing: $stage.play()
 			$title.stop()
 "
 

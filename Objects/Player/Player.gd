@@ -438,6 +438,7 @@ func process_build(facing):
 
 			# Graphic and stat changes
 			hand_object.frame = Global.hammer_sprite_index[Run.hammer]
+			$Sounds/Swing.pitch_scale = 1.0 + randf()
 			$Sounds/Swing.play()
 			var pos = spawn_mel.global_position
 			attacks.shoot_build(pos, facing, Run.hammer)
