@@ -26,7 +26,7 @@ func _on_Platform_start_fall():
 
 func _on_Hitbox_area_entered(_area):
 	repair_platform(_area)
-
+	
 	
 func repair_platform(_area):
 	position.y -= RESTORE_RATE / 60

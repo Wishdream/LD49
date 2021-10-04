@@ -3,6 +3,7 @@ extends Sprite
 export(int) var price:int = 0 setget set_price
 export(int) var index:int = 0 setget set_index
 var hovered:bool = false setget set_hovered
+var hovered_obj:EntityObject = null
 
 func _ready():
 	set_price(price)
@@ -32,6 +33,7 @@ func set_index(value):
 		$AnimationPlayer.advance(rand_range(0, $AnimationPlayer.current_animation_length))
 		
 		var item = Global.items[value]
+		index = value
 		
 		var frameind = 0
 		match item[0]:
@@ -55,15 +57,28 @@ func set_index(value):
 		$Down.visible = false
 	
 func _on_Area_body_entered(body):
+	hovered_obj = body
 	set_hovered(true)
 	
 func _on_Area_body_exited(body):
+	hovered_obj = body
 	set_hovered(false)
 	
 func _process(delta):
 	if hovered:
 		if Input.is_action_just_pressed("move_down"):
 			if Run.scrap >= price:
+				match Global.items[index][0]:
+					Global.ITEMTYPE.AERIAL:
+						Run.aerial = Global.items[index][1]
+					Global.ITEMTYPE.AURA:
+						Run.add_aura(Global.items[index][1])
+					Global.ITEMTYPE.HAMMER:
+						Run.hammer = Global.items[index][1]
+					Global.ITEMTYPE.WEAPON:
+						Run.weapon = Global.items[index][1]
+				
 				Run.scrap -= price
+				hovered_obj.update_items()
 				set_index(-1)
 				pass
