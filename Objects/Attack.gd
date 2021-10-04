@@ -7,6 +7,7 @@ export(float) var damage_time = 0.1
 export(int, "Attack", "Build", "Damage", "Double") var damage_type = 0
 export(int, "Melee", "Projectile") var attack_type = 0
 export(Vector2) var velocity = Vector2.ZERO
+#export(bool) var fade
 
 func set_bullet():
 	if damage_type == 0: # Attack from player
@@ -45,6 +46,9 @@ func _ready():
 func _physics_process(delta):
 	if attack_type == 1:
 		position += velocity * delta
+		
+	#if fade:
+		#$Sprite.modulate.a = lerp(1,0, 1-($Timer.time_left/$Timer.wait_time))
 
 func _on_Timer_timeout():
 	call_deferred("queue_free")

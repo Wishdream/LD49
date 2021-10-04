@@ -117,6 +117,7 @@ func take_damage(value):
 		change_state(HURT)
 		
 func update_items():
+	hand_object.frame = Global.weapon_sprite_index[Run.weapon]
 	emit_signal("items_changed")
 	
 func give_scrap(value):
