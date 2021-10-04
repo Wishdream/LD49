@@ -101,8 +101,10 @@ func calculate_aura():
 	spawn_rate = 1
 	if items.has("more_damage"):
 		attack_rate += .2 * items.more_damage
+		build_rate -= .2 * items.more_damage
 	if items.has("more_hammer"):
 		build_rate += .2 * items.more_hammer
+		attack_rate -= .2 * items.more_damage
 	if items.has("all_damage"):
 		attack_rate += 1
 		build_rate = 0
