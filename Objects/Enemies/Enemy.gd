@@ -4,9 +4,10 @@ class_name Enemy
 export var WAIT_TIME : float = 2.0
 
 enum {IDLE, MOVE, ATTACK}
-onready var animator = get_node("Sprite")
 onready var timer = get_node("Timer")
 
+func _ready():
+	timer.wait_time = WAIT_TIME
 
 func _physics_process(delta):
 	match state:
@@ -28,7 +29,7 @@ func process_idle(_delta):
 
 func process_move(_delta):
 	start_timer(WAIT_TIME)
-	play_anim("walk")
+	play_anim("move")
 	if velocity.x == 0:
 		velocity.x = facing * MOVE_SPEED
 	if !is_on_floor() or is_on_wall():
@@ -43,9 +44,13 @@ func process_attack(_delta):
 	apply_gravity(_delta)
 
 
+func process_time_end():
+	change_state(randi()%3)
+
+
 func play_anim(animation : String):
-	if animator != null:
-		animator.play(animation)
+	if sprite != null:
+		sprite.play(animation)
 
 
 func start_timer(time : float):
@@ -53,7 +58,7 @@ func start_timer(time : float):
 
 
 func _on_Timer_timeout():
-	state = randi()%3
+	process_time_end()
 
 
 func _on_Hitbox_area_entered(area):
