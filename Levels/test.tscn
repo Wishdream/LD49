@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Objects/Tiles/block.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Objects/Tiles/ladder.tscn" type="PackedScene" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://Objects/Tiles/tile_mask.tres" type="Shape2D" id=5]
 [ext_resource path="res://Objects/Enemies/Enemy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Objects/Enemies/Dropper/Dropper.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Objects/Enemies/Flier/Flier.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Objects/Enemies/Zoomer/Zoomer.tscn" type="PackedScene" id=9]
 
 [sub_resource type="Shader" id=1]
 resource_name = "Flash Shader"
@@ -78,8 +80,14 @@ position = Vector2( 256, 288 )
 [node name="Enemy" parent="Level" instance=ExtResource( 6 )]
 position = Vector2( 328, 280 )
 
-[node name="Enemy" parent="Level/Enemy" instance=ExtResource( 7 )]
-position = Vector2( -24, 0 )
+[node name="Enemy2" parent="Level" instance=ExtResource( 7 )]
+position = Vector2( 304, 280 )
+
+[node name="Enemy3" parent="Level" instance=ExtResource( 8 )]
+position = Vector2( 336, 168 )
+
+[node name="Enemy" parent="Level/Enemy3" instance=ExtResource( 9 )]
+position = Vector2( 0, 32 )
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2( 176, 176 )

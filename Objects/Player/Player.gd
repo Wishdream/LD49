@@ -37,7 +37,6 @@ var is_attacking = false
 var is_building = false
 var boom_throw = false
 
-onready var sprite = get_node("Sprite")
 onready var move_timer = get_node("MoveTimer")
 onready var inv_timer = get_node("InvTimer")
 onready var swing_timer = get_node("SwingTimer")
