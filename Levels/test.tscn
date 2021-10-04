@@ -5,7 +5,7 @@
 [ext_resource path="res://Objects/Tiles/platform.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Objects/Player/Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Objects/Tiles/tile_mask.tres" type="Shape2D" id=5]
-[ext_resource path="res://Objects/Enemies/Walker/Walker.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Objects/Enemies/Enemy.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Shader" id=1]
 resource_name = "Flash Shader"
@@ -76,7 +76,6 @@ position = Vector2( 256, 288 )
 
 [node name="Enemy" parent="Level" instance=ExtResource( 6 )]
 position = Vector2( 328, 280 )
-collision_mask = 8
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2( 176, 176 )

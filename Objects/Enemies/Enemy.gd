@@ -54,8 +54,7 @@ func start_timer(time : float):
 
 func _on_Timer_timeout():
 	state = randi()%3
-	print(state)
 
 
 func _on_Hitbox_area_entered(area):
-	deal_damage(area.damage_value)
+	deal_damage(area.get_parent().damage_value)

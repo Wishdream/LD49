@@ -14,9 +14,9 @@ func _ready():
 
 func _physics_process(_delta):
 	if parent.sprite_anim.frame == parent.sprite_max:
-		move_and_slide(vel * 1.5)
+		var _vel = move_and_slide(vel * 1.5)
 	elif timer.is_stopped(): 
-		move_and_slide(vel)
+		var _vel = move_and_slide(vel)
 
 
 func _on_Platform_start_fall():
@@ -28,7 +28,7 @@ func _on_Hitbox_area_entered(_area):
 
 
 func repair_platform():
-	move_and_slide(Vector2(0, -200) * Run.build_rate)
+	var _vel = move_and_slide(Vector2(0, -200) * Run.build_rate)
 	if position.y < main_pos.y:
 		position = main_pos
 		timer.stop()

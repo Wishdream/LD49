@@ -11,6 +11,5 @@ func _physics_process(delta):
 	position += velocity * delta
 
 func _on_Scanbox_area_entered(_area):
-	print("hit!")
 	$Hitbox.set_collision_mask_bit(1, true)
 	$Hitbox.set_collision_layer_bit(4, true)
