@@ -68,3 +68,4 @@ func shoot_build(pos, dir, type):
 func spawn_bullet(pos, shot):
 	get_tree().get_current_scene().add_child(shot)
 	shot.position = pos
+	shot.source = get_parent()
