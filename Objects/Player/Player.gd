@@ -446,10 +446,13 @@ func _on_MoveTimer_timeout():
 
 
 func _on_Hitbox_area_entered(_area):
-	if (_area.get("damage_value") == null):
-		take_damage(1)
+	if _area.get_collision_mask_bit(6):
+		_area.queue_free()
 	else:
-		take_damage(_area.damage_value)
+		if (_area.get("damage_value") == null):
+			take_damage(1)
+		else:
+			take_damage(_area.damage_value)
 
 
 func _on_Ladderbox_area_entered(_area):
