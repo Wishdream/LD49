@@ -518,4 +518,5 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 func _on_Hitbox_body_entered(body):
 	if body.get_collision_layer_bit(6):
 		give_scrap(body.scrap_value)
+		$Sounds/Pickup.play()
 		body.queue_free()

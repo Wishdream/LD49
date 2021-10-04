@@ -12,4 +12,4 @@ dest_files=[ "res://.import/stage.ogg-64a242f83d6ef4a8a50994d9d3b1a34b.oggstr" ]
 [params]
 
 loop=true
-loop_offset=0.0
+loop_offset=5.143
