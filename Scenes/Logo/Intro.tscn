@@ -1,0 +1,181 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Scenes/Logo/Intro.gd" type="Script" id=1]
+[ext_resource path="res://Objects/Parallax/parallax-clouds.png" type="Texture" id=2]
+[ext_resource path="res://Objects/Parallax/parallax-bg.png" type="Texture" id=3]
+[ext_resource path="res://Levels/stage.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Logo/signature-1.wav" type="AudioStream" id=5]
+[ext_resource path="res://Scenes/Logo/signature-2.wav" type="AudioStream" id=6]
+[ext_resource path="res://Scenes/Logo/signature-3.wav" type="AudioStream" id=7]
+[ext_resource path="res://Scenes/Logo/intro-kaiera.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/Logo/intro-wish.png" type="Texture" id=9]
+[ext_resource path="res://Scenes/Logo/intro-ld.png" type="Texture" id=10]
+
+[sub_resource type="Animation" id=1]
+resource_name = "meow"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Audio1:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Audio2:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.1, 1.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Audio3:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 2.5, 3.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("intro-ld:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 2.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("intro-kaiera:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.5, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("intro-kaiera:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 1.1, 1.3 ),
+"transitions": PoolRealArray( 1, 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 90, 60 ), Vector2( 90, 60 ), Vector2( 90, 45.5 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("intro-wish:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 1.1, 1.3 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 90, 60 ), Vector2( 90, 76 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("intro-wish:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 1.1, 1.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("intro-wish:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 1.1, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+
+[node name="Intro" type="Node2D"]
+scale = Vector2( 4, 4 )
+script = ExtResource( 1 )
+scene = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/meow = SubResource( 1 )
+
+[node name="Audio1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = -5.0
+
+[node name="Audio2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -10.0
+
+[node name="Audio3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -10.0
+
+[node name="Background" type="Node2D" parent="."]
+scale = Vector2( 0.5, 0.5 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="parallax-bg" type="Sprite" parent="Background"]
+scale = Vector2( 360, 2 )
+texture = ExtResource( 3 )
+centered = false
+
+[node name="parallax-clouds" type="Sprite" parent="Background"]
+position = Vector2( 308, 116 )
+scale = Vector2( 1.7, 1.7 )
+texture = ExtResource( 2 )
+
+[node name="parallax-clouds2" type="Sprite" parent="Background"]
+position = Vector2( 248, 124 )
+texture = ExtResource( 2 )
+
+[node name="intro-kaiera" type="Sprite" parent="."]
+visible = false
+position = Vector2( 90, 45.5 )
+texture = ExtResource( 8 )
+
+[node name="intro-wish" type="Sprite" parent="."]
+visible = false
+position = Vector2( 90, 76 )
+texture = ExtResource( 9 )
+
+[node name="intro-ld" type="Sprite" parent="."]
+position = Vector2( 90, 60 )
+texture = ExtResource( 10 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
