@@ -9,14 +9,15 @@ var hp_rate = 1
 var disaster = 0
 var wind_dir = Vector2.ZERO
 
-var weapon = Global.WEAPON.DAGGER
-var hammer = Global.HAMMMER.NORMAL
-var aerial = Global.AERIAL.DOUBLE_JUMP
+var weapon = Global.WEAPON.SHURIKEN
+var hammer = Global.HAMMER.BOOMER
+var aerial = Global.AERIAL.NONE
 
 var weapon_dura = 0
 var hammer_dura = 0
 
 var scrap = 0
+var items = {}
 
 func reset_run():
 	scrap_rate = 1
@@ -26,16 +27,17 @@ func reset_run():
 	disaster = 0
 	wind_dir = Vector2.ZERO
 	weapon = Global.WEAPON.DAGGER
-	hammer = Global.HAMMMER.NORMAL
+	hammer = Global.HAMMER.NORMAL
 	aerial = Global.AERIAL.NONE
 	weapon_dura = 0
 	hammer_dura = 0
 	scrap = 0
+	items = {}
 
-func add_aura(item):
+func add_aura(_item):
 	pass
 
-func remove_aura(item):
+func remove_aura(_item):
 	pass
 	
 func calculate_aura():

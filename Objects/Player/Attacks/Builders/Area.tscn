@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Objects/attack_base.tscn" type="PackedScene" id=1]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 24.0
+
+[node name="Normal" instance=ExtResource( 1 )]
+build_value = 1
+damage_time = 0.05
+damage_type = 1
+
+[node name="Hitbox" parent="." index="0"]
+monitoring = false
+
+[node name="Shape" type="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource( 1 )
