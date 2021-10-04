@@ -29,7 +29,7 @@ func _on_DecayTimer_timeout():
 	else:
 		sprite_anim.frame = 10
 		broken = true
-		modulate.a = 0.5
+		modulate.a = 0.75
 		$Collider.set_collision_layer_bit(1, false)
 		if time_signal:
 			timer.disconnect("timeout", self, "_onDecayTimer_timeout")
