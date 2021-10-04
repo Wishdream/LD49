@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Objects/Player/Attacks/attack_base.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Objects/attack_base.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Objects/Player/Attacks/Builders/regular_build_hitbox.tres" type="Shape2D" id=2]
 
 [node name="Normal" instance=ExtResource( 1 )]
