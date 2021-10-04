@@ -17,14 +17,13 @@ var state = 0
 func deal_damage(value):
 	if hp < 0:
 		hp = 0
-		call_deferred("queue_free")
 	else:
 		hp -= value
 
 func process_movement(_delta, _facing = 1):
 	if velocity.x != 0:
 		facing = sign(velocity.x)
-	velocity = move_and_slide(velocity, Vector2.UP)
+	velocity = move_and_slide_with_snap(velocity, Vector2.UP)
 
 func change_state(new_state):
 	prev_state = state

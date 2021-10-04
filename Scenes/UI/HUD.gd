@@ -3,10 +3,10 @@ extends Control
 var huditem = preload("res://Scenes/UI/HUDItem.tscn")
 
 func _ready():
-	set_health(10)
-	set_scrap(0)
-	set_sword(0)
-	set_hammer(5)
+	set_scrap(Run.scrap)
+	set_sword(Run.weapon)
+	set_hammer(Run.hammer)
+	set_aerial(Run.aerial)
 
 func set_health(value:int):
 	$Health.value = value
@@ -15,10 +15,13 @@ func set_scrap(value:int):
 	$Scrap/Label.text = str(value)
 
 func set_sword(value:int):
-	$Sword.index = value
+	$MainItems/Sword.index = Global.weapon_sprite_index[value]
 
 func set_hammer(value:int):
-	$Hammer.index = value
+	$MainItems/Hammer.index = Global.hammer_sprite_index[value]
+
+func set_aerial(value:int):
+	$MainItems/Aerial.index = Global.aerial_sprite_index[value]
 	
 func add_item(index:int):
 	var instance = huditem.instance()
@@ -33,3 +36,6 @@ func remove_item(index:int):
 		if (i.name == ind):
 			i.queue_free()
 			break
+
+func _on_Player_hp_changed(new_hp):
+	set_health(new_hp)

@@ -9,9 +9,9 @@
 [node name="HUD" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -540.0
-margin_bottom = -360.0
-rect_scale = Vector2( 4, 4 )
+margin_right = -360.0
+margin_bottom = -240.0
+rect_scale = Vector2( 2, 2 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_lock_": true,
@@ -57,32 +57,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sword" parent="." instance=ExtResource( 3 )]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -26.0
-margin_top = -14.0
-margin_right = -2.0
-margin_bottom = 10.0
-rect_scale = Vector2( 0.5, 0.5 )
-
-[node name="Hammer" parent="." instance=ExtResource( 3 )]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -14.0
-margin_top = -14.0
-margin_right = 10.0
-margin_bottom = 10.0
-rect_scale = Vector2( 0.5, 0.5 )
-index = 5
-
-[node name="Sprite" parent="Hammer" index="0"]
-frame = 5
-
 [node name="ItemContainer" type="HBoxContainer" parent="."]
 anchor_right = 1.0
 margin_left = 2.0
@@ -95,4 +69,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[editable path="Hammer"]
+[node name="MainItems" type="HBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -72.0
+margin_top = -24.0
+custom_constants/separation = 0
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Aerial" parent="MainItems" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_right = 24.0
+index = 11
+
+[node name="Sword" parent="MainItems" instance=ExtResource( 3 )]
+margin_left = 24.0
+margin_right = 48.0
+
+[node name="Hammer" parent="MainItems" instance=ExtResource( 3 )]
+margin_left = 48.0
+margin_right = 72.0
+index = 5

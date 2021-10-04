@@ -61,10 +61,10 @@ zoom = Vector2( 0.5, 0.5 )
 [node name="UI" type="MarginContainer" parent="Camera"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -180.0
-margin_top = -120.0
-margin_right = 180.0
-margin_bottom = 120.0
+margin_left = -178.0
+margin_top = -118.0
+margin_right = 178.0
+margin_bottom = 118.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -72,14 +72,15 @@ __meta__ = {
 [node name="HUD" parent="Camera/UI" instance=ExtResource( 8 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 360.0
-margin_bottom = 240.0
+margin_right = 356.0
+margin_bottom = 236.0
 rect_scale = Vector2( 1, 1 )
 
 [node name="Item" parent="Camera/UI" instance=ExtResource( 9 )]
+visible = false
 margin_left = 0.0
-margin_right = 360.0
-margin_bottom = 240.0
+margin_right = 356.0
+margin_bottom = 236.0
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -8 )
@@ -126,6 +127,7 @@ scale_amount_random = 1.0
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Flash = SubResource( 1 )
 
+[connection signal="hp_changed" from="." to="Camera/UI/HUD" method="_on_Player_hp_changed"]
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="area_entered" from="Ladderbox" to="." method="_on_Ladderbox_area_entered"]
 [connection signal="area_exited" from="Ladderbox" to="." method="_on_Ladderbox_area_exited"]
