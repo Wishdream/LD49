@@ -10,7 +10,7 @@ config_version=4
 
 [application]
 
-config/name="Ruff Tuff Flight"
+config/name="Ruff Tuff Skies"
 run/main_scene="res://Levels/test.tscn"
 config/icon="res://icon.png"
 config/windows_native_icon="res://icon.ico"
