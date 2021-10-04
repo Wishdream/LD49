@@ -2,6 +2,7 @@ extends EntityObject
 class_name Enemy
 
 export var WAIT_TIME : float = 2.0
+var gold_tender = load("res://Objects/Scrap/Scrap.tscn")
 
 enum {IDLE, MOVE, ATTACK}
 onready var timer = get_node("Timer")
@@ -35,6 +36,9 @@ func process_move(_delta):
 		velocity.x = facing * MOVE_SPEED
 	if (!check_ground_move() and grounded) or is_on_wall():
 		velocity.x *= -1
+	if !grounded:
+		timer.stop()
+		change_state(IDLE)
 	apply_gravity(_delta)
 
 
@@ -62,6 +66,26 @@ func play_anim(animation : String):
 
 func start_timer(time : float):
 	if timer.is_stopped(): timer.start(time)
+
+
+func deal_damage(value):
+	if hp < 0:
+		hp = 0
+		var amount = 3.0 * Run.scrap_rate
+		for i in range(amount):
+			var scrap = gold_tender.instance()
+			get_tree().get_current_scene().call_deferred("add_child", scrap)
+			scrap.position = global_position
+			var amount_norm = i/(amount-1)
+			scrap.velocity.x = lerp(-100, 100, amount_norm)
+			#var curve_height = abs(amount_norm - floor(amount_norm + 0.5))
+			var curve_height = sin(amount_norm * (PI))
+			scrap.BOUNCE_SPEED = lerp(200, scrap.BOUNCE_SPEED, curve_height) 
+			scrap.velocity.y = -scrap.BOUNCE_SPEED
+			print(curve_height)
+		call_deferred("queue_free")
+	else:
+		hp -= value * Run.attack_rate
 
 
 func _on_Timer_timeout():
