@@ -23,7 +23,6 @@ func _on_Platform_start_fall():
 	vel = Vector2(0, 10 * Run.decay_rate)
 	
 
-
 func _on_Hitbox_area_entered(_area):
 	repair_platform()
 

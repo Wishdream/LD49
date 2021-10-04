@@ -13,7 +13,7 @@ func _ready():
 	sprite_anim = get_node("Collider/Sprite")
 	sprite_max = sprite_anim.frames.get_frame_count("default")
 	timer = get_tree().get_current_scene().get_node("DecayTimer")
-	timer.connect("timeout", self, "_on_DecayTimer_timeout")
+	time_signal = timer.connect("timeout", self, "_on_DecayTimer_timeout")
 
 func _on_DecayTimer_timeout():
 	if safe_hp > 0:
