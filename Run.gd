@@ -33,13 +33,91 @@ func reset_run():
 	items = {}
 
 func add_aura(_item):
-	pass
+	match _item:
+		Global.AURA.ALL_DAMAGE:
+			if !items.has("all_damage"):
+				items.all_damage = 1
+		Global.AURA.ALL_HAMMER:
+			if !items.has("all_hammer"):
+				items.all_hammer = 1
+		Global.AURA.MORE_DAMAGE:
+			if items.has("more_damage"):
+				items.more_damage += 1
+			else:
+				items.more_damage = 1
+		Global.AURA.MORE_HAMMER:
+			if items.has("more_hammer"):
+				items.more_hammer += 1
+			else:
+				items.more_hammer = 1
+		Global.AURA.FAST_SCRAPHP:
+			if items.has("fast_scraphp"):
+				items.fast_scraphp += 1
+			else:
+				items.fast_scraphp = 1
+		Global.AURA.FAST_SCRAPSPAWN:
+			if items.has("fast_scrapspawn"):
+				items.fast_scrapspawn += 1
+			else:
+				items.fast_scrapspawn = 1
+	calculate_aura()
 
 func remove_aura(_item):
-	pass
+	match _item:
+		Global.AURA.ALL_DAMAGE:
+			if !items.has("all_damage"):
+				items.erase("all_damage")
+		Global.AURA.ALL_HAMMER:
+			if !items.has("all_hammer"):
+				items.erase("all_hammer")
+		Global.AURA.MORE_DAMAGE:
+			if items.has("more_damage"):
+				items.more_damage -= 1
+			else:
+				items.erase("more_damage")
+		Global.AURA.MORE_HAMMER:
+			if items.has("more_hammer"):
+				items.more_hammer -= 1
+			else:
+				items.erase("more_hammer")
+		Global.AURA.FAST_SCRAPHP:
+			if items.has("fast_scraphp"):
+				items.fast_scraphp -= 1
+			else:
+				items.erase("fast_scraphp")
+		Global.AURA.FAST_SCRAPSPAWN:
+			if items.has("fast_scrapspawn"):
+				items.fast_scrapspawn -= 1
+			else:
+				items.erase("fast_scrapspawn")
+	calculate_aura()
 	
 func calculate_aura():
-	pass
-
+	scrap_rate = 1
+	decay_rate = 1
+	attack_rate = 1
+	build_rate = 1
+	hp_rate = 1
+	spawn_rate = 1
+	if items.has("more_damage"):
+		attack_rate += .2 * items.more_damage
+	if items.has("more_hammer"):
+		build_rate += .2 * items.more_hammer
+	if items.has("all_damage"):
+		attack_rate += 1
+		build_rate = 0
+	if items.has("all_hammer"):
+		build_rate += 1
+		attack_rate = 0
+	if items.has("all_hammer") and items.has("all_damage"):
+		attack_rate = 0
+		build_rate = 0
+	if items.has("fast_scraphp"):
+		hp_rate += .2
+		scrap_rate += .2
+	if items.has("fast_scrapspawn"):
+		spawn_rate += .2
+		scrap_rate += .2
+		
 func add_scrap(amount):
 	scrap += amount
