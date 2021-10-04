@@ -2,7 +2,7 @@ extends Sprite
 
 export(int) var price:int = 0 setget set_price
 export(int) var index:int = 0 setget set_index
-var hovered:bool = false
+var hovered:bool = false setget set_hovered
 
 func _ready():
 	set_price(price)
@@ -16,6 +16,11 @@ func set_price(value):
 		$HBoxContainer/Label.text = str(value)
 	else:
 		$HBoxContainer/Label.text = "FREE"
+		
+func set_hovered(value):
+	hovered = value
+	$Down.visible = hovered
+	set_process(hovered)
 
 func set_index(value):
 	if value >= 0:
@@ -50,9 +55,15 @@ func set_index(value):
 		$Down.visible = false
 	
 func _on_Area_body_entered(body):
-	hovered = true
-	$Down.visible = true
+	set_hovered(true)
 	
 func _on_Area_body_exited(body):
-	hovered = false
-	$Down.visible = false
+	set_hovered(false)
+	
+func _process(delta):
+	if hovered:
+		if Input.is_action_just_pressed("move_down"):
+			if Run.scrap >= price:
+				Run.scrap -= price
+				set_index(-1)
+				pass
