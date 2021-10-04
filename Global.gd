@@ -6,7 +6,7 @@ enum ITEMTYPE {WEAPON, HAMMER, AERIAL, AURA}
 enum WEAPON {DAGGER, SWORD, SPEAR, HAMMER, PISTOL, SHURIKEN}
 enum HAMMER {NORMAL, BOOMER, SPIKE, BETTER, AREA}
 enum AERIAL {NONE, AIR_DASH, DOUBLE_JUMP, HOOK, JET}
-enum AURA {MORE_DAMAGE, MORE_HAMMER, ALL_DAMAGE, ALL_HAMMER, FAST_MOVE, FAST_GOLDHP, FAST_GOLDSPAWN}
+enum AURA {MORE_DAMAGE, MORE_HAMMER, ALL_DAMAGE, ALL_HAMMER, FAST_MOVE, FAST_SCRAPHP, FAST_SCRAPSPAWN}
 
 const GRAVITY = 800
 
@@ -39,8 +39,8 @@ const items = [
 	[ITEMTYPE.AURA, AURA.ALL_DAMAGE, "MAX DAMAGE", "+100% weapon effectiveness but disables hammers"],
 	[ITEMTYPE.AURA, AURA.ALL_HAMMER, "MAX HAMMER", "+100% hammer effectiveness but disables weapons"],
 	[ITEMTYPE.AURA, AURA.FAST_MOVE, "Double Time", "Makes your journey faster"],
-	[ITEMTYPE.AURA, AURA.FAST_GOLDHP, "Scrap 4 HP", "Enemy HP +50% for +50% scrap gained"],
-	[ITEMTYPE.AURA, AURA.FAST_GOLDSPAWN, "Scrap 4 Enemies", "Enemy spawn +50% for +50% scrap gained"],
+	[ITEMTYPE.AURA, AURA.FAST_SCRAPHP, "Scrap 4 HP", "Enemy HP +50% for +50% scrap gained"],
+	[ITEMTYPE.AURA, AURA.FAST_SCRAPSPAWN, "Scrap 4 Enemies", "Enemy spawn +50% for +50% scrap gained"],
 ]
 
 const weapon_sprite_index = {
@@ -74,8 +74,8 @@ const aura_sprite_index = {
 	AURA.ALL_DAMAGE: 16,
 	AURA.ALL_HAMMER: 18,
 	AURA.FAST_MOVE: 19,
-	AURA.FAST_GOLDHP: 20,
-	AURA.FAST_GOLDSPAWN: 21,
+	AURA.FAST_SCRAPHP: 20,
+	AURA.FAST_SCRAPSPAWN: 21,
 }
 
 func _ready():
