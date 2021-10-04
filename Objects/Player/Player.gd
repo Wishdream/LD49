@@ -449,6 +449,7 @@ func process_build(facing):
 # Downstate
 func process_death(_delta):
 	hand_object.visible = false
+	$Hitbox/HitShape.disabled = false
 	sprite.play("hurt")
 	if grounded:
 		if abs(velocity.x) > 1:
@@ -494,7 +495,7 @@ func _on_Hitbox_area_entered(_area):
 			take_damage(1)
 		else:
 			take_damage(_area.damage_value)
-	if _area.get_collision_layer_bit(9):
+	elif _area.get_collision_layer_bit(9):
 		emit_signal("player_died")
 
 

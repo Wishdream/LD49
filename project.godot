@@ -39,7 +39,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Ruff Tuff Skies"
-run/main_scene="res://Levels/stage.tscn"
+run/main_scene="res://Scenes/Logo/Intro.tscn"
 config/icon="res://icon.png"
 config/windows_native_icon="res://icon.ico"
 
@@ -48,6 +48,7 @@ config/windows_native_icon="res://icon.ico"
 Global="*res://Global.gd"
 Run="*res://Run.gd"
 BGM="*res://Sounds/BGM/BGM.tscn"
+Transition="*res://Scenes/Transition.tscn"
 
 [display]
 

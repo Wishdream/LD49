@@ -13,7 +13,8 @@ func _ready():
 func _process(delta):
 	if Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("ui_select"):
 		$AnimationPlayer.stop()
-		assert(get_tree().change_scene(scene.resource_path) == OK)
+		Transition.scene_change(scene.resource_path)
+		#assert(get_tree().change_scene(scene.resource_path) == OK)
 	
 	var delta_move = 10 * delta
 	$"Background/parallax-clouds".position.x -= delta_move
@@ -22,4 +23,5 @@ func _process(delta):
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "meow":
-		assert(get_tree().change_scene(scene.resource_path) == OK)
+		Transition.scene_change(scene.resource_path)
+		#assert(get_tree().change_scene(scene.resource_path) == OK)

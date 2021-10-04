@@ -3,16 +3,13 @@
 [ext_resource path="res://Scenes/UI/HUD.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/UI/Pause.tscn" type="PackedScene" id=2]
 
-[node name="UI" type="MarginContainer"]
+[node name="UI" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -178.0
 margin_top = -118.0
 margin_right = 178.0
 margin_bottom = 118.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="HUD" parent="." instance=ExtResource( 1 )]
 anchor_right = 0.0

@@ -40,8 +40,12 @@ func enable_platform():
 func _on_StageTimer_timeout():
 	if shop_active:
 		shopkeep_leave()
+		get_parent().get_node("Stage").modulate = Color.white
+		get_parent().get_node("DecayTimer").paused = false
 		get_tree().get_current_scene().get_node("StageTimer").start(Global.RUN_TIME * Run.wait_rate)
 	else:
 		shopkeep_call()
+		get_parent().get_node("Stage").modulate = Color.aqua
+		get_parent().get_node("DecayTimer").paused = true
 		get_tree().get_current_scene().get_node("StageTimer").start(WAIT_TIME)
 	shop_active = !shop_active

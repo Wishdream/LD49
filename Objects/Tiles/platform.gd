@@ -1,7 +1,7 @@
-extends StaticBody2D
+extends KinematicBody2D
 
 var main_pos = Vector2()
-var vel = 0
+var vel = Vector2.ZERO
 var is_hit = false
 var parent
 var timer
@@ -15,13 +15,13 @@ func _ready():
 
 func _physics_process(_delta):
 	if parent.sprite_anim.frame == parent.sprite_max:
-		position.y += (vel * 1.5) * _delta
+		var _vel = move_and_slide(vel * 1.5)
 	elif timer.is_stopped(): 
-		position.y += vel * _delta
+		var _vel = move_and_slide(vel)
 
 
 func _on_Platform_start_fall():
-	vel = 10 * Run.decay_rate
+	vel = Vector2(0, 10 * Run.decay_rate)
 	
 
 func _on_Hitbox_area_entered(_area):
@@ -38,7 +38,7 @@ func repair_platform(_area):
 
 func _on_Exit_area_entered(area):
 	if area == $ExitChecker:
-		vel = 100
+		vel = Vector2(0, 100)
 		$ExitChecker/ExitPlayer.play("fall")
 		set_collision_layer_bit(1, false)
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Sounds/BGM/title.ogg" type="AudioStream" id=1]
 [ext_resource path="res://Sounds/BGM/stage.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Sounds/BGM/fail.mp3" type="AudioStream" id=3]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node
@@ -9,15 +10,22 @@ script/source = "extends Node
 func stop():
 	$title.stop()
 	$stage.stop()
+	$fail.stop()
 	
 func play(song_name : String):
 	match song_name:
 		\"title\":
 			if !$title.playing: $title.play()
 			$stage.stop()
+			$fail.stop()
 		\"stage\":
 			if !$stage.playing: $stage.play()
 			$title.stop()
+			$fail.stop()
+		\"fail\":
+			$title.stop()
+			$stage.stop()
+			$fail.play()
 "
 
 [node name="BGM" type="Node"]
@@ -30,4 +38,8 @@ volume_db = -10.0
 
 [node name="stage" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
+volume_db = -10.0
+
+[node name="fail" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
 volume_db = -10.0

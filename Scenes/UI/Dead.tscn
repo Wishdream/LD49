@@ -5,15 +5,6 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
 
-func _process(_delta):
-	if Input.is_action_just_pressed(\"pause\") and !get_parent().get_node(\"Dead\").visible:
-		if !visible:
-			get_tree().paused = true
-		else:
-			get_tree().paused = false
-		visible = !visible
-
-
 func _on_Retry_pressed():
 	Run.reset_run()
 	BGM.stop()
@@ -24,9 +15,15 @@ func _on_Retry_pressed():
 
 func _on_Exit_pressed():
 	get_tree().change_scene(\"res://Scenes/Title/Title.tscn\")
+
+
+func _on_Player_player_died():
+	BGM.play(\"fail\")
+	visible = true
+	get_tree().paused = true
 "
 
-[node name="Pause" type="Control"]
+[node name="Dead" type="Control"]
 pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -44,24 +41,24 @@ margin_left = -360.0
 margin_top = -240.0
 margin_right = 360.0
 margin_bottom = 240.0
-color = Color( 0.368627, 0.219608, 0.329412, 0.501961 )
+color = Color( 0.305882, 0.160784, 0.356863, 0.796078 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Paused" type="Label" parent="."]
+[node name="Game Over" type="Label" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -43.0
+margin_left = -60.6326
 margin_top = -32.0
-margin_right = 43.0
+margin_right = 61.3674
 margin_bottom = -20.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_fonts/font = ExtResource( 1 )
-text = "PAUSED"
+text = "GAME OVER"
 align = 1
 valign = 1
 __meta__ = {
