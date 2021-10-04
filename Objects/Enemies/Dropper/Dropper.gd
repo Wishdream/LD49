@@ -5,3 +5,4 @@ func process_move(_delta):
 	play_anim("walk")
 	if velocity.x == 0:
 		velocity.x = facing * MOVE_SPEED
+	apply_gravity(_delta)
