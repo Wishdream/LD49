@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=8 format=2]
+[gd_resource type="Theme" load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/UI/font-dogicapixel.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Scenes/UI/font-dogicapixelbold.tres" type="DynamicFont" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://Scenes/UI/Theme/theme-button-hover.tres" type="StyleBox" id=5]
 [ext_resource path="res://Scenes/UI/Theme/theme-button-disabled.tres" type="StyleBox" id=6]
 [ext_resource path="res://Scenes/UI/Theme/theme-button-pressed.tres" type="StyleBox" id=7]
+[ext_resource path="res://Scenes/UI/Theme/theme-progressbar-fg.tres" type="StyleBox" id=8]
+[ext_resource path="res://Scenes/UI/Theme/theme-progressbar-bg.tres" type="StyleBox" id=9]
 
 [resource]
 default_font = ExtResource( 1 )
@@ -33,3 +35,8 @@ Label/constants/shadow_offset_y = 1
 Label/fonts/font = null
 Label/styles/normal = null
 Panel/styles/panel = ExtResource( 3 )
+ProgressBar/colors/font_color = Color( 0.94, 0.94, 0.94, 1 )
+ProgressBar/colors/font_color_shadow = Color( 0, 0, 0, 1 )
+ProgressBar/fonts/font = null
+ProgressBar/styles/bg = ExtResource( 9 )
+ProgressBar/styles/fg = ExtResource( 8 )
