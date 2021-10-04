@@ -12,6 +12,10 @@ const GRAVITY = 800
 
 var difficulty = 0
 
+func _process(delta):
+	if Input.is_key_pressed(KEY_F5):
+		get_tree().reload_current_scene()
+
 # 0 = weapons
 # 1 = hammer
 # 2 = aerial

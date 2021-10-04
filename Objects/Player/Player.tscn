@@ -122,6 +122,7 @@ anims/Flash = SubResource( 1 )
 
 [connection signal="hp_changed" from="." to="Camera/UI/HUD" method="_on_Player_hp_changed"]
 [connection signal="items_changed" from="." to="Camera/UI/HUD" method="_on_Player_items_changed"]
+[connection signal="scrap_changed" from="." to="Camera/UI/HUD" method="_on_Player_scrap_changed"]
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_Hitbox_body_entered"]
 [connection signal="area_entered" from="Ladderbox" to="." method="_on_Ladderbox_area_entered"]

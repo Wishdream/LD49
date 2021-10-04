@@ -63,3 +63,7 @@ func _on_Player_items_changed():
 	set_hammer(Run.hammer)
 	set_aerial(Run.aerial)
 	update_items()
+
+
+func _on_Player_scrap_changed():
+	set_scrap(Run.scrap)

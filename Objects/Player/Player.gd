@@ -52,6 +52,7 @@ onready var spawn_mel:Position2D = get_node("HandPivot/MelSpawn")
 onready var spawn_proj:Position2D = get_node("HandPivot/ProjSpawn")
 
 signal hp_changed(new_hp)
+signal scrap_changed()
 signal items_changed()
 
 #==============================================================================
@@ -117,6 +118,10 @@ func take_damage(value):
 		
 func update_items():
 	emit_signal("items_changed")
+	
+func give_scrap(value):
+	Run.scrap += value
+	emit_signal("scrap_changed")
 
 func process_movement(_delta, _facing = 1):
 	if not aerialed: particles.emitting = dashed
