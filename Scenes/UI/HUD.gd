@@ -67,3 +67,7 @@ func _on_Player_items_changed():
 
 func _on_Player_scrap_changed():
 	set_scrap(Run.scrap)
+
+
+func _on_Player_player_died():
+	pass # Replace with function body.

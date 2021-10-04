@@ -7,7 +7,7 @@
 [ext_resource path="res://Objects/Player/player_colbox.tres" type="Shape2D" id=5]
 [ext_resource path="res://Objects/Player/Items/HeldSprite.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Objects/Player/PlayerAttacks.gd" type="Script" id=7]
-[ext_resource path="res://Scenes/UI/HUD.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/UI/UI.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Sounds/SFX/Player/Pickup.wav" type="AudioStream" id=9]
 [ext_resource path="res://Sounds/SFX/Player/Jump2.wav" type="AudioStream" id=10]
 [ext_resource path="res://Sounds/SFX/Player/Land.wav" type="AudioStream" id=11]
@@ -130,23 +130,15 @@ shape = ExtResource( 5 )
 current = true
 zoom = Vector2( 0.5, 0.5 )
 
-[node name="UI" type="MarginContainer" parent="Camera"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -178.0
-margin_top = -118.0
-margin_right = 178.0
-margin_bottom = 118.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="UI" parent="Camera" instance=ExtResource( 8 )]
 
-[node name="HUD" parent="Camera/UI" instance=ExtResource( 8 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="HUD" parent="Camera/UI" index="0"]
 margin_right = 356.0
 margin_bottom = 236.0
-rect_scale = Vector2( 1, 1 )
+
+[node name="Pause" parent="Camera/UI" index="1"]
+margin_right = 356.0
+margin_bottom = 236.0
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -8 )
@@ -198,10 +190,12 @@ anims/Invul = SubResource( 2 )
 
 [connection signal="hp_changed" from="." to="Camera/UI/HUD" method="_on_Player_hp_changed"]
 [connection signal="items_changed" from="." to="Camera/UI/HUD" method="_on_Player_items_changed"]
-[connection signal="scrap_changed" from="." to="Camera/UI/HUD" method="_on_Player_scrap_changed"]
+[connection signal="player_died" from="." to="Camera/UI/HUD" method="_on_Player_player_died"]
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_Hitbox_body_entered"]
 [connection signal="area_entered" from="Ladderbox" to="." method="_on_Ladderbox_area_entered"]
 [connection signal="area_exited" from="Ladderbox" to="." method="_on_Ladderbox_area_exited"]
 [connection signal="timeout" from="MoveTimer" to="." method="_on_MoveTimer_timeout"]
 [connection signal="timeout" from="InvTimer" to="." method="_on_InvTimer_timeout"]
+
+[editable path="Camera/UI"]

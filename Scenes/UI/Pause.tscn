@@ -1,0 +1,108 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/UI/font-dogicapixel16.tres" type="DynamicFont" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+func _process(delta):
+	if Input.is_action_just_pressed(\"pause\"):
+			if !visible:
+				visible = true
+				get_tree().paused = true
+			else:
+				visible = false
+				get_tree().paused = false
+
+
+func _on_Retry_button_up():
+	BGM.stop()
+	get_tree().paused = false
+	var _reload = get_tree().reload_current_scene()
+	BGM.play(\"stage\")
+
+
+func _on_Exit_button_up():
+	pass # Replace with function body.
+"
+
+[node name="Pause" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 720.0
+margin_bottom = 480.0
+color = Color( 0.368627, 0.219608, 0.329412, 0.501961 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Paused" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -360.0
+margin_top = -272.0
+margin_right = 360.0
+margin_bottom = 208.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 1 )
+text = "PAUSED"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -192.0
+margin_right = 192.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Retry" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -128.0
+margin_right = -40.0
+margin_bottom = 40.0
+custom_fonts/font = ExtResource( 1 )
+shortcut_in_tooltip = false
+text = " Retry "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 40.0
+margin_right = 128.0
+margin_bottom = 40.0
+custom_fonts/font = ExtResource( 1 )
+shortcut_in_tooltip = false
+text = " Exit "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="button_up" from="Retry" to="." method="_on_Retry_button_up"]
+[connection signal="button_up" from="Exit" to="." method="_on_Exit_button_up"]
