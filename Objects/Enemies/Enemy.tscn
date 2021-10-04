@@ -30,6 +30,7 @@ animation = "idle"
 offset = Vector2( 0, -12 )
 
 [node name="Timer" type="Timer" parent="."]
+one_shot = true
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

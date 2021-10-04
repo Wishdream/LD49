@@ -28,5 +28,5 @@ func process_attack(_delta):
 	if is_on_floor():
 		change_state(IDLE)
 
-func _on_Timer_timeout():
-	state = randi()%2
+func process_time_end():
+	change_state(randi()%2)

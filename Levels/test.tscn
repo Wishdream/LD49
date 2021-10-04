@@ -83,11 +83,11 @@ position = Vector2( 328, 280 )
 [node name="Enemy2" parent="Level" instance=ExtResource( 7 )]
 position = Vector2( 304, 280 )
 
-[node name="Enemy3" parent="Level" instance=ExtResource( 8 )]
-position = Vector2( 336, 168 )
+[node name="Enemy4" parent="Level" instance=ExtResource( 8 )]
+position = Vector2( 344, 200 )
 
-[node name="Enemy" parent="Level/Enemy3" instance=ExtResource( 9 )]
-position = Vector2( 0, 32 )
+[node name="Enemy" parent="Level/Enemy4" instance=ExtResource( 9 )]
+position = Vector2( 0, -32 )
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2( 176, 176 )

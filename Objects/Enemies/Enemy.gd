@@ -44,6 +44,10 @@ func process_attack(_delta):
 	apply_gravity(_delta)
 
 
+func process_time_end():
+	change_state(randi()%3)
+
+
 func play_anim(animation : String):
 	if sprite != null:
 		sprite.play(animation)
@@ -54,7 +58,7 @@ func start_timer(time : float):
 
 
 func _on_Timer_timeout():
-	state = randi()%3
+	process_time_end()
 
 
 func _on_Hitbox_area_entered(area):
