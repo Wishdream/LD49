@@ -28,27 +28,30 @@ enum {
 }
 
 var dir = Vector2.ZERO
-var dashed = false
-var dodged = false
-var aerialed = false
-var climbing = false
-var on_ladder = false
-var is_attacking = false
-var is_building = false
-var boom_throw = false
+var dashed:bool = false
+var dodged:bool = false
+var aerialed:bool = false
+var climbing:bool = false
+var on_ladder:bool = false
+var is_attacking:bool = false
+var is_building:bool = false
+var boom_throw:bool = false
 
-onready var move_timer = get_node("MoveTimer")
-onready var inv_timer = get_node("InvTimer")
-onready var swing_timer = get_node("SwingTimer")
-onready var particles = get_node("Particles")
-onready var anim_player = get_node("AnimationPlayer")
-onready var ladderbox = get_node("Ladderbox")
-onready var hand_pivot = get_node("HandPivot")
-onready var hand_object = get_node("HandPivot/Hand")
-onready var hand_anim = get_node("HandPivot/Hand/AnimationPlayer")
-onready var attacks = get_node("Attacks")
-onready var spawn_mel = get_node("HandPivot/MelSpawn")
-onready var spawn_proj = get_node("HandPivot/ProjSpawn")
+#onready var sprite:AnimatedSprite = get_node("Sprite")
+onready var move_timer:Timer = get_node("MoveTimer")
+onready var inv_timer:Timer = get_node("InvTimer")
+onready var swing_timer:Timer = get_node("SwingTimer")
+onready var particles:CPUParticles2D = get_node("Particles")
+onready var anim_player:AnimationPlayer = get_node("AnimationPlayer")
+onready var ladderbox:Area2D = get_node("Ladderbox")
+onready var hand_pivot:Node2D = get_node("HandPivot")
+onready var hand_object:Sprite = get_node("HandPivot/Hand")
+onready var hand_anim:AnimationPlayer = get_node("HandPivot/Hand/AnimationPlayer")
+onready var attacks:Node = get_node("Attacks")
+onready var spawn_mel:Position2D = get_node("HandPivot/MelSpawn")
+onready var spawn_proj:Position2D = get_node("HandPivot/ProjSpawn")
+
+signal hp_changed(new_hp)
 
 #==============================================================================
 # Functions
@@ -59,6 +62,9 @@ func _ready():
 	state = FALL
 	hand_anim.connect("animation_finished", self, "_on_AnimationPlayer_animation_finished")
 	hand_anim.play("idle")
+	hand_object.frame = Global.weapon_sprite_index[Run.weapon]
+	
+	emit_signal("hp_changed", hp)
 
 func _physics_process(delta):
 
@@ -103,6 +109,8 @@ func _physics_process(delta):
 func take_damage(value):
 	hp -= value
 	dashed = false
+	emit_signal("hp_changed", hp)
+	
 	if (value > 0):
 		move_timer.start(HURT_TIME)
 		change_state(HURT)
@@ -364,20 +372,8 @@ func process_attack(facing):
 		if Input.is_action_just_pressed("attack") and swing_timer.time_left < 0.1:
 			
 			# Graphic and stat changes
-			match Run.weapon:
-				Global.WEAPON.DAGGER:
-					hand_object.frame = 22
-				Global.WEAPON.SWORD:
-					hand_object.frame = 0
-				Global.WEAPON.SPEAR:
-					hand_object.frame = 1
-				Global.WEAPON.HAMMER:
-					hand_object.frame = 2
-				Global.WEAPON.PISTOL:
-					hand_object.frame = 3
-				Global.WEAPON.SHURIKEN:
-					hand_object.frame = 4
-					
+			hand_object.frame = Global.weapon_sprite_index[Run.weapon]
+			
 			is_attacking = true
 			var pos
 			if Run.weapon > 3:
@@ -396,20 +392,13 @@ func process_build(facing):
 		if Input.is_action_just_pressed("build") and swing_timer.time_left < 0.1:
 			
 			# Graphic and stat changes
-			match Run.hammer:
-				Global.HAMMER.NORMAL:
-					hand_object.frame = 5
-				Global.HAMMER.BOOMER:
-					hand_object.frame = 6
+			hand_object.frame = Global.hammer_sprite_index[Run.hammer]
+			
+			#match Run.hammer:
+				#Global.HAMMER.BOOMER:
 					# Skip if boom not in hand
 					# if boom_throw: return
 					# boom_throw = true
-				Global.HAMMER.SPIKE:
-					hand_object.frame = 7
-				Global.HAMMER.BETTER:
-					hand_object.frame = 8
-				Global.HAMMER.AREA:
-					hand_object.frame = 9
 			
 			var pos = spawn_mel.global_position
 			attacks.shoot_build(pos, facing, Run.hammer)
