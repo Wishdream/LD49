@@ -449,10 +449,11 @@ func _on_MoveTimer_timeout():
 
 
 func _on_Hitbox_area_entered(_area):
-	if (_area.get("damage_value") == null):
-		take_damage(1)
-	else:
-		take_damage(_area.damage_value)
+	if _area.get_collision_layer_bit(5):
+		if (_area.get("damage_value") == null):
+			take_damage(1)
+		else:
+			take_damage(_area.damage_value)
 
 
 func _on_Ladderbox_area_entered(_area):
@@ -470,3 +471,9 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "swing":
 		is_attacking = false
 		hand_anim.play("idle")
+
+
+func _on_Hitbox_body_entered(body):
+	if body.get_collision_layer_bit(6):
+		give_scrap(body.scrap_value)
+		body.queue_free()
