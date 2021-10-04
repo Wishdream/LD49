@@ -5,5 +5,5 @@ func _ready():
 
 func reset_pedestals():
 	for i in $Pedestals.get_children():
-		i.index = randi() % 24
+		i.index = randi() % Global.items.size()
 		i.price = randi() % 200 + 20
