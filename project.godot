@@ -52,6 +52,7 @@ Run="*res://Run.gd"
 
 window/size/width=720
 window/size/height=480
+window/size/resizable=false
 
 [gui]
 
