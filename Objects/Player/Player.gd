@@ -115,6 +115,7 @@ func take_damage(value):
 
 	if (value > 0):
 		move_timer.start(HURT_TIME)
+		$Sounds/Hit.play()
 		change_state(HURT)
 		
 func update_items():
@@ -215,6 +216,10 @@ func process_jump(delta):
 
 	if move_timer.is_stopped():
 		move_timer.start(JUMP_TIME)
+		if aerialed:
+			$Sounds/Jump2.play()
+		else:
+			$Sounds/Jump.play()
 		sprite.play("air up")
 
 	# Dash Modifier
@@ -253,6 +258,7 @@ func process_dash(_delta, facing):
 
 	if move_timer.is_stopped():
 		move_timer.start(DASH_TIME)
+		$Sounds/Dash.play()
 
 	if Input.is_action_just_pressed("jump"):
 		move_timer.start(JUMP_TIME)
@@ -303,6 +309,7 @@ func process_fall(delta):
 
 	if grounded:
 		change_state(IDLE)
+		$Sounds/Land.play()
 
 	if Input.is_action_just_pressed("jump") and Run.aerial != Global.AERIAL.NONE and not aerialed:
 		change_state(AERIAL)
@@ -322,6 +329,8 @@ func process_dodge(_delta):
 	sprite.play("dodge")
 	if move_timer.is_stopped():
 		move_timer.start(DODGE_TIME)
+		$Hitbox/HitShape.disabled = true
+		$Sounds/Dodge.play()
 		dodged = true
 		velocity = dir * DODGE_SPEED
 		sprite.flip_h = dir.x < 0
@@ -334,6 +343,7 @@ func process_dodge(_delta):
 # Climbing
 func process_climb(_delta):
 	sprite.play("climb")
+	
 	if dir.x != 0: sprite.flip_h = dir.x < 0
 	velocity = dir * MOVE_SPEED
 
@@ -357,7 +367,10 @@ func process_hurt(_delta, facing):
 	if prev_state != CLIMB:
 		velocity.x = -DASH_SPEED * facing
 		velocity.y = 0
+	else:
+		velocity = Vector2.ZERO
 	sprite.play("hurt")
+	$Hitbox/HitShape.disabled = true
 	particles.emitting = false
 	dashed = false
 	if hp < 1:
@@ -405,7 +418,7 @@ func process_attack(facing):
 
 			# Graphic and stat changes
 			hand_object.frame = Global.weapon_sprite_index[Run.weapon]
-
+			$Sounds/Attack.play()
 			is_attacking = true
 			var pos
 			if Run.weapon > 3:
@@ -425,7 +438,7 @@ func process_build(facing):
 
 			# Graphic and stat changes
 			hand_object.frame = Global.hammer_sprite_index[Run.hammer]
-
+			$Sounds/Swing.play()
 			var pos = spawn_mel.global_position
 			attacks.shoot_build(pos, facing, Run.hammer)
 			is_attacking = true
@@ -434,7 +447,6 @@ func process_build(facing):
 
 # Downstate
 func process_death(_delta):
-	
 	hand_object.visible = false
 	sprite.play("hurt")
 	if grounded:
@@ -443,7 +455,9 @@ func process_death(_delta):
 		else:
 			velocity.x = 0
 		sprite.play("down")
-		if inv_timer.is_stopped(): inv_timer.start(DOWN_TIME)
+		if inv_timer.is_stopped():
+			$Sounds/HitLand.play()
+			inv_timer.start(DOWN_TIME)
 	apply_gravity(_delta)
 
 
@@ -455,8 +469,9 @@ func _on_MoveTimer_timeout():
 	if state == HURT:
 		velocity = Vector2.ZERO
 		inv_timer.start()
-		$Hitbox/HitShape.disabled = true
 		anim_player.play("Invul")
+	if state == DODGE:
+		$Hitbox/HitShape.disabled = false
 	if state == DASH:
 		change_state(IDLE)
 	elif state != IDLE and state != MOVE:

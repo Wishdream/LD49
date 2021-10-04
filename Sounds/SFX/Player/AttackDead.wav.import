@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/AttackDead.wav-0b68bf1c9ccaf1d1404aeb3c7a71dc7a.sample"
+
+[deps]
+
+source_file="res://Sounds/SFX/Player/AttackDead.wav"
+dest_files=[ "res://.import/AttackDead.wav-0b68bf1c9ccaf1d1404aeb3c7a71dc7a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

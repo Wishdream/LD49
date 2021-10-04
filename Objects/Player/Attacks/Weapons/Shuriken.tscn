@@ -23,7 +23,7 @@ tracks/0/keys = {
 }
 
 [node name="Shuriken" instance=ExtResource( 1 )]
-damage_value = 20
+damage_value = 2
 damage_time = 1.0
 attack_type = 1
 velocity = Vector2( 400, 0 )

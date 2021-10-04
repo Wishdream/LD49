@@ -15,7 +15,7 @@ func shopkeep_leave():
 	$AnimationPlayer.play("exit")
 
 func shopkeep_call():
-	$AnimationPlayer.play("enter")
+	$AnimationPlayer.play("entry")
 
 func disable_platform():
 	for i in $Platform/Pedestals.get_children():
@@ -33,3 +33,7 @@ func enable_platform():
 	for i in $Platform/Tiles.get_children():
 		var body:StaticBody2D = i.get_node("StaticBody2D")
 		body.set_collision_layer_bit(1, true)
+
+
+func _on_StageTimer_timeout():
+	shopkeep_call()

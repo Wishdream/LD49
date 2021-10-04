@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Objects/Player/pal-spriteframes.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://Objects/Player/Player.gd" type="Script" id=2]
@@ -9,6 +9,18 @@
 [ext_resource path="res://Objects/Player/PlayerAttacks.gd" type="Script" id=7]
 [ext_resource path="res://Scenes/UI/HUD.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Objects/Playerinvul.tres" type="Animation" id=9]
+[ext_resource path="res://Sounds/SFX/Player/Jump2.wav" type="AudioStream" id=10]
+[ext_resource path="res://Sounds/SFX/Player/Land.wav" type="AudioStream" id=11]
+[ext_resource path="res://Sounds/SFX/Player/Dash.wav" type="AudioStream" id=12]
+[ext_resource path="res://Sounds/SFX/Player/Dodge.wav" type="AudioStream" id=13]
+[ext_resource path="res://Sounds/SFX/Player/Hit.wav" type="AudioStream" id=14]
+[ext_resource path="res://Sounds/SFX/Player/Jump.wav" type="AudioStream" id=15]
+[ext_resource path="res://Sounds/SFX/Player/HitLand.wav" type="AudioStream" id=16]
+[ext_resource path="res://Sounds/SFX/Player/Swing.wav" type="AudioStream" id=17]
+[ext_resource path="res://Sounds/SFX/Player/Attack.wav" type="AudioStream" id=18]
+[ext_resource path="res://Sounds/SFX/Player/AttackHit.wav" type="AudioStream" id=19]
+[ext_resource path="res://Sounds/SFX/Player/Hammer.wav" type="AudioStream" id=20]
+[ext_resource path="res://Sounds/SFX/Player/AttackDead.wav" type="AudioStream" id=21]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Flash"
@@ -34,6 +46,45 @@ MOVE_SPEED = 120
 
 [node name="Attacks" type="Node" parent="."]
 script = ExtResource( 7 )
+
+[node name="Sounds" type="Node2D" parent="."]
+
+[node name="Attack" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 18 )
+
+[node name="Dash" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 12 )
+
+[node name="Dodge" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 13 )
+
+[node name="Hit" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 14 )
+
+[node name="HitLand" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 16 )
+
+[node name="Jump" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 15 )
+
+[node name="Jump2" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 10 )
+
+[node name="Land" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 11 )
+
+[node name="Swing" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 17 )
+
+[node name="AttackHit" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 19 )
+
+[node name="AttackDead" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 21 )
+
+[node name="Repair" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 20 )
+volume_db = -10.0
 
 [node name="Hitbox" type="Area2D" parent="."]
 monitorable = false

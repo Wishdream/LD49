@@ -46,9 +46,14 @@ extents = Vector2( 728, 120 )
 [sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 40, 832 )
 
-[node name="Node" type="Node"]
+[node name="SkyTrail" type="Node"]
 
 [node name="DecayTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="StageTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
 autostart = true
 
 [node name="Parallax" parent="." instance=ExtResource( 1 )]
@@ -202,3 +207,5 @@ shape = SubResource( 8 )
 [node name="DED3" type="CollisionShape2D" parent="DeathPlane"]
 position = Vector2( 768, 120 )
 shape = SubResource( 8 )
+
+[connection signal="timeout" from="StageTimer" to="shopkeep" method="_on_StageTimer_timeout"]

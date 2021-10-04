@@ -53,10 +53,23 @@ func _physics_process(delta):
 		#$Sprite.modulate.a = lerp(1,0, 1-($Timer.time_left/$Timer.wait_time))
 
 func _on_Timer_timeout():
-	call_deferred("queue_free")
+	call_deferred("free")
 
 func _on_Hitbox_area_entered(_area):
-	call_deferred("queue_free")
+	hit_registered(_area)
 
 func _on_Hitbox_body_entered(_body):
-	call_deferred("queue_free")
+	hit_registered(_body)
+
+func hit_registered(coll):
+	if damage_type != 2:
+		# Positive it's only the player doing this
+		if (coll.get_parent().get("hp") != null):
+			if damage_type == 1 or damage_type == 3:
+				source.get_node("Sounds/Repair").play()
+			if damage_type != 1 and !coll.get_collision_layer_bit(1):
+				if coll.get_parent().hp < 1:
+					source.get_node("Sounds/AttackDead").play()
+				else:
+					source.get_node("Sounds/AttackHit").play()
+	call_deferred("free")

@@ -69,7 +69,7 @@ func start_timer(time : float):
 
 
 func deal_damage(value):
-	if hp < 0:
+	if hp - value < 1:
 		hp = 0
 		var amount = 3.0 * Run.scrap_rate
 		for i in range(amount):
@@ -82,7 +82,6 @@ func deal_damage(value):
 			var curve_height = sin(amount_norm * (PI))
 			scrap.BOUNCE_SPEED = lerp(200, scrap.BOUNCE_SPEED, curve_height) 
 			scrap.velocity.y = -scrap.BOUNCE_SPEED
-			print(curve_height)
 		call_deferred("queue_free")
 	else:
 		hp -= value * Run.attack_rate
@@ -96,4 +95,4 @@ func _on_Hitbox_area_entered(area):
 	if area.get_collision_layer_bit(9):
 		call_deferred("free")
 	else:
-		deal_damage(area.get_parent().damage_value)
+		deal_damage(area.get_parent().damage_value * Run.attack_rate)

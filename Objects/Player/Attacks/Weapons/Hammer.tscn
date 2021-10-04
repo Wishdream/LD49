@@ -7,7 +7,7 @@
 radius = 24.0
 
 [node name="Hammer" instance=ExtResource( 1 )]
-damage_value = 30
+damage_value = 5
 build_value = 1
 damage_time = 0.05
 

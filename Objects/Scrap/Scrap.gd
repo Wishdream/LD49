@@ -18,3 +18,6 @@ func apply_gravity(_delta):
 	velocity += Vector2(0,Global.GRAVITY) * _delta
 	if velocity.y > FALL_SPEED:
 		velocity.y = FALL_SPEED
+
+func _on_Timer_timeout():
+	call_deferred("free")
