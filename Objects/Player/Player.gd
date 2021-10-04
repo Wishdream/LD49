@@ -320,6 +320,8 @@ func process_dodge(_delta):
 		dodged = true
 		velocity = dir * DODGE_SPEED
 		sprite.flip_h = dir.x < 0
+		if inv_timer.is_stopped():
+			anim_player.play("Flash")
 	if move_timer.time_left < 0.06:
 		velocity = Vector2.ZERO
 
@@ -446,6 +448,9 @@ func process_death(_delta):
 func _on_MoveTimer_timeout():
 	if state == HURT:
 		velocity = Vector2.ZERO
+		inv_timer.start()
+		$Hitbox/HitShape.disabled = true
+		anim_player.play("Invul")
 	if state == DOWN:
 		get_tree().quit()
 	if state == DASH:
@@ -453,6 +458,12 @@ func _on_MoveTimer_timeout():
 	elif state != FALL and state != IDLE and state != MOVE:
 		change_state(FALL)
 
+
+func _on_InvTimer_timeout():
+	$Hitbox/HitShape.disabled = false
+	anim_player.stop()
+	sprite.visible = true
+	
 
 func _on_Hitbox_area_entered(_area):
 	if _area.get_collision_layer_bit(5):

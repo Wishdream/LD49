@@ -1,6 +1,6 @@
 extends Node
 
-var scrap_rate = 1
+var scrap_rate = 2
 var decay_rate = 1
 var attack_rate = 1
 var build_rate = 1
