@@ -7,6 +7,7 @@ enum {IDLE, MOVE, ATTACK}
 onready var timer = get_node("Timer")
 
 func _ready():
+	sprite.flip_h = facing == 1
 	timer.wait_time = WAIT_TIME
 
 func _physics_process(delta):
