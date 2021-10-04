@@ -22,7 +22,7 @@ func deal_damage(value):
 		hp = 0
 		call_deferred("queue_free")
 	else:
-		hp -= value
+		hp -= value * Run.attack_rate
 
 func process_movement(_delta, _facing = 1):
 	if velocity.x != 0:

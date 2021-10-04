@@ -384,7 +384,7 @@ func process_aerial(_delta, facing):
 
 # Attacks
 func process_attack(facing):
-	if state != HURT and state != DOWN:
+	if state != HURT and state != DOWN and Run.attack_rate > 0:
 		if Input.is_action_just_pressed("attack") and swing_timer.time_left < 0.1:
 
 			# Graphic and stat changes
@@ -404,7 +404,7 @@ func process_attack(facing):
 
 # Build
 func process_build(facing):
-	if state != HURT and state != DOWN:
+	if state != HURT and state != DOWN and Run.build_rate > 0:
 		if Input.is_action_just_pressed("build") and swing_timer.time_left < 0.1:
 
 			# Graphic and stat changes
