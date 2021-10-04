@@ -116,7 +116,7 @@ func take_damage(value):
 		change_state(HURT)
 		
 func give_scrap(value):
-	Run.scrap += value
+	Run.add_scrap(value * Run.scrap_rate)
 	emit_signal("scrap_changed", Run.scrap)
 
 func process_movement(_delta, _facing = 1):
@@ -450,9 +450,7 @@ func _on_MoveTimer_timeout():
 
 
 func _on_Hitbox_area_entered(_area):
-	if _area.get_collision_mask_bit(6):
-		_area.queue_free()
-	else:
+	if _area.get_collision_layer_bit(5):
 		if (_area.get("damage_value") == null):
 			take_damage(1)
 		else:
@@ -474,3 +472,9 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "swing":
 		is_attacking = false
 		hand_anim.play("idle")
+
+
+func _on_Hitbox_body_entered(body):
+	if body.get_collision_layer_bit(6):
+		give_scrap(body.scrap_value)
+		body.queue_free()

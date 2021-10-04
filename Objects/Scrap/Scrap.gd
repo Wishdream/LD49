@@ -4,6 +4,7 @@ var velocity = Vector2.ZERO
 var FALL_SPEED = 300
 var BOUNCE_SPEED = 300
 var BOUNCE_RATE = 25
+var scrap_value = 2
 
 func _physics_process(delta):
 	apply_gravity(delta)
