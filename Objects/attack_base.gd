@@ -14,16 +14,16 @@ func set_bullet():
 		$Hitbox.set_collision_mask_bit(1, true)
 		$Hitbox.set_collision_mask_bit(2, true)
 		if !$Hitbox.is_connected("body_entered", self, "_on_Hitbox_body_entered"):
-			$Hitbox.connect("body_entered", self, "_on_Hitbox_body_entered")
+			var _signal = $Hitbox.connect("body_entered", self, "_on_Hitbox_body_entered")
 	if damage_type == 1: # Build
 		$Hitbox.set_collision_layer_bit(4, true)
 		$Hitbox.set_collision_mask_bit(1, true)
 		if !$Hitbox.is_connected("area_entered", self, "_on_Hitbox_area_entered"):
-			$Hitbox.connect("area_entered", self, "_on_Hitbox_area_entered")
+			var _signal = $Hitbox.connect("area_entered", self, "_on_Hitbox_area_entered")
 	if damage_type == 2: # Damage to player
 		$Hitbox.set_collision_layer_bit(5, true)
 		if !$Hitbox.is_connected("area_entered", self, "_on_Hitbox_area_entered"):
-			$Hitbox.connect("area_entered", self, "_on_Hitbox_area_entered")
+			var _signal = $Hitbox.connect("area_entered", self, "_on_Hitbox_area_entered")
 		$Hitbox.set_collision_mask_bit(0, true)
 		$Hitbox.set_collision_mask_bit(1, true)
 	if damage_type == 3: # Double - Build and attack
@@ -32,9 +32,9 @@ func set_bullet():
 		$Hitbox.set_collision_mask_bit(1, true)
 		$Hitbox.set_collision_mask_bit(2, true)
 		if !$Hitbox.is_connected("area_entered", self, "_on_Hitbox_area_entered"):
-			$Hitbox.connect("area_entered", self, "_on_Hitbox_area_entered")
+			var _signal = $Hitbox.connect("area_entered", self, "_on_Hitbox_area_entered")
 		if !$Hitbox.is_connected("body_entered", self, "_on_Hitbox_body_entered"):
-			$Hitbox.connect("body_entered", self, "_on_Hitbox_body_entered")
+			var _signal = $Hitbox.connect("body_entered", self, "_on_Hitbox_body_entered")
 	if attack_type == 1:
 		$Hitbox.monitoring = true
 	$Timer.start(damage_time)
