@@ -9,6 +9,7 @@ func process_idle(_delta):
 		change_state(ATTACK)
 	apply_gravity(_delta)
 
+
 func process_move(_delta):
 	start_timer(WAIT_TIME)
 	play_anim("move")

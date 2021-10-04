@@ -32,20 +32,26 @@ func process_move(_delta):
 	play_anim("move")
 	if velocity.x == 0:
 		velocity.x = facing * MOVE_SPEED
-	if !is_on_floor() or is_on_wall():
+	if (!check_ground_move() and grounded) or is_on_wall():
 		velocity.x *= -1
 	apply_gravity(_delta)
 
 
 func process_attack(_delta):
 	velocity.x = 0
-	start_timer(WAIT_TIME/6)
+	start_timer(WAIT_TIME/4)
 	play_anim("attack")
 	apply_gravity(_delta)
 
 
 func process_time_end():
-	change_state(randi()%3)
+	if state == ATTACK:
+		change_state(IDLE)
+	else:
+		var random = randi()%3-1
+		if random != 0:
+			facing = random
+		change_state(randi()%3)
 
 
 func play_anim(animation : String):

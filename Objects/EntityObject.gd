@@ -13,6 +13,7 @@ var hp = hp_max
 var velocity = Vector2.ZERO
 var prev_state = null
 var state = 0
+var grounded = false
 
 onready var sprite = get_node("Sprite")
 
@@ -27,6 +28,7 @@ func process_movement(_delta, _facing = 1):
 	if velocity.x != 0:
 		facing = sign(velocity.x)
 		sprite.flip_h = facing == 1
+	grounded = is_on_floor()
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 func change_state(new_state):
@@ -37,3 +39,7 @@ func apply_gravity(_delta):
 	velocity += Vector2(0,Global.GRAVITY) * _delta
 	if velocity.y > FALL_SPEED:
 		velocity.y = FALL_SPEED
+
+func check_ground_move():
+	var check = Vector2(MOVE_SPEED * facing, Global.GRAVITY)
+	return test_move(transform, check)
