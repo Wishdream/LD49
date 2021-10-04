@@ -10,6 +10,7 @@ var time_signal
 var safe_hp = 5
 var hpmax = 10.0
 var hp = hpmax
+var broken
 
 func _ready():
 	sprite_anim = get_node("Collider/Sprite")
@@ -27,28 +28,21 @@ func _on_DecayTimer_timeout():
 		emit_signal("start_fall")
 	else:
 		sprite_anim.frame = 10
-		$Collider/CollisionShape.disabled = true
-		$Collider/Hitbox.monitoring = false
-		$Collider/Hitbox.monitorable = false
+		broken = true
+		modulate.a = 0.5
+		$Collider.set_collision_layer_bit(1, false)
 		if time_signal:
 			timer.disconnect("timeout", self, "_onDecayTimer_timeout")
 		
-#	if sprite_anim.frame < sprite_max-2:
-#		sprite_anim.frame = sprite_anim.frame + 1
-#		emit_signal("start_fall")
-#
-#	else:
-#		sprite_anim.frame = sprite_anim.frame + 1
-#		$Collider/CollisionShape.disabled = true
-#		$Collider/Hitbox.monitoring = false
-#		$Collider/Hitbox.monitorable = false
-#		if time_signal:
-#			timer.disconnect("timeout", self, "_onDecayTimer_timeout")
 
 func _on_Hitbox_area_entered(area):
 	if hp > hpmax:
 		hp = hpmax
 		sprite_anim.frame = 0
+		if broken:
+			broken = false
+			modulate.a = 1
+			$Collider.set_collision_layer_bit(1, true)
 	else:
 		hp += area.get_parent().build_value * Run.build_rate
 		sprite_anim.frame = int(sprite_max - hp) - 1
