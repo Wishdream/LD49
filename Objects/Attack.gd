@@ -7,6 +7,7 @@ export(float) var damage_time = 0.1
 export(int, "Attack", "Build", "Damage", "Double") var damage_type = 0
 export(int, "Melee", "Projectile") var attack_type = 0
 export(Vector2) var velocity = Vector2.ZERO
+var source = null
 
 func set_bullet():
 	if damage_type == 0: # Attack from player

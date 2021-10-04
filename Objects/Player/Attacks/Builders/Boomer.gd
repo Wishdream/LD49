@@ -1,7 +1,5 @@
 extends Attack
 
-var source
-
 func _ready():
 	set_bullet()
 	$Hitbox.set_collision_mask_bit(1, false)

@@ -5,6 +5,7 @@ var vel = Vector2.ZERO
 var is_hit = false
 var parent
 var timer
+export var RESTORE_RATE = 400
 
 func _ready():
 	main_pos = position
@@ -24,13 +25,13 @@ func _on_Platform_start_fall():
 	
 
 func _on_Hitbox_area_entered(_area):
-	repair_platform()
+	repair_platform(_area)
 
-
-func repair_platform():
-	var _vel = move_and_slide(Vector2(0, -200) * Run.build_rate)
+	
+func repair_platform(_area):
+	position.y -= RESTORE_RATE / 60
+	timer.start()
 	if position.y < main_pos.y:
 		position = main_pos
 		timer.stop()
-	else:
-		timer.start()
+
