@@ -39,6 +39,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Ruff Tuff Skies"
+config/description="The cat wakes up alone after a storm..."
 run/main_scene="res://Scenes/Logo/Intro.tscn"
 config/icon="res://icon.png"
 config/windows_native_icon="res://icon.ico"
@@ -54,7 +55,6 @@ Transition="*res://Scenes/Transition.tscn"
 
 window/size/width=720
 window/size/height=480
-window/size/resizable=false
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 

@@ -5,6 +5,7 @@ var vel = Vector2.ZERO
 var is_hit = false
 var parent
 var timer
+const fall_rate = 20
 export var RESTORE_RATE = 400
 
 func _ready():
@@ -20,14 +21,16 @@ func _physics_process(_delta):
 		var _vel = move_and_slide(vel)
 
 
-func _on_Platform_start_fall():
-	vel = Vector2(0, 10 * Run.decay_rate)
-	
+#func _on_Platform_start_fall():
+#	vel = Vector2(0, 10 * Run.decay_rate)
 
 func _on_Hitbox_area_entered(_area):
 	if _area.get_collision_layer_bit(4):
 		repair_platform(_area)
-	
+		
+	if _area.get_collision_layer_bit(0) or _area.get_collision_layer_bit(2):
+		vel = Vector2(0, fall_rate * Run.decay_rate)
+
 	
 func repair_platform(_area):
 	position.y -= RESTORE_RATE / 60

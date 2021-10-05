@@ -4,17 +4,17 @@
 [ext_resource path="res://Objects/Player/Attacks/Weapons/sword-part.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 24.0
+radius = 32.0
 
 [node name="Sword" instance=ExtResource( 1 )]
 damage_value = 4
 damage_time = 0.05
 
 [node name="Shape" type="CollisionShape2D" parent="Hitbox" index="0"]
-position = Vector2( 8, -8 )
+position = Vector2( 8, -16 )
 shape = SubResource( 1 )
 
 [node name="Sprite" parent="." index="2"]
-position = Vector2( 16, -8 )
-scale = Vector2( 1.33333, 1.33333 )
+position = Vector2( 12, -20 )
+scale = Vector2( 2.33333, 2.33333 )
 texture = ExtResource( 2 )

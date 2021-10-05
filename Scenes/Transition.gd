@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer #Control
 
 enum {CHANGE_TO, CHANGE, RESTART, QUIT}
 var type = 0
@@ -27,7 +27,7 @@ func quit():
 func process_transition(next):
 	if !$AnimationPlayer.is_playing():
 		next_scene = next
-		visible = true
+		#visible = true
 		$AnimationPlayer.queue("enter")
 
 func _on_AnimationPlayer_animation_finished(anim_name):
@@ -47,6 +47,6 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 				BGM.call_deferred("play","stage")
 			QUIT:
 				get_tree().quit()
-	if anim_name == "exit":
-		visible = false
+	#if anim_name == "exit":
+		#visible = false
 		

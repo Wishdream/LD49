@@ -5,7 +5,7 @@
 [ext_resource path="res://Objects/Player/Attacks/Builders/builder_circle.png" type="Texture" id=3]
 
 [node name="Better" instance=ExtResource( 1 )]
-build_value = 3
+build_value = 5
 damage_time = 0.05
 damage_type = 1
 
@@ -14,10 +14,11 @@ monitoring = false
 collision_layer = 2
 
 [node name="Shape" type="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2( 16, 0 )
 shape = ExtResource( 2 )
 
 [node name="Sprite" parent="." index="2"]
-modulate = Color( 1, 1, 1, 0.498039 )
-position = Vector2( 1.90735e-06, 1.90735e-06 )
+modulate = Color( 1, 0.858824, 0.301961, 0.498039 )
+position = Vector2( 16, 4.54747e-13 )
 scale = Vector2( 2.5, 2.5 )
 texture = ExtResource( 3 )

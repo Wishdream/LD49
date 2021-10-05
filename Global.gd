@@ -6,7 +6,7 @@ enum ITEMTYPE {WEAPON, HAMMER, AERIAL, AURA}
 enum WEAPON {DAGGER, SWORD, SPEAR, HAMMER, PISTOL, SHURIKEN}
 enum HAMMER {NORMAL, BOOMER, SPIKE, BETTER, AREA}
 enum AERIAL {NONE, AIR_DASH, DOUBLE_JUMP, HOOK, JET}
-enum AURA {MORE_DAMAGE, MORE_HAMMER, ALL_DAMAGE, ALL_HAMMER, FAST_MOVE, FAST_SCRAPHP, FAST_SCRAPSPAWN}
+enum AURA {MORE_DAMAGE, MORE_HAMMER, ALL_DAMAGE, ALL_HAMMER, FAST_MOVE, FAST_SCRAPHP, FAST_SCRAPSPAWN, HEAL}
 
 const RUN_TIME = 30 # by seconds
 const GRAVITY = 800
@@ -14,8 +14,9 @@ const GRAVITY = 800
 var difficulty = 0
 
 func _process(_delta):
-	if Input.is_key_pressed(KEY_F5):
-		var _reload = get_tree().reload_current_scene()
+	if OS.is_debug_build():
+		if Input.is_key_pressed(KEY_F5):
+			var _reload = get_tree().reload_current_scene()
 
 # 0 = weapons
 # 1 = hammer
@@ -23,19 +24,19 @@ func _process(_delta):
 # 3 = aura
 
 const items = [
-	[ITEMTYPE.WEAPON, WEAPON.DAGGER, "Dagger", "Short, weak, but reliable"],
+	#[ITEMTYPE.WEAPON, WEAPON.DAGGER, "Dagger", "Short, weak, but reliable"],
 	[ITEMTYPE.WEAPON, WEAPON.SWORD, "Sword", "Decent and lasts awhile"],
 	[ITEMTYPE.WEAPON, WEAPON.SPEAR, "Spear", "Far-reaching"],
 	[ITEMTYPE.WEAPON, WEAPON.HAMMER, "\"Hammer\"", "Why hammer when you can use a sword to hammer?"],
 	[ITEMTYPE.WEAPON, WEAPON.PISTOL, "Revolver", "Powerful, but slow to reload"],
 	[ITEMTYPE.WEAPON, WEAPON.SHURIKEN, "Shuriken", "Swift, far-reaching, but weak"],
-	[ITEMTYPE.HAMMER, HAMMER.NORMAL, "Hammer", "Ol' reliable!"],
+	#[ITEMTYPE.HAMMER, HAMMER.NORMAL, "Hammer", "Ol' reliable!"],
 	[ITEMTYPE.HAMMER, HAMMER.BOOMER, "Hammerang", "Throw your hammer!"],
 	[ITEMTYPE.HAMMER, HAMMER.SPIKE, "Spiky Hammer", "Why use a weapon when you can hammer them down?"],
 	[ITEMTYPE.HAMMER, HAMMER.BETTER, "Gold Hammer", "Shiny, effective, but breaks easily."],
 	[ITEMTYPE.HAMMER, HAMMER.AREA, "Wide Hammer", "Fix in a wider range!"],
-	[ITEMTYPE.AERIAL, AERIAL.NONE, "Dash", "Feel good for throwing away your aerial maneuvers!"],
-	[ITEMTYPE.AERIAL, AERIAL.AIR_DASH, "Air Dash", "Dash in the air!"],
+	#[ITEMTYPE.AERIAL, AERIAL.NONE, "Dash", "Feel good for throwing away your aerial maneuvers!"],
+	[ITEMTYPE.AERIAL, AERIAL.AIR_DASH, "Air Dash", "Double-tap jump to Dash in the air!"],
 	[ITEMTYPE.AERIAL, AERIAL.DOUBLE_JUMP, "Double Jump", "Jump twice in the air!"],
 	#[ITEMTYPE.AERIAL, AERIAL.HOOK, "Hookshot", "Quickly reach other places!"],
 	#[ITEMTYPE.AERIAL, AERIAL.JET, "Jetpack", "Float for a short amount of time!"],
@@ -44,8 +45,9 @@ const items = [
 	[ITEMTYPE.AURA, AURA.ALL_DAMAGE, "MAX DAMAGE", "+100% weapon effectiveness but disables hammers"],
 	[ITEMTYPE.AURA, AURA.ALL_HAMMER, "MAX HAMMER", "+100% hammer effectiveness but disables weapons"],
 	[ITEMTYPE.AURA, AURA.FAST_MOVE, "Double Time", "Makes your journey faster"],
-	[ITEMTYPE.AURA, AURA.FAST_SCRAPHP, "Scrap 4 HP", "Enemy HP +50% for +50% scrap gained"],
-	[ITEMTYPE.AURA, AURA.FAST_SCRAPSPAWN, "Scrap 4 Enemies", "Enemy spawn +50% for +50% scrap gained"],
+	[ITEMTYPE.AURA, AURA.FAST_SCRAPHP, "Scrappy HP", "Enemy HP +20% for +20% scrap gained"],
+	[ITEMTYPE.AURA, AURA.FAST_SCRAPSPAWN, "Scrappy Spawn", "Enemy spawn +20% for +20% scrap gained"],
+	[ITEMTYPE.AURA, AURA.HEAL, "First Aid", "Recovers a heart"],
 ]
 
 const weapon_sprite_index = {
@@ -70,7 +72,7 @@ const aerial_sprite_index = {
 	AERIAL.AIR_DASH: 10,
 	AERIAL.DOUBLE_JUMP: 12,
 	AERIAL.HOOK: 13,
-	AERIAL.JET: 14
+	AERIAL.JET: 14,
 }
 
 const aura_sprite_index = {
@@ -81,6 +83,7 @@ const aura_sprite_index = {
 	AURA.FAST_MOVE: 19,
 	AURA.FAST_SCRAPHP: 20,
 	AURA.FAST_SCRAPSPAWN: 21,
+	AURA.HEAL: 23,
 }
 
 func _ready():

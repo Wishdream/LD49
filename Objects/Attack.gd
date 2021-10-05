@@ -14,7 +14,7 @@ var source = null
 func set_bullet():
 	if damage_type == 0: # Attack from player
 		$Hitbox.set_collision_layer_bit(3,true)
-		$Hitbox.set_collision_mask_bit(1, true)
+		#$Hitbox.set_collision_mask_bit(1, true)
 		$Hitbox.set_collision_mask_bit(2, true)
 		if !$Hitbox.is_connected("body_entered", self, "_on_Hitbox_body_entered"):
 			var _signal = $Hitbox.connect("body_entered", self, "_on_Hitbox_body_entered")

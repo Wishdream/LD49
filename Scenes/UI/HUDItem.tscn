@@ -3,7 +3,6 @@
 [ext_resource path="res://Scenes/UI/HUDItem.gd" type="Script" id=1]
 [ext_resource path="res://Objects/Player/Items/ItemSprite.tscn" type="PackedScene" id=2]
 
-
 [node name="Item" type="Control"]
 margin_left = 328.0
 margin_right = 352.0
@@ -16,3 +15,13 @@ __meta__ = {
 
 [node name="Sprite" parent="." instance=ExtResource( 2 )]
 position = Vector2( 12, 12 )
+
+[node name="Label" type="Label" parent="."]
+margin_right = 24.0
+margin_bottom = 24.0
+text = "1"
+align = 2
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -35,6 +35,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Timer" type="Label" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = -24.0
+margin_right = 44.0
+margin_bottom = -16.0
+text = "Flown:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Count" type="Label" parent="Timer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 40.0
+margin_top = -8.0
+margin_right = 88.0
+text = "0s"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Scrap" type="TextureRect" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0

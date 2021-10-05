@@ -72,7 +72,10 @@ func _process(_delta):
 					Global.ITEMTYPE.AERIAL:
 						Run.aerial = Global.items[index][1]
 					Global.ITEMTYPE.AURA:
-						Run.add_aura(Global.items[index][1])
+						if Global.items[index][1] == Global.AURA.HEAL:
+							hovered_obj.take_damage(-2)
+						else:
+							Run.add_aura(Global.items[index][1])
 					Global.ITEMTYPE.HAMMER:
 						Run.hammer = Global.items[index][1]
 					Global.ITEMTYPE.WEAPON:

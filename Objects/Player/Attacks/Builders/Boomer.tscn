@@ -26,11 +26,11 @@ tracks/0/keys = {
 
 [node name="Boomer" type="Node2D"]
 script = ExtResource( 1 )
-build_value = 3
+build_value = 4
 damage_time = 1.0
 damage_type = 1
 attack_type = 1
-velocity = Vector2( 150, 0 )
+velocity = Vector2( 150, 150 )
 
 [node name="Scanbox" type="Area2D" parent="."]
 input_pickable = false

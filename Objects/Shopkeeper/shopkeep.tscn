@@ -164,14 +164,10 @@ tracks/5/keys = {
 script = ExtResource( 5 )
 
 [node name="shopkeep" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 272, -280 )
+position = Vector2( 272, -56 )
 texture = ExtResource( 4 )
 
 [node name="Platform" type="Node2D" parent="."]
-visible = false
-modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 0, 256 )
 
 [node name="Tiles" type="Node2D" parent="Platform"]
 
@@ -201,16 +197,16 @@ position = Vector2( 224, 0 )
 [node name="Pedestals" type="Node2D" parent="Platform"]
 
 [node name="ShopkeepPedestal" parent="Platform/Pedestals" instance=ExtResource( 2 )]
-position = Vector2( 96, 0 )
+position = Vector2( 200, 0 )
 
 [node name="ShopkeepPedestal2" parent="Platform/Pedestals" instance=ExtResource( 2 )]
-position = Vector2( 32, 0 )
+position = Vector2( 152, 0 )
 
 [node name="ShopkeepPedestal3" parent="Platform/Pedestals" instance=ExtResource( 2 )]
-position = Vector2( 160, 0 )
+position = Vector2( 104, 0 )
 
 [node name="ShopkeepPedestal4" parent="Platform/Pedestals" instance=ExtResource( 2 )]
-position = Vector2( 224, 0 )
+position = Vector2( 56, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/entry = SubResource( 1 )

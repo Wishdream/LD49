@@ -4,7 +4,7 @@
 [ext_resource path="res://Objects/Player/Attacks/Weapons/spear-part.png" type="Texture" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 7.99997
+radius = 12.0
 height = 24.0001
 
 [node name="Spear" instance=ExtResource( 1 )]
@@ -12,10 +12,11 @@ damage_value = 4
 damage_time = 0.05
 
 [node name="Shape" type="CollisionShape2D" parent="Hitbox" index="0"]
-position = Vector2( 20, -4 )
+position = Vector2( 24, -4 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="Sprite" parent="." index="2"]
 position = Vector2( 24, -4 )
+scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 2 )

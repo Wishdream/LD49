@@ -32,6 +32,15 @@ func reset_run():
 	aerial = Global.AERIAL.NONE
 	scrap = 0
 	items = {}
+	
+	if OS.is_debug_build():
+		weapon = Global.WEAPON.DAGGER
+		hammer = Global.HAMMER.NORMAL
+		aerial = Global.AERIAL.NONE
+		scrap = 0
+		#items = {"more_damage":4, "all_hammer":1}
+		
+		calculate_aura()
 
 func add_aura(_item):
 	match _item:
@@ -112,10 +121,12 @@ func calculate_aura():
 	spawn_rate = 1
 	if items.has("more_damage"):
 		attack_rate += .2 * items.more_damage
-		build_rate -= .2 * items.more_damage
+		if items.has("more_hammer"):
+			build_rate -= .2 * items.more_hammer
 	if items.has("more_hammer"):
 		build_rate += .2 * items.more_hammer
-		attack_rate -= .2 * items.more_damage
+		if items.has("more_damage"):
+			attack_rate -= .2 * items.more_damage
 	if items.has("all_damage"):
 		attack_rate += 1
 		build_rate = 0

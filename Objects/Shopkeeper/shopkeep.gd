@@ -11,9 +11,12 @@ func _ready():
 
 func reset_pedestals():
 	for i in $Platform/Pedestals.get_children():
-		i.index = randi() % Global.items.size()
+		i.index = randi() % Global.items.size()-1
 		i.price = randi() % 200 + 20
-		
+	var i = $Platform/Pedestals.get_child(0)
+	i.index = Global.items.size()-1
+	i.price = randi() % 25 + 40
+
 func shopkeep_leave():
 	$AnimationPlayer.play("exit")
 
@@ -29,9 +32,7 @@ func disable_platform():
 		body.set_collision_layer_bit(1, false)
 
 func enable_platform():
-	for i in $Platform/Pedestals.get_children():
-		i.index = randi() % Global.items.size()
-		i.price = randi() % 200 + 20
+	reset_pedestals()
 		
 	for i in $Platform/Tiles.get_children():
 		var body:StaticBody2D = i.get_node("StaticBody2D")

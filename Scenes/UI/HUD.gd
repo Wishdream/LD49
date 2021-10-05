@@ -7,6 +7,7 @@ func _ready():
 	set_sword(Run.weapon)
 	set_hammer(Run.hammer)
 	set_aerial(Run.aerial)
+	update_items()
 
 func set_health(value:int):
 	$Health.value = value
@@ -40,11 +41,14 @@ func update_items():
 				sprind = Global.aura_sprite_index[Global.AURA.MORE_DAMAGE]
 			"more_hammer":
 				sprind = Global.aura_sprite_index[Global.AURA.MORE_HAMMER]
+			"fast_move":
+				sprind = Global.aura_sprite_index[Global.AURA.FAST_MOVE]
 			"fast_scraphp":
 				sprind = Global.aura_sprite_index[Global.AURA.FAST_SCRAPHP]
 			"fast_scrapspawn":
 				sprind = Global.aura_sprite_index[Global.AURA.FAST_SCRAPSPAWN]
 		instance.index = sprind
+		instance.count = Run.items[k]
 
 func remove_item(index:int):
 	var items = $ItemContainer.get_children()

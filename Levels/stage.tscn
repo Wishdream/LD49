@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Objects/Parallax/Parallax.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Objects/Player/Player.tscn" type="PackedScene" id=2]
@@ -12,6 +12,8 @@
 script/source = "extends Node
 
 onready var progress = $Player/Camera/UI/HUD/Progress/ProgressBar
+onready var timer = $Player/Camera/UI/HUD/Timer/Count
+var time = 0
 
 func _ready():
 	$StageTimer.start(Global.RUN_TIME)
@@ -20,10 +22,41 @@ func _ready():
 func _process(_delta):
 	progress.max_value = $StageTimer.wait_time
 	progress.value = $StageTimer.wait_time - $StageTimer.time_left
+	
+	time += _delta
+	timer.text = str(int(time)) + \"m\"
 "
 
+[sub_resource type="Animation" id=10]
+length = 6.0
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 6 ),
+"transitions": PoolRealArray( 5, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
 [sub_resource type="Shader" id=2]
-resource_name = "Flash Shader"
 code = "shader_type canvas_item;
 
 uniform vec4 flash_color : hint_color = vec4(1.0);
@@ -37,7 +70,6 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id=3]
 resource_local_to_scene = true
-resource_name = "Flash Material"
 shader = SubResource( 2 )
 shader_param/flash_color = Color( 1, 1, 1, 1 )
 shader_param/flash_modifier = 1.0
@@ -71,6 +103,131 @@ wait_time = 30.0
 one_shot = true
 
 [node name="Parallax" parent="." instance=ExtResource( 1 )]
+
+[node name="Tutorial" type="Control" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -178.0
+margin_top = -214.0
+margin_right = 178.0
+margin_bottom = 22.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Tutorial"]
+modulate = Color( 1, 1, 1, 0.75 )
+margin_left = 121.0
+margin_top = 54.0
+margin_right = 233.0
+margin_bottom = 92.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "REBUILD THE SHIP
+KEEP FLYING
+
+Tap Right Mouse / [Y]"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Tutorial"]
+visible = false
+modulate = Color( 1, 1, 1, 0.75 )
+margin_left = 94.0
+margin_top = 158.0
+margin_right = 259.0
+margin_bottom = 196.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Move with
+
+WASD/Directions"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="Tutorial"]
+visible = false
+modulate = Color( 1, 1, 1, 0.75 )
+margin_left = -62.0
+margin_top = 158.0
+margin_right = 103.0
+margin_bottom = 196.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Attack
+
+Left Mouse
+[X]"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="Tutorial"]
+visible = false
+modulate = Color( 1, 1, 1, 0.75 )
+margin_left = -38.0
+margin_top = 62.0
+margin_right = 42.0
+margin_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Dash
+
+Shift 
+[B] / [RB]"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label5" type="Label" parent="Tutorial"]
+visible = false
+modulate = Color( 1, 1, 1, 0.75 )
+margin_left = 346.0
+margin_top = 62.0
+margin_right = 426.0
+margin_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Dodge
+
+Ctrl
+[LB]"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label6" type="Label" parent="Tutorial"]
+visible = false
+modulate = Color( 1, 1, 1, 0.75 )
+margin_left = 370.0
+margin_top = 160.0
+margin_right = 450.0
+margin_bottom = 198.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Jump
+
+Space
+[A]"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tutorial"]
+autoplay = "fade"
+anims/fade = SubResource( 10 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 material = SubResource( 3 )
@@ -163,7 +320,7 @@ position = Vector2( 80, -96 )
 position = Vector2( -176, -96 )
 
 [node name="Platform2" parent="Stage" instance=ExtResource( 5 )]
-position = Vector2( -16, -93 )
+position = Vector2( -16, -96 )
 
 [node name="Platform5" parent="Stage" instance=ExtResource( 5 )]
 position = Vector2( 144, -96 )
