@@ -254,7 +254,7 @@ func process_dash(_delta, facing):
 	sprite.play("dash")
 	dashed = true
 
-	if (check_ground_move( (DASH_SPEED*2) ) ):
+	if (check_ground_move((DASH_SPEED*16))):
 		velocity.x = DASH_SPEED * facing
 	else:
 		velocity.x = 0
