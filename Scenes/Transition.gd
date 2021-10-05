@@ -36,14 +36,16 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		$AnimationPlayer.queue("exit")
 		match type:
 			CHANGE_TO:
-				get_tree().change_scene_to(next_scene)
+				var _scene = get_tree().change_scene_to(next_scene)
+				_scene = get_tree().call_deferred("reload_current_scene")
 			CHANGE:
-				get_tree().change_scene(next_scene)
+				var _scene = get_tree().change_scene(next_scene)
+				_scene = get_tree().call_deferred("reload_current_scene")
 			RESTART:
 				Run.reset_run()
 				BGM.stop()
 				get_tree().paused = false
-				get_tree().reload_current_scene()
+				var _scene = get_tree().reload_current_scene()
 				BGM.call_deferred("play","stage")
 			QUIT:
 				get_tree().quit()

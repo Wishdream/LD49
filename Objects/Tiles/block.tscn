@@ -94,5 +94,4 @@ centered = false
 anims/flash = ExtResource( 5 )
 
 [connection signal="area_entered" from="Collider/Hitbox" to="." method="_on_Hitbox_area_entered"]
-[connection signal="body_entered" from="Collider/Hitbox" to="." method="_on_Hitbox_body_entered"]
 [connection signal="body_entered" from="Collider/Stuckbox" to="." method="_on_Stuckbox_body_entered"]

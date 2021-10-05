@@ -20,7 +20,7 @@ func _process(delta):
 		
 func start():
 	Run.reset_run()
-	get_tree().change_scene(\"res://Levels/stage.tscn\")
+	Transition.scene_change(\"res://Levels/stage.tscn\")
 
 func start_bgm():
 	BGM.call_deferred(\"play\",\"stage\")
@@ -178,11 +178,10 @@ __meta__ = {
 }
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 345.6, 240 )
+position = Vector2( 1000, 240 )
 scale = Vector2( 2, 2 )
 frames = ExtResource( 2 )
-animation = "run"
-frame = 1
+animation = "dash"
 playing = true
 
 [node name="WakeUp" type="AudioStreamPlayer" parent="."]
@@ -270,12 +269,11 @@ __meta__ = {
 }
 
 [node name="ColorRect2" type="ColorRect" parent="."]
-modulate = Color( 0.945098, 0.945098, 0.945098, 0 )
+modulate = Color( 0.945098, 0.945098, 0.945098, 1 )
 margin_right = 720.0
 margin_bottom = 480.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="finished" from="WakeUp" to="." method="_on_WakeUp_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

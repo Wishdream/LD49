@@ -6,21 +6,16 @@
 script/source = "extends Control
 
 func _on_Retry_pressed():
-	Run.reset_run()
-	BGM.stop()
-	get_tree().paused = false
-	get_tree().reload_current_scene()
-	BGM.call_deferred(\"play\",\"stage\")
+	Transition.restart()
 
 
 func _on_Exit_pressed():
-	get_tree().change_scene(\"res://Scenes/Title/Title.tscn\")
+	Transition.scene_change(\"res://Scenes/Title/Title.tscn\")
 
 
 func _on_Player_player_died():
 	BGM.play(\"fail\")
 	visible = true
-	$HBoxContainer/Retry.grab_focus()
 	get_tree().paused = true
 "
 

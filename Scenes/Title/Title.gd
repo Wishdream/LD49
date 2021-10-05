@@ -10,10 +10,10 @@ func _ready():
 func _on_Start_pressed():
 	BGM.stop()
 	#assert(get_tree().change_scene("res://Scenes/Intro/WakeUp.tscn") == OK)
-	get_tree().change_scene("res://Scenes/Intro/WakeUp.tscn")# == OK
+	var _scene = get_tree().change_scene("res://Scenes/Intro/WakeUp.tscn")# == OK
 
 func _on_Quit_pressed():
 	Transition.quit()
 
 func _on_LinkButton_pressed():
-	OS.shell_open("https://ldjam.com/events/ludum-dare/49/ruff-tuff-skies")
+	var _open = OS.shell_open("https://ldjam.com/events/ludum-dare/49/ruff-tuff-skies")
