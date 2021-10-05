@@ -96,7 +96,7 @@ extents = Vector2( 40, 832 )
 script = SubResource( 1 )
 
 [node name="DecayTimer" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 1.25
 autostart = true
 
 [node name="StageTimer" type="Timer" parent="."]
