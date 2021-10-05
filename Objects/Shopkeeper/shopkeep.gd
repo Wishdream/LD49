@@ -11,8 +11,8 @@ func _ready():
 
 func reset_pedestals():
 	for i in $Platform/Pedestals.get_children():
-		i.index = randi() % Global.items.size()-1
-		i.price = randi() % 200 + 20
+		i.index = randi() % (Global.items.size()-1)
+		i.price = randi() % 105 + 45
 	var i = $Platform/Pedestals.get_child(0)
 	i.index = Global.items.size()-1
 	i.price = randi() % 25 + 40

@@ -23,11 +23,11 @@ func _process(_delta):
 	progress.max_value = $StageTimer.wait_time
 	progress.value = $StageTimer.wait_time - $StageTimer.time_left
 	
-	time += _delta
+	time += _delta * (1 + (Run.wait_rate-1))
 	timer.text = str(int(time)) + \"m\"
 "
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=2]
 length = 6.0
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -56,7 +56,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Shader" id=2]
+[sub_resource type="Shader" id=3]
 code = "shader_type canvas_item;
 
 uniform vec4 flash_color : hint_color = vec4(1.0);
@@ -68,28 +68,28 @@ void fragment() {
 	COLOR = color;
 }"
 
-[sub_resource type="ShaderMaterial" id=3]
+[sub_resource type="ShaderMaterial" id=4]
 resource_local_to_scene = true
-shader = SubResource( 2 )
+shader = SubResource( 3 )
 shader_param/flash_color = Color( 1, 1, 1, 1 )
 shader_param/flash_modifier = 1.0
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 253, 48 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 253, 25 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 253, 8 )
 
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 64, 8 )
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 728, 120 )
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 40, 832 )
 
 [node name="SkyTrail" type="Node"]
@@ -227,10 +227,10 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Tutorial"]
 autoplay = "fade"
-anims/fade = SubResource( 10 )
+anims/fade = SubResource( 2 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-material = SubResource( 3 )
+material = SubResource( 4 )
 position = Vector2( 0, -96 )
 
 [node name="Stage" type="Node2D" parent="."]
@@ -335,32 +335,32 @@ SPAWN_TYPE = 1
 
 [node name="SpawnArea" type="CollisionShape2D" parent="spawners/Air1"]
 position = Vector2( 16, -144 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="Air2" parent="spawners" instance=ExtResource( 7 )]
 SPAWN_TYPE = 1
 
 [node name="SpawnArea" type="CollisionShape2D" parent="spawners/Air2"]
 position = Vector2( 16, -31 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="Ground1" parent="spawners" instance=ExtResource( 7 )]
 
 [node name="SpawnArea" type="CollisionShape2D" parent="spawners/Ground1"]
 position = Vector2( 16, -8 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="Ground2" parent="spawners" instance=ExtResource( 7 )]
 
 [node name="SpawnArea" type="CollisionShape2D" parent="spawners/Ground2"]
 position = Vector2( -112, -104 )
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 
 [node name="Ground3" parent="spawners" instance=ExtResource( 7 )]
 
 [node name="SpawnArea" type="CollisionShape2D" parent="spawners/Ground3"]
 position = Vector2( 112, -104 )
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 
 [node name="DeathPlane" type="Area2D" parent="."]
 monitoring = false
@@ -369,15 +369,15 @@ collision_mask = 0
 
 [node name="DED" type="CollisionShape2D" parent="DeathPlane"]
 position = Vector2( 0, 480 )
-shape = SubResource( 8 )
+shape = SubResource( 9 )
 
 [node name="DED2" type="CollisionShape2D" parent="DeathPlane"]
 position = Vector2( -768, 120 )
-shape = SubResource( 9 )
+shape = SubResource( 10 )
 
 [node name="DED3" type="CollisionShape2D" parent="DeathPlane"]
 position = Vector2( 768, 120 )
-shape = SubResource( 9 )
+shape = SubResource( 10 )
 
 [node name="Enemies" type="Node" parent="."]
 
