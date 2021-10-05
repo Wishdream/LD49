@@ -34,7 +34,7 @@ func process_move(_delta):
 	play_anim("move")
 	if velocity.x == 0:
 		velocity.x = facing * MOVE_SPEED
-	if (!check_ground_move() and grounded) or is_on_wall():
+	if (!check_ground_move(MOVE_SPEED) and grounded) or is_on_wall():
 		velocity.x *= -1
 	if !grounded:
 		timer.stop()

@@ -254,7 +254,10 @@ func process_dash(_delta, facing):
 	sprite.play("dash")
 	dashed = true
 
-	velocity.x = DASH_SPEED * facing
+	if (check_ground_move( (DASH_SPEED*2) ) ):
+		velocity.x = DASH_SPEED * facing
+	else:
+		velocity.x = 0
 
 	if move_timer.is_stopped():
 		move_timer.start(DASH_TIME)

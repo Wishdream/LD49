@@ -40,6 +40,6 @@ func apply_gravity(_delta):
 	if velocity.y > FALL_SPEED:
 		velocity.y = FALL_SPEED
 
-func check_ground_move():
-	var check = Vector2(MOVE_SPEED * facing, Global.GRAVITY)
+func check_ground_move(move_speed):
+	var check = Vector2(move_speed * facing, Global.GRAVITY)
 	return test_move(transform, check)
