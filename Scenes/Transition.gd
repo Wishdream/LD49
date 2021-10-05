@@ -37,10 +37,10 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		match type:
 			CHANGE_TO:
 				var _scene = get_tree().change_scene_to(next_scene)
-				_scene = get_tree().call_deferred("reload_current_scene")
+				get_tree().call_deferred("reload_current_scene")
 			CHANGE:
 				var _scene = get_tree().change_scene(next_scene)
-				_scene = get_tree().call_deferred("reload_current_scene")
+				get_tree().call_deferred("reload_current_scene")
 			RESTART:
 				Run.reset_run()
 				BGM.stop()

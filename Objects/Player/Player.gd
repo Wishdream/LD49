@@ -391,6 +391,7 @@ func process_aerial(_delta, facing):
 		# Aerial Dash
 		Global.AERIAL.AIR_DASH:
 			if move_timer.is_stopped():
+				$Sounds/Jump2.play()
 				move_timer.start(DASH_TIME)
 				sprite.play("dash")
 				particles.emitting = true
