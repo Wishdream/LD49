@@ -19,6 +19,7 @@ var scrap = 0
 var items = {}
 
 func reset_run():
+	wait_rate = 1
 	scrap_rate = 2
 	decay_rate = 1
 	attack_rate = 1
@@ -62,7 +63,8 @@ func add_aura(_item):
 				items.more_hammer = 1
 		Global.AURA.FAST_MOVE:
 			if items.has("fast_move"):
-				items.fast_move += 1
+				if items.fast_move < 7:
+					items.fast_move += 1
 			else:
 				items.fast_move = 1
 		Global.AURA.FAST_SCRAPHP:
