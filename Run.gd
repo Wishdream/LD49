@@ -39,7 +39,7 @@ func reset_run():
 		hammer = Global.HAMMER.NORMAL
 		aerial = Global.AERIAL.NONE
 		scrap = 0
-		#items = {"more_damage":4, "all_hammer":1}
+		items = {"fast_move":7, "more_damage":7, "more_hammer":7, "fast_scraphp":7, "fast_scrapspawn":7}
 		
 		calculate_aura()
 
@@ -115,6 +115,7 @@ func remove_aura(_item):
 	calculate_aura()
 	
 func calculate_aura():
+	wait_rate = 1
 	scrap_rate = 1
 	decay_rate = 1
 	attack_rate = 1
@@ -139,14 +140,14 @@ func calculate_aura():
 		attack_rate = 0
 		build_rate = 0
 	if items.has("fast_move"):
-		wait_rate -= .1
-		spawn_rate -= .1
+		wait_rate -= .1 * items.fast_move
+		spawn_rate -= .1 * items.fast_move
 	if items.has("fast_scraphp"):
-		hp_rate += .2
-		scrap_rate += .2
+		hp_rate += .2 * items.fast_scraphp
+		scrap_rate += .2 * items.fast_scraphp
 	if items.has("fast_scrapspawn"):
-		spawn_rate -= .2
-		scrap_rate += .2
+		spawn_rate -= .2 * items.fast_scrapspawn
+		scrap_rate += .2 * items.fast_scrapspawn
 		
 func add_scrap(amount):
 	scrap += amount

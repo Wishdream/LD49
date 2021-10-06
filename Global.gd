@@ -50,6 +50,17 @@ const items = [
 	[ITEMTYPE.AURA, AURA.HEAL, "First Aid", "Recovers a heart"],
 ]
 
+const aura_id = {
+	AURA.MORE_DAMAGE : "more_damage",
+	AURA.MORE_HAMMER : "more_hammer",
+	AURA.ALL_DAMAGE : "all_damage",
+	AURA.ALL_HAMMER : "all_hammer",
+	AURA.FAST_MOVE : "fast_move",
+	AURA.FAST_SCRAPHP : "fast_scraphp",
+	AURA.FAST_SCRAPSPAWN : "fast_scrapspawn",
+	AURA.HEAL : "heal"
+}
+
 const weapon_sprite_index = {
 	WEAPON.DAGGER: 22,
 	WEAPON.SWORD: 0,

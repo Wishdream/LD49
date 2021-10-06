@@ -23,8 +23,8 @@ func _process(_delta):
 	progress.max_value = $StageTimer.wait_time
 	progress.value = $StageTimer.wait_time - $StageTimer.time_left
 	
-	time += _delta * (1 + (Run.wait_rate-1))
-	timer.text = str(int(time)) + \"m\"
+	time += _delta * ((1 + (Run.wait_rate-1)) * 2)
+	timer.text = str(floor(time)) + \"m\"
 "
 
 [sub_resource type="Animation" id=2]

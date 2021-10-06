@@ -11,8 +11,22 @@ func _ready():
 
 func reset_pedestals():
 	for i in $Platform/Pedestals.get_children():
-		i.index = randi() % (Global.items.size()-1)
+		var index:int
+		index = randi() % (Global.items.size()-1)
+		
+		while true:
+			if Global.items[index][0] == Global.ITEMTYPE.AURA:
+				var itemind = Global.items[index][1]
+				print(Global.aura_id[itemind])
+				if Run.items.has(Global.aura_id[itemind]):
+					if Run.items[Global.aura_id[itemind]] >= 7:
+						index = randi() % (Global.items.size()-1)
+						continue
+			break
+		
+		i.index = index
 		i.price = randi() % 105 + 45
+		
 	var i = $Platform/Pedestals.get_child(0)
 	i.index = Global.items.size()-1
 	i.price = randi() % 25 + 40
