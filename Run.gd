@@ -1,7 +1,7 @@
 extends Node
 
 var wait_rate = 1
-var scrap_rate = 2
+var scrap_rate = 1
 var decay_rate = 1
 var attack_rate = 1
 var build_rate = 1
@@ -20,7 +20,7 @@ var items = {}
 
 func reset_run():
 	wait_rate = 1
-	scrap_rate = 2
+	scrap_rate = 1
 	decay_rate = 1
 	attack_rate = 1
 	build_rate = 1
