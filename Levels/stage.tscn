@@ -87,10 +87,10 @@ extents = Vector2( 253, 8 )
 extents = Vector2( 64, 8 )
 
 [sub_resource type="RectangleShape2D" id=9]
-extents = Vector2( 728, 120 )
+extents = Vector2( 728, 264 )
 
 [sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 40, 832 )
+extents = Vector2( 128, 832 )
 
 [node name="SkyTrail" type="Node"]
 script = SubResource( 1 )
@@ -127,7 +127,7 @@ grow_vertical = 2
 text = "REBUILD THE SHIP
 KEEP FLYING
 
-Tap Right Mouse / [Y]"
+Tap Right Mouse / [X] Key / [Y] Button"
 align = 1
 valign = 1
 __meta__ = {
@@ -369,15 +369,15 @@ collision_layer = 512
 collision_mask = 0
 
 [node name="DED" type="CollisionShape2D" parent="DeathPlane"]
-position = Vector2( 0, 480 )
+position = Vector2( 0, 520 )
 shape = SubResource( 9 )
 
 [node name="DED2" type="CollisionShape2D" parent="DeathPlane"]
-position = Vector2( -768, 120 )
+position = Vector2( -856, 120 )
 shape = SubResource( 10 )
 
 [node name="DED3" type="CollisionShape2D" parent="DeathPlane"]
-position = Vector2( 768, 120 )
+position = Vector2( 856, 120 )
 shape = SubResource( 10 )
 
 [node name="Enemies" type="Node" parent="."]
